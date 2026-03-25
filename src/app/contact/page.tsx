@@ -63,7 +63,7 @@ export default function ContactPage() {
             <p><strong>Location:</strong> Vancouver, BC</p>
             <div className="contact-links">
               <a href="https://linkedin.com/in/mahsa-khakpour" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-              <a href="https://github.com/mahsa-khakpour" target="_blank" rel="noopener noreferrer">GitHub</a>
+              <a href="https://github.com/mahsakhakpour" target="_blank" rel="noopener noreferrer">GitHub</a>
               <a href="/Mahsa_Khakpour_Resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
             </div>
           </div>

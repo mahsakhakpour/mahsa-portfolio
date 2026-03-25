@@ -11,7 +11,7 @@ export default function Footer() {
         
         <div className="footer-links">
           <a 
-            href="https://github.com/mahsa-khakpour" 
+            href="https://github.com/mahsakhakpour" 
             target="_blank" 
             rel="noopener noreferrer"
             aria-label="GitHub"
