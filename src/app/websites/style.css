@@ -1,0 +1,294 @@
+/* ==================== RESET ==================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ==================== LIGHT MODE (DEFAULT) ==================== */
+:root {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-gradient-start: #f0fafa;
+  --bg-gradient-end: #e0f2f2;
+  --text-primary: #1a2b3c;
+  --text-secondary: #5a7a7a;
+  --accent: #0a3a3a;
+  --accent-light: #1a5a5a;
+  --border-color: rgba(0,0,0,0.1);
+  --shadow: rgba(0,0,0,0.1);
+  --card-bg: #ffffff;
+  --card-text: #0a3a3a;
+  --card-hover-bg: linear-gradient(135deg, #ffffff 0%, #f8fcfc 100%);
+  --underline-gradient: linear-gradient(90deg, #0a3a3a, #1a5a5a);
+  --title-gradient: linear-gradient(135deg, #0a3a3a 0%, #1a5a5a 100%);
+}
+
+/* ==================== DARK MODE ==================== */
+body.dark {
+  --bg-primary: #0a2a28;
+  --bg-secondary: #0e3a38;
+  --bg-gradient-start: #0e3a38;
+  --bg-gradient-end: #0a2a28;
+  --text-primary: #e8f0f0;
+  --text-secondary: #c0d0d0;
+  --accent: #ffffff;
+  --accent-light: #e0f2f2;
+  --border-color: rgba(255,255,255,0.1);
+  --shadow: rgba(0,0,0,0.3);
+  --card-bg: #1a4d4a;
+  --card-text: white;
+  --card-hover-bg: linear-gradient(135deg, #2a6b68 0%, #1a4d4a 100%);
+  --underline-gradient: linear-gradient(90deg, #ffffff, #e0f2f2);
+  --title-gradient: linear-gradient(135deg, #ffffff 0%, #e0f2f2 100%);
+}
+
+/* ==================== WEBSITES PAGE STYLES ==================== */
+.websites-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+  padding: 80px 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.3s ease;
+}
+
+/* Optional: Add subtle decorative elements */
+.websites-page::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(255,215,0,0.03) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.page-title {
+  font-size: 3.2rem;
+  margin-bottom: 50px;
+  color: var(--accent);
+  font-weight: 800;
+  letter-spacing: -1px;
+  line-height: 1.2;
+  background: var(--title-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-block;
+  position: relative;
+  z-index: 2;
+}
+
+.page-title::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: var(--underline-gradient);
+  border-radius: 4px;
+}
+
+.websites-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 100px);
+  gap: 40px;
+  justify-content: center;
+  align-items: center;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  position: relative;
+  z-index: 2;
+}
+
+.website-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  background: var(--card-bg);
+  border-radius: 24px;
+  box-shadow: 0 15px 30px -10px var(--shadow);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--card-text);
+  text-decoration: none;
+  transition: all 0.4s ease;
+  border: 1px solid var(--border-color);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.website-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--accent);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.website-card:hover::before {
+  transform: translateX(100%);
+}
+
+/* Inner glow effect */
+.website-card::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: var(--accent);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.website-card:hover::after {
+  opacity: 0.1;
+}
+
+.website-card:hover {
+  transform: translateY(-8px) scale(1.05);
+  box-shadow: 0 25px 40px -15px var(--shadow);
+  border-color: var(--accent);
+  background: var(--card-hover-bg);
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.empty-state p {
+  color: var(--text-secondary);
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+/* ==================== RESPONSIVE MEDIA QUERIES ==================== */
+
+/* Tablet (768px and below) */
+@media (max-width: 768px) {
+  .websites-page {
+    padding: 60px 15px;
+  }
+  
+  .page-title {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+  }
+  
+  .websites-grid {
+    grid-template-columns: repeat(3, 90px);
+    gap: 25px;
+  }
+  
+  .website-card {
+    width: 90px;
+    height: 90px;
+    font-size: 1.8rem;
+    border-radius: 20px;
+  }
+}
+
+/* Mobile (480px and below) */
+@media (max-width: 480px) {
+  .websites-page {
+    padding: 50px 12px;
+  }
+  
+  .page-title {
+    font-size: 2rem;
+    margin-bottom: 30px;
+  }
+  
+  .websites-grid {
+    grid-template-columns: repeat(2, 80px);
+    gap: 20px;
+  }
+  
+  .website-card {
+    width: 80px;
+    height: 80px;
+    font-size: 1.6rem;
+    border-radius: 18px;
+  }
+}
+
+/* Small Mobile (380px and below) */
+@media (max-width: 380px) {
+  .websites-page {
+    padding: 40px 10px;
+  }
+  
+  .page-title {
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+  }
+  
+  .page-title::after {
+    width: 60px;
+    bottom: -8px;
+  }
+  
+  .websites-grid {
+    grid-template-columns: repeat(2, 70px);
+    gap: 15px;
+  }
+  
+  .website-card {
+    width: 70px;
+    height: 70px;
+    font-size: 1.4rem;
+    border-radius: 16px;
+  }
+}
+
+/* Extra Small Mobile (320px and below) */
+@media (max-width: 320px) {
+  .websites-grid {
+    grid-template-columns: repeat(2, 65px);
+    gap: 12px;
+  }
+  
+  .website-card {
+    width: 65px;
+    height: 65px;
+    font-size: 1.2rem;
+    border-radius: 14px;
+  }
+}
+
+/* Large Desktop (1200px and above) */
+@media (min-width: 1200px) {
+  .websites-grid {
+    max-width: 1000px;
+    gap: 50px;
+  }
+  
+  .website-card {
+    width: 120px;
+    height: 120px;
+    font-size: 2.2rem;
+    border-radius: 28px;
+  }
+  
+  .page-title {
+    font-size: 3.5rem;
+  }
+}

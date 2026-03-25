@@ -1,103 +1,174 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
+import { FaCode, FaLaptopCode, FaPalette, FaChartLine, FaSearch } from "react-icons/fa";
+import Chat from "../../components/Chat";
+
+export default function HomePage() {
+
+  const skills = [
+    { name: "HTML", file: "/icons/html5.jpg" },
+    { name: "CSS", file: "/icons/css3.png" },
+    { name: "JavaScript", file: "/icons/js.png" },
+    { name: "React", file: "/icons/react.png" },
+    { name: "Next.js", file: "/icons/nextjs.png" },
+    { name: "Node.js", file: "/icons/node.png" },
+    { name: "SQL", file: "/icons/sql.png" },
+    { name: "Python", file: "/icons/python.jpg" },
+    { name: "MongoDB", file: "/icons/mongo.png" },
+    { name: "PHP", file: "/icons/php.png" },
+    { name: "Angular", file: "/icons/angular.png" },
+  ];
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <>
+      <Header />
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
+      <main>
+
+        {/* Hero */}
+        <section className="hero">
+          <h1>
+            Bringing Ideas to Life <br />
+            In the Digital World
+          </h1>
+          <p>
+            Front-end developer focused on creating structured, user-friendly
+            and modern web experiences.
+          </p>
+        </section>
+
+        {/* About */}
+        <section className="about">
+          <div className="about-content">
+            <img src="/Mahsa.png" alt="Mahsa Khakpour" className="about-photo" />
+
+            <div className="about-text">
+              <h2>About Me</h2>
+              <p>
+                I am a web developer who combines design and development to turn ideas into
+                functional, user-centered applications. From front-end interfaces to back-end
+                systems and databases, I apply technical skills, structured design, and careful
+                planning to deliver modern, responsive, and accessible digital experiences.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Professional Summary */}
+        <section className="summary">
+          <h2>Professional Summary</h2>
+          <p>
+            I approach projects with a balance of structure and flexibility,
+            focusing on clarity, maintainability, and long-term value.
+          </p>
+        </section>
+
+        {/* Skills */}
+        <section className="skills" id="skills">
+          <h2>Skills Overview</h2>
+
+          <div className="skills-marquee">
+            <div className="skills-track">
+
+              {skills.concat(skills).map((skill, idx) => (
+                <div key={idx} className="skill-item">
+                  <img
+                    src={skill.file}
+                    alt={skill.name}
+                    className="skill-icon"
+                  />
+                  <span>{skill.name}</span>
+                </div>
+              ))}
+
+            </div>
+          </div>
+        </section>
+
+        {/* What I Offer */}
+        <section className="offer">
+
+          <h2>What I Offer</h2>
+
+          <div className="offer-grid">
+
+            <div className="offer-card">
+              <FaLaptopCode className="offer-icon" />
+              <h3>Front-End Development</h3>
+              <p>
+                Creating responsive, accessible, and modern user interfaces
+                using current front-end technologies.
+              </p>
+            </div>
+
+            <div className="offer-card">
+              <FaCode className="offer-icon" />
+              <h3>Full Stack Development</h3>
+              <p>
+                Building end-to-end applications with structured
+                and maintainable code.
+              </p>
+            </div>
+
+            <div className="offer-card">
+              <FaPalette className="offer-icon" />
+              <h3>UX/UI Designing</h3>
+              <p>
+                Designing clear, user-centered interfaces for
+                practical applications.
+              </p>
+            </div>
+
+            <div className="offer-card">
+              <FaChartLine className="offer-icon" />
+              <h3>Data-Driven Development</h3>
+              <p>
+                Applying data insights and visualization
+                to improve application outcomes.
+              </p>
+            </div>
+
+            <div className="offer-card">
+              <FaSearch className="offer-icon" />
+              <h3>Business Analysis & SEO</h3>
+              <p>
+                Aligning technical solutions with business goals
+                and improving visibility.
+              </p>
+            </div>
+
+          </div>
+
+        </section>
+
+        {/* Contact */}
+        <section className="contact" id="contact">
+          <h2>Contact</h2>
+
+          <p>
+            If you&apos;d like to work together or have any questions:
+          </p>
+
+        <a
+          href="https://mail.google.com/mail/?view=cm&fs=1&to=mahsa54@gmail.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="cta-button"
+        >
+          Send Email
+        </a>
+
+        </section>
+
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+
+      <Footer />
+      
+      {/* Chat Component - Floating Button */}
+      <Chat />
+
+    </>
   );
 }
