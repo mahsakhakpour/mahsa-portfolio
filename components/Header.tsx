@@ -58,7 +58,7 @@ export default function Header() {
   return (
     <header className="main-header">
       <div className="logo-area">
-        <img src="/Logo.png" alt="Mahsa Logo" className="logo" />
+        <img src="/logo.png" alt="Mahsa logo" className="logo" />
         <span className="site-name">Mahsa Khakpour</span>
       </div>
 
