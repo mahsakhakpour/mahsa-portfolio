@@ -1,16 +1,14 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { FaMoon, FaSun } from "react-icons/fa";
+import styles from "./Header.module.css";
 
 export default function Header() {
-  const [open, setOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  // Load theme from localStorage on mount
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme === "dark") {
@@ -19,7 +17,6 @@ export default function Header() {
     }
   }, []);
 
-  // Toggle theme function
   const toggleTheme = () => {
     if (darkMode) {
       document.body.classList.remove("dark");
@@ -32,64 +29,35 @@ export default function Header() {
     }
   };
 
-  // Handle dropdown with delay
-  const handleMouseEnter = () => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
-    setOpen(true);
-  };
-
-  const handleMouseLeave = () => {
-    timeoutRef.current = setTimeout(() => {
-      setOpen(false);
-    }, 200);
-  };
-
-  // Cleanup timeout on unmount
-  useEffect(() => {
-    return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-    };
-  }, []);
-
   return (
-    <header className="main-header">
-      <div className="logo-area">
-        <img src="/logo.png" alt="Mahsa logo" className="logo" />
-        <span className="site-name">Mahsa Khakpour</span>
+    <header className={styles.mainHeader}>
+      <div className={styles.logoArea}>
+        <img src="/logo.png" alt="Mahsa logo" className={styles.logo} />
+        <span className={styles.siteName}>Mahsa Khakpour</span>
       </div>
 
-      <nav className="nav-bar">
-        <Link href="/" className="nav-item">About</Link>
+      <nav className={styles.navBar}>
+        <Link href="/" className={styles.navItem}>About</Link>
 
         <div
-          className="dropdown"
-          ref={dropdownRef}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
+          className={styles.dropdown}
+          onMouseEnter={() => setDropdownOpen(true)}
+          onMouseLeave={() => setDropdownOpen(false)}
         >
-          <span className="nav-item portfolio-link">Portfolio ▾</span>
+          <span className={styles.navItem}>Portfolio ▾</span>
 
-          {open && (
-            <div 
-              className="dropdown-menu"
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
-            >
-              <Link href="/projects">Projects</Link>
-              <Link href="/my-designs">My Designs</Link>
-              <Link href="/websites">Websites</Link>
-              
+          {dropdownOpen && (
+            <div className={styles.dropdownMenu}>
+              <Link href="/projects" className={styles.dropdownLink}>Projects</Link>
+              <Link href="/my-designs" className={styles.dropdownLink}>My Designs</Link>
+              <Link href="/websites" className={styles.dropdownLink}>Websites</Link>
             </div>
           )}
         </div>
 
-        <Link href="/contact" className="nav-item">Contact</Link>
-        
-        <button onClick={toggleTheme} className="theme-toggle">
+        <Link href="/contact" className={styles.navItem}>Contact</Link>
+
+        <button onClick={toggleTheme} className={styles.themeToggle}>
           {darkMode ? <FaSun size={20} /> : <FaMoon size={20} />}
         </button>
       </nav>

@@ -1,17 +1,16 @@
-// Navbar.tsx
-import Link from 'next/link';
+import Link from "next/link";
+import styles from "./Header.module.css";
 
 export default function Navbar() {
   return (
-    <header className="main-header">
-      <div className="logo-area">
-        <img src="/itex.png" className="logo" alt="Logo" />
-        <span className="site-name">Mahsa Khakpour</span>
+    <header className={styles.mainHeader}>
+      <div className={styles.logoArea}>
+        <img src="/logo.png" alt="Logo" className={styles.logo} />
+        <span className={styles.siteName}>Mahsa Khakpour</span>
       </div>
-
-      <nav className="nav">        
-        <Link href="/#about">About</Link>
-        <Link href="/#contact">Contact</Link>
+      <nav className={styles.navBar}>
+        <Link href="/#about" className={styles.navItem}>About</Link>
+        <Link href="/#contact" className={styles.navItem}>Contact</Link>
       </nav>
     </header>
   );
