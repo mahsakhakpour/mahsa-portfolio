@@ -29,7 +29,9 @@ export default function Footer() {
             <FaLinkedin size={28} style={{ color: "white", fill: "white" }} />
           </a>
           <a 
-            href="mailto:mahsa54@gmail.com"
+            href="https://mail.google.com/mail/?view=cm&fs=1&to=mahsa54@gmail.com"
+            target="_blank"
+            rel="noopener noreferrer"
             aria-label="Email"
             style={{ color: "white" }}
           >

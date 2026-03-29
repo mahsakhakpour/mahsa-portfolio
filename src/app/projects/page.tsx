@@ -12,6 +12,14 @@ export default function ProjectsPage() {
       image: "/kanba/kanba.png",
       link: "/projects/kanba"
     },
+
+    {
+      title: "Course Analytics",
+      image: "/course output Screenshot.png",
+      link: "/projects/course-analytics"
+    },
+
+
     {
       title: "MCCP",
       image: "/MCCP/MCCP.png",
@@ -20,29 +28,21 @@ export default function ProjectsPage() {
     {
       title: "interiYOUR",
       image: "interiYOUR/ui.gif",
-      link: "/projects/uiux"
+      link: "/InteriYOUR-Design_Final-Project.pdf"
     },
     {
       title: "Patrol Robots",
       image: "/Robots.png",
       link: "/projects/javascript"
     },
-    {
-      title: "Reference Platform ",
-      image: "/course output Screenshot.png",
-      link: "/projects/phpmyadmin"
-    },
+
     {
       title: "Table1 Visualization",
       image: "/Vis- ver5.jpg",
       link: "/projects/datavis"
     },
  
-    {
-      title: "Order Management",
-      image: "/query.png",
-      link: "/projects/sql"
-    },
+
     {
       title: "Campus Map Explorer",
       image: "/Screenshot 2026-01-10 231718.png",

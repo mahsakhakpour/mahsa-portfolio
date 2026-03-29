@@ -79,9 +79,10 @@ export default function Header() {
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
             >
+              <Link href="/projects">Projects</Link>
               <Link href="/my-designs">My Designs</Link>
               <Link href="/websites">Websites</Link>
-              <Link href="/projects">Projects</Link>
+              
             </div>
           )}
         </div>
