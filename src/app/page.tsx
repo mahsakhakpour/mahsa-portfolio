@@ -1,7 +1,5 @@
 "use client";
 
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
 import { FaCode, FaLaptopCode, FaPalette, FaChartLine, FaSearch } from "react-icons/fa";
 import Chat from "../../components/Chat";
 
@@ -23,8 +21,6 @@ export default function HomePage() {
 
   return (
     <>
-      <Header />
-
       <main>
 
         {/* Hero */}
@@ -163,10 +159,8 @@ export default function HomePage() {
         </section>
 
       </main>
-
-      <Footer />
       
-      {/* Chat Component - Floating Button */}
+   
       <Chat />
 
     </>

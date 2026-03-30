@@ -1,4 +1,44 @@
-/* ==================== RESET & VARIABLES ==================== */
+
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+
+.project-container,
+.projects-grid,
+.design-page,
+.websites-grid,
+.contact-container,
+.projects-page,
+.websites-page,
+.contact-page,
+.design-container,
+.kanba-container {
+  max-width: 100%;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+
+img, video {
+  max-width: 100%;
+  height: auto;
+}
+
+
+.grid-container,
+.offer-grid,
+.features-grid {
+  max-width: 100%;
+  overflow-x: hidden;
+}
 * {
   margin: 0;
   padding: 0;
@@ -10,7 +50,7 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Light Mode (Default) - Aligned with Emerald Theme */
+/* Light mode */
 :root {
   --bg-primary: #f9fafb;
   --bg-secondary: #ffffff;
@@ -45,7 +85,7 @@ body {
   --dropdown-text: #10b981;
 }
 
-/* Dark Mode - Aligned with Project Page Dark Theme */
+/* Dark mode */
 body.dark {
   --bg-primary: #0f172a;
   --bg-secondary: #1e293b;
@@ -85,7 +125,7 @@ body {
   color: var(--text-primary);
 }
 
-/* ==================== THEME TOGGLE ==================== */
+/* Theme toggle */
 .theme-toggle {
   background: rgba(255,255,255,0.2);
   border: none;
@@ -106,7 +146,7 @@ body {
   transform: rotate(15deg);
 }
 
-/* ==================== HEADER ==================== */
+/* Header */
 .main-header {
   display: flex;
   justify-content: space-between;
@@ -270,7 +310,7 @@ body {
   border-bottom-right-radius: 20px;
 }
 
-/* ==================== FOOTER ==================== */
+/* Footer */
 .footer {
   background: var(--footer-bg);
   color: var(--footer-text);
@@ -323,7 +363,7 @@ body {
   transform: translateY(-4px);
 }
 
-/* ==================== HERO ==================== */
+/* Hero */
 .hero {
   text-align: center;
   padding: 80px 20px 60px;
@@ -365,14 +405,14 @@ body {
   padding: 0 15px;
 }
 
-/* Fix for hero title in dark mode */
+
 body.dark .hero h1 {
   -webkit-text-fill-color: white;
   background: none;
   color: white;
 }
 
-/* ==================== ABOUT ==================== */
+/* About */
 .about {
   padding: 80px 40px;
   background: var(--bg-secondary);
@@ -431,7 +471,7 @@ body.dark .hero h1 {
   color: var(--text-light);
 }
 
-/* ==================== SUMMARY ==================== */
+/* Summary */
 .summary {
   padding: 60px 20px;
   text-align: center;
@@ -469,7 +509,7 @@ body.dark .hero h1 {
   padding: 0 15px;
 }
 
-/* ==================== SKILLS ==================== */
+/* Skills */
 .skills {
   padding: 60px 20px;
   text-align: center;
@@ -557,7 +597,7 @@ body.dark .hero h1 {
   color: var(--skill-text);
 }
 
-/* ==================== OFFER ==================== */
+/* Offer */
 .offer {
   padding: 80px 20px;
   text-align: center;
@@ -633,7 +673,7 @@ body.dark .hero h1 {
   font-size: 1.05rem;
 }
 
-/* ==================== CONTACT ==================== */
+/* Contact */
 .contact {
   padding: 60px 20px;
   text-align: center;
@@ -690,7 +730,7 @@ body.dark .hero h1 {
   box-shadow: 0 15px 25px -5px var(--shadow);
 }
 
-/* ==================== CHAT STYLES ==================== */
+/* Chat styles */
 .chat-floating-button {
   position: fixed;
   bottom: 30px;
@@ -714,7 +754,6 @@ body.dark .hero h1 {
   transform: scale(1.1);
 }
 
-/* Fix for chat button in dark mode */
 body.dark .chat-floating-button {
   background: var(--accent);
   color: white;
@@ -1156,4 +1195,70 @@ body.dark .chat-floating-button {
     background: rgba(255, 255, 255, 0.4) !important;
     transform: translateY(-4px) !important;
   }
+
+
+  /* ==================== CONTAINER FIX FOR ALL CONTENT ==================== */
+.hero, .about, .summary, .skills, .offer, .contact {
+  max-width: 1200px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 24px;
+  padding-right: 24px;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+/* Hero specific padding */
+.hero {
+  padding-top: 80px;
+  padding-bottom: 60px;
+}
+
+/* About specific */
+.about {
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
+/* Summary */
+.summary {
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+
+/* Skills */
+.skills {
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+
+/* Offer */
+.offer {
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
+/* Contact */
+.contact {
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+
+/* Mobile padding */
+@media (max-width: 768px) {
+  .hero, .about, .summary, .skills, .offer, .contact {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero, .about, .summary, .skills, .offer, .contact {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}
+
+  
 }

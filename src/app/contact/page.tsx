@@ -1,7 +1,5 @@
 "use client";
 
-import Header from "../../../components/Header";
-import Footer from "../../../components/Footer";
 import "./style.css";
 import { useState, FormEvent } from "react";
 
@@ -44,8 +42,6 @@ export default function ContactPage() {
 
   return (
     <>
-      <Header />
-
       <main className="contact-page">
         <section className="contact-hero">
           <h1>Contact</h1>
@@ -98,8 +94,6 @@ export default function ContactPage() {
           {status && <p className="form-status">{status}</p>}
         </section>
       </main>
-
-      <Footer />
     </>
   );
 }

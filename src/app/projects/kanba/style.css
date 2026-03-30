@@ -1,4 +1,44 @@
-/* Reset */
+/* ==================== GLOBAL MOBILE FIXES ==================== */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Container fixes for all pages */
+.project-container,
+.projects-grid,
+.design-page,
+.websites-grid,
+.contact-container,
+.projects-page,
+.websites-page,
+.contact-page,
+.design-container,
+.kanba-container {
+  max-width: 100%;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+
+img, video {
+  max-width: 100%;
+  height: auto;
+}
+
+
+.grid-container,
+.offer-grid,
+.features-grid {
+  max-width: 100%;
+  overflow-x: hidden;
+}
 * {
   margin: 0;
   padding: 0;

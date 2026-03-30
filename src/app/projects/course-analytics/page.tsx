@@ -1,29 +1,34 @@
-'use client'
+'use client';
 
-import { useEffect, useState } from 'react'
-import './style.css'
-import Header from '../../../../components/Header'
-import Footer from '../../../../components/Footer'
+import { useEffect, useState } from 'react';
+import './style.css';
 
 export default function CourseAnalyticsProject() {
-  const [isDark, setIsDark] = useState(false)
+  const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
     const checkDarkMode = () => {
-      const isDarkMode = document.documentElement.classList.contains('dark') ||
-                         document.body.classList.contains('dark') ||
-                         window.matchMedia('(prefers-color-scheme: dark)').matches
-      setIsDark(isDarkMode)
-    }
+      // Check if body has dark class
+      const isDarkMode = document.body.classList.contains('dark');
+      setIsDark(isDarkMode);
+    };
 
-    checkDarkMode()
+    // Initial check
+    checkDarkMode();
 
-    const observer = new MutationObserver(checkDarkMode)
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
-    observer.observe(document.body, { attributes: true, attributeFilter: ['class'] })
+    // Create observer to watch for class changes on body
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'class') {
+          checkDarkMode();
+        }
+      });
+    });
 
-    return () => observer.disconnect()
-  }, [])
+    observer.observe(document.body, { attributes: true });
+
+    return () => observer.disconnect();
+  }, []);
 
   const screenshots = [
     {
@@ -54,101 +59,95 @@ export default function CourseAnalyticsProject() {
       tag: 'Results & Insights',
       tagClass: 'project-tag-results'
     },
-  ]
+  ];
 
   const features = [
     { title: 'Interactive Charts', description: 'Real-time data visualization with Recharts that updates instantly when new responses are submitted.' },
     { title: 'Local Storage', description: 'Persistent data storage using browser\'s localStorage - no backend required, works offline.' },
     { title: 'Fully Responsive', description: 'Optimized for all devices - desktop, tablet, and mobile with a seamless experience.' },
     { title: 'Modern Design', description: 'Clean UI with Tailwind CSS, dark mode support, and smooth animations.' },
-  ]
+  ];
 
   const techStack = [
     'Next.js 14', 'TypeScript', 'Tailwind CSS', 'React Query',
     'Recharts', 'Framer Motion', 'React Hook Form', 'LocalStorage API'
-  ]
+  ];
 
   return (
-    <>
-      <Header />
+    <div className={`project-page ${isDark ? 'dark' : ''}`}>
+      {/* Hero Section */}
+      <section className="project-hero">
+        <div className="project-container">
+          <h1>Course Platform Analytics</h1>
+          <p>A full-stack survey platform for collecting and visualizing student preferences for BCIT course platforms</p>
+          <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+            <a href="https://github.com/mahsakhakpour/course-platform-analytics" target="_blank" rel="noopener noreferrer" className="project-btn project-btn-primary">
+              View Source Code
+            </a>
+            <a href="https://course-analytics.vercel.app" target="_blank" rel="noopener noreferrer" className="project-btn project-btn-secondary">
+              Live Demo
+            </a>
+          </div>
+        </div>
+      </section>
 
-      <div className={`project-page ${isDark ? 'dark' : ''}`}>
-        {/* Hero Section */}
-        <section className="project-hero">
-          <div className="project-container">
-            <h1>Course Platform Analytics</h1>
-            <p>A full-stack survey platform for collecting and visualizing student preferences for BCIT course platforms</p>
-            <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-              <a href="https://github.com/mahsakhakpour/course-platform-analytics" target="_blank" rel="noopener noreferrer" className="project-btn project-btn-primary">
-                View Source Code
+      <div className="project-container">
+        {/* Features Section */}
+        <section>
+          <h2 className="project-section-title">Key <span>Features</span></h2>
+          <div className="project-features">
+            {features.map((feature, index) => (
+              <div key={index} className="project-feature-card">
+                <h3>{feature.title}</h3>
+                <p>{feature.description}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Screenshots Section */}
+        <section>
+          <h2 className="project-section-title">Project <span>Walkthrough</span></h2>
+          {screenshots.map((screenshot, index) => (
+            <div key={index} className={`project-screenshot-item ${index % 2 === 1 ? 'reverse' : ''}`}>
+              <div className="project-screenshot-image">
+                <img src={screenshot.src} alt={screenshot.title} />
+              </div>
+              <div className="project-screenshot-content">
+                <h3>{screenshot.title}</h3>
+                <p>{screenshot.description}</p>
+                <span className={`project-tag ${screenshot.tagClass}`}>{screenshot.tag}</span>
+              </div>
+            </div>
+          ))}
+        </section>
+
+        {/* Tech Stack Section */}
+        <section>
+          <h2 className="project-section-title">Technologies <span>Used</span></h2>
+          <div className="project-tech-stack">
+            {techStack.map((tech, index) => (
+              <span key={index} className="project-tech-item">{tech}</span>
+            ))}
+          </div>
+        </section>
+
+        {/* Links Section */}
+        <section>
+          <div className="project-links">
+            <h2>Ready to Explore?</h2>
+            <p>Check out the complete source code on GitHub or try the live demo.</p>
+            <div className="project-buttons">
+              <a href="https://github.com/mahsakhakpour/course-platform-analytics" target="_blank" rel="noopener noreferrer" className="project-btn project-btn-dark">
+                Source Code
               </a>
-              <a href="https://course-analytics.vercel.app" target="_blank" rel="noopener noreferrer" className="project-btn project-btn-secondary">
-                Live Demo
+              <a href="https://github.com/mahsakhakpour/course-platform-analytics/blob/main/README.md" target="_blank" rel="noopener noreferrer" className="project-btn project-btn-outline">
+                Documentation
               </a>
             </div>
           </div>
         </section>
-
-        <div className="project-container">
-          {/* Features Section */}
-          <section>
-            <h2 className="project-section-title">Key <span>Features</span></h2>
-            <div className="project-features">
-              {features.map((feature, index) => (
-                <div key={index} className="project-feature-card">
-                  <h3>{feature.title}</h3>
-                  <p>{feature.description}</p>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* Screenshots Section */}
-          <section>
-            <h2 className="project-section-title">Project <span>Walkthrough</span></h2>
-            {screenshots.map((screenshot, index) => (
-              <div key={index} className={`project-screenshot-item ${index % 2 === 1 ? 'reverse' : ''}`}>
-                <div className="project-screenshot-image">
-                  <img src={screenshot.src} alt={screenshot.title} />
-                </div>
-                <div className="project-screenshot-content">
-                  <h3>{screenshot.title}</h3>
-                  <p>{screenshot.description}</p>
-                  <span className={`project-tag ${screenshot.tagClass}`}>{screenshot.tag}</span>
-                </div>
-              </div>
-            ))}
-          </section>
-
-          {/* Tech Stack Section */}
-          <section>
-            <h2 className="project-section-title">Technologies <span>Used</span></h2>
-            <div className="project-tech-stack">
-              {techStack.map((tech, index) => (
-                <span key={index} className="project-tech-item">{tech}</span>
-              ))}
-            </div>
-          </section>
-
-          {/* Links Section */}
-          <section>
-            <div className="project-links">
-              <h2>Ready to Explore?</h2>
-              <p>Check out the complete source code on GitHub or try the live demo.</p>
-              <div className="project-buttons">
-                <a href="https://github.com/mahsakhakpour/course-platform-analytics" target="_blank" rel="noopener noreferrer" className="project-btn project-btn-dark">
-                  Source Code
-                </a>
-                <a href="https://github.com/mahsakhakpour/course-platform-analytics/blob/main/README.md" target="_blank" rel="noopener noreferrer" className="project-btn project-btn-outline">
-                  Documentation
-                </a>
-              </div>
-            </div>
-          </section>
-        </div>
       </div>
-
-      <Footer />
-    </>
-  )
+    </div>
+  );
 }

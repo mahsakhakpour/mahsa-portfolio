@@ -1,60 +1,84 @@
-/* ==================== RESET ==================== */
+/* ==================== GLOBAL MOBILE FIXES ==================== */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* ==================== LIGHT MODE (DEFAULT) ==================== */
+/* Container fixes for all pages */
+.websites-page,
+.websites-grid,
+.project-container,
+.projects-grid,
+.design-page,
+.contact-container {
+  max-width: 100%;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* Fix for all images and media */
+img, video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Light mode */
 :root {
   --bg-primary: #ffffff;
   --bg-secondary: #f8f9fa;
-  --bg-gradient-start: #f0fafa;
-  --bg-gradient-end: #e0f2f2;
+  --bg-gradient-start: #f9fafb;
+  --bg-gradient-end: #f0fdf4;
   --text-primary: #1a2b3c;
   --text-secondary: #5a7a7a;
-  --accent: #0a3a3a;
-  --accent-light: #1a5a5a;
+  --accent: #10b981;
+  --accent-light: #34d399;
   --border-color: rgba(0,0,0,0.1);
   --shadow: rgba(0,0,0,0.1);
   --card-bg: #ffffff;
-  --card-text: #0a3a3a;
-  --card-hover-bg: linear-gradient(135deg, #ffffff 0%, #f8fcfc 100%);
-  --underline-gradient: linear-gradient(90deg, #0a3a3a, #1a5a5a);
-  --title-gradient: linear-gradient(135deg, #0a3a3a 0%, #1a5a5a 100%);
+  --card-text: #10b981;
+  --card-hover-bg: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
+  --underline-gradient: linear-gradient(90deg, #10b981, #34d399);
+  --title-gradient: linear-gradient(135deg, #10b981 0%, #34d399 100%);
 }
 
-/* ==================== DARK MODE ==================== */
+/* Dark mode */
 body.dark {
-  --bg-primary: #0a2a28;
-  --bg-secondary: #0e3a38;
-  --bg-gradient-start: #0e3a38;
-  --bg-gradient-end: #0a2a28;
-  --text-primary: #e8f0f0;
-  --text-secondary: #c0d0d0;
-  --accent: #ffffff;
-  --accent-light: #e0f2f2;
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-gradient-start: #0f172a;
+  --bg-gradient-end: #1e293b;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --accent: #10b981;
+  --accent-light: #34d399;
   --border-color: rgba(255,255,255,0.1);
-  --shadow: rgba(0,0,0,0.3);
-  --card-bg: #1a4d4a;
-  --card-text: white;
-  --card-hover-bg: linear-gradient(135deg, #2a6b68 0%, #1a4d4a 100%);
-  --underline-gradient: linear-gradient(90deg, #ffffff, #e0f2f2);
+  --shadow: rgba(0,0,0,0.4);
+  --card-bg: #1e293b;
+  --card-text: #10b981;
+  --card-hover-bg: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  --underline-gradient: linear-gradient(90deg, #10b981, #34d399);
   --title-gradient: linear-gradient(135deg, #ffffff 0%, #e0f2f2 100%);
 }
 
-/* ==================== WEBSITES PAGE STYLES ==================== */
+/* Website page style */
 .websites-page {
   min-height: 100vh;
   background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
   padding: 80px 20px;
   text-align: center;
   position: relative;
-  overflow: hidden;
-  transition: background 0.3s ease;
+  overflow-x: hidden;
 }
 
-/* Optional: Add subtle decorative elements */
+/* Subtle decorative elements */
 .websites-page::before {
   content: '';
   position: absolute;
@@ -62,15 +86,14 @@ body.dark {
   right: -50%;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle, rgba(255,215,0,0.03) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(16,185,129,0.03) 0%, transparent 70%);
   pointer-events: none;
 }
 
 .page-title {
-  font-size: 3.2rem;
-  margin-bottom: 50px;
-  color: var(--accent);
+  font-size: 3.5rem;
   font-weight: 800;
+  margin-bottom: 48px;
   letter-spacing: -1px;
   line-height: 1.2;
   background: var(--title-gradient);
@@ -82,10 +105,17 @@ body.dark {
   z-index: 2;
 }
 
+/* Dark mode title */
+body.dark .page-title {
+  -webkit-text-fill-color: white;
+  background: none;
+  color: white;
+}
+
 .page-title::after {
   content: '';
   position: absolute;
-  bottom: -10px;
+  bottom: -12px;
   left: 50%;
   transform: translateX(-50%);
   width: 80px;
@@ -107,6 +137,38 @@ body.dark {
   z-index: 2;
 }
 
+/* Responsive grid - fix for mobile */
+@media (max-width: 768px) {
+  .websites-grid {
+    grid-template-columns: repeat(3, 90px);
+    gap: 25px;
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .websites-grid {
+    grid-template-columns: repeat(2, 80px);
+    gap: 20px;
+    padding: 12px;
+  }
+}
+
+@media (max-width: 380px) {
+  .websites-grid {
+    grid-template-columns: repeat(2, 70px);
+    gap: 15px;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 320px) {
+  .websites-grid {
+    grid-template-columns: repeat(2, 65px);
+    gap: 12px;
+  }
+}
+
 .website-card {
   display: flex;
   justify-content: center;
@@ -125,6 +187,57 @@ body.dark {
   position: relative;
   overflow: hidden;
   backdrop-filter: blur(10px);
+}
+
+/* Responsive card sizes */
+@media (max-width: 768px) {
+  .website-card {
+    width: 90px;
+    height: 90px;
+    font-size: 1.8rem;
+    border-radius: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .website-card {
+    width: 80px;
+    height: 80px;
+    font-size: 1.6rem;
+    border-radius: 18px;
+  }
+}
+
+@media (max-width: 380px) {
+  .website-card {
+    width: 70px;
+    height: 70px;
+    font-size: 1.4rem;
+    border-radius: 16px;
+  }
+}
+
+@media (max-width: 320px) {
+  .website-card {
+    width: 65px;
+    height: 65px;
+    font-size: 1.2rem;
+    border-radius: 14px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .website-card {
+    width: 120px;
+    height: 120px;
+    font-size: 2.2rem;
+    border-radius: 28px;
+  }
+  
+  .websites-grid {
+    max-width: 1000px;
+    gap: 50px;
+  }
 }
 
 .website-card::before {
@@ -166,9 +279,10 @@ body.dark {
   box-shadow: 0 25px 40px -15px var(--shadow);
   border-color: var(--accent);
   background: var(--card-hover-bg);
+  color: var(--accent);
 }
 
-/* Empty State */
+/* Empty state */
 .empty-state {
   text-align: center;
   padding: 60px 20px;
@@ -180,8 +294,6 @@ body.dark {
   margin-bottom: 20px;
 }
 
-/* ==================== RESPONSIVE MEDIA QUERIES ==================== */
-
 /* Tablet (768px and below) */
 @media (max-width: 768px) {
   .websites-page {
@@ -192,102 +304,39 @@ body.dark {
     font-size: 2.5rem;
     margin-bottom: 40px;
   }
-  
-  .websites-grid {
-    grid-template-columns: repeat(3, 90px);
-    gap: 25px;
-  }
-  
-  .website-card {
-    width: 90px;
-    height: 90px;
-    font-size: 1.8rem;
-    border-radius: 20px;
-  }
 }
 
 /* Mobile (480px and below) */
 @media (max-width: 480px) {
   .websites-page {
-    padding: 50px 12px;
+    padding: 48px 16px;
   }
   
   .page-title {
     font-size: 2rem;
-    margin-bottom: 30px;
-  }
-  
-  .websites-grid {
-    grid-template-columns: repeat(2, 80px);
-    gap: 20px;
-  }
-  
-  .website-card {
-    width: 80px;
-    height: 80px;
-    font-size: 1.6rem;
-    border-radius: 18px;
+    margin-bottom: 32px;
   }
 }
 
 /* Small Mobile (380px and below) */
 @media (max-width: 380px) {
   .websites-page {
-    padding: 40px 10px;
+    padding: 40px 12px;
   }
   
   .page-title {
-    font-size: 1.8rem;
-    margin-bottom: 25px;
+    font-size: 1.75rem;
+    margin-bottom: 28px;
   }
   
   .page-title::after {
     width: 60px;
     bottom: -8px;
   }
-  
-  .websites-grid {
-    grid-template-columns: repeat(2, 70px);
-    gap: 15px;
-  }
-  
-  .website-card {
-    width: 70px;
-    height: 70px;
-    font-size: 1.4rem;
-    border-radius: 16px;
-  }
-}
-
-/* Extra Small Mobile (320px and below) */
-@media (max-width: 320px) {
-  .websites-grid {
-    grid-template-columns: repeat(2, 65px);
-    gap: 12px;
-  }
-  
-  .website-card {
-    width: 65px;
-    height: 65px;
-    font-size: 1.2rem;
-    border-radius: 14px;
-  }
 }
 
 /* Large Desktop (1200px and above) */
 @media (min-width: 1200px) {
-  .websites-grid {
-    max-width: 1000px;
-    gap: 50px;
-  }
-  
-  .website-card {
-    width: 120px;
-    height: 120px;
-    font-size: 2.2rem;
-    border-radius: 28px;
-  }
-  
   .page-title {
     font-size: 3.5rem;
   }

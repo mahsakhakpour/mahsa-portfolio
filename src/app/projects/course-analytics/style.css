@@ -1,6 +1,44 @@
-/* Course Analytics Project Page Styles - Green & Emerald Theme */
-/* این استایل‌ها فقط برای صفحه پروژه هست و با بقیه سایت تداخل نداره */
+/* ==================== GLOBAL MOBILE FIXES ==================== */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
 
+* {
+  box-sizing: border-box;
+}
+
+/* Container fixes for all pages */
+.project-container,
+.projects-grid,
+.design-page,
+.websites-grid,
+.contact-container,
+.projects-page,
+.websites-page,
+.contact-page,
+.design-container,
+.kanba-container {
+  max-width: 100%;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+
+img, video {
+  max-width: 100%;
+  height: auto;
+}
+
+
+.grid-container,
+.offer-grid,
+.features-grid {
+  max-width: 100%;
+  overflow-x: hidden;
+}
 .project-page {
   --project-bg-primary: #f9fafb;
   --project-bg-secondary: #ffffff;
@@ -14,7 +52,8 @@
   --project-card-bg: #ffffff;
 }
 
-.project-page.dark {
+.project-page.dark,
+body.dark .project-page {
   --project-bg-primary: #0f172a;
   --project-bg-secondary: #1e293b;
   --project-text-primary: #f1f5f9;
@@ -31,7 +70,7 @@
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
 }
 
-/* Hero Section - Gradient from Dark to Emerald */
+/* Hero Section */
 .project-hero {
   background: linear-gradient(135deg, #0f172a 0%, #10b981 100%);
   color: white;
@@ -184,7 +223,7 @@
   line-height: 1.6;
 }
 
-/* Screenshot Items - اصلاح شده برای عکس‌های مستطیلی */
+/* Items */
 .project-screenshot-item {
   display: flex;
   gap: 48px;
@@ -282,22 +321,26 @@
   color: #065f46;
 }
 
-.project-page.dark .project-tag-start {
+.project-page.dark .project-tag-start,
+body.dark .project-page .project-tag-start {
   background: #065f46;
   color: #d1fae5;
 }
 
-.project-page.dark .project-tag-analytics {
+.project-page.dark .project-tag-analytics,
+body.dark .project-page .project-tag-analytics {
   background: #065f46;
   color: #d1fae5;
 }
 
-.project-page.dark .project-tag-input {
+.project-page.dark .project-tag-input,
+body.dark .project-page .project-tag-input {
   background: #065f46;
   color: #d1fae5;
 }
 
-.project-page.dark .project-tag-results {
+.project-page.dark .project-tag-results,
+body.dark .project-page .project-tag-results {
   background: #065f46;
   color: #d1fae5;
 }
