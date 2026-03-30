@@ -18,16 +18,17 @@ export default function Header() {
     }
   }, []);
 
-  // Body scroll lock when mobile menu is open
   useEffect(() => {
     if (mobileMenuOpen) {
       document.body.classList.add("menu-open");
+      document.body.style.overflow = "hidden";
     } else {
       document.body.classList.remove("menu-open");
+      document.body.style.overflow = "";
     }
-    
     return () => {
       document.body.classList.remove("menu-open");
+      document.body.style.overflow = "";
     };
   }, [mobileMenuOpen]);
 
@@ -43,6 +44,10 @@ export default function Header() {
     }
   };
 
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
   const closeMobileMenu = () => {
     setMobileMenuOpen(false);
     setDropdownOpen(false);
@@ -55,20 +60,15 @@ export default function Header() {
         <span className={styles.siteName}>Mahsa Khakpour</span>
       </div>
 
-      {/* Mobile Hamburger */}
       <button
         className={styles.mobileToggle}
-        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        onClick={toggleMobileMenu}
         aria-label="Toggle menu"
       >
         {mobileMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
       </button>
 
-      <nav
-        className={`${styles.navBar} ${
-          mobileMenuOpen ? styles.navBarMobileActive : ""
-        }`}
-      >
+      <nav className={`${styles.navBar} ${mobileMenuOpen ? styles.navBarMobileActive : ""}`}>
         <Link href="/" className={styles.navItem} onClick={closeMobileMenu}>
           About
         </Link>
@@ -87,7 +87,7 @@ export default function Header() {
                 Projects
               </Link>
               <Link href="/my-designs" className={styles.dropdownLink} onClick={closeMobileMenu}>
-                My Designs
+                Designs
               </Link>
               <Link href="/websites" className={styles.dropdownLink} onClick={closeMobileMenu}>
                 Websites

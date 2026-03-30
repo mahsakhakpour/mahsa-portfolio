@@ -29,13 +29,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         style={{
-          maxWidth: "100%",
-          overflowX: "hidden",
           margin: 0,
           padding: 0,
+          overflowX: "hidden",
+          width: "100%",
         }}
       >
         <ThemeProvider 
@@ -49,8 +52,6 @@ export default function RootLayout({
             width: "100%",
             maxWidth: "100%",
             overflowX: "hidden",
-            margin: 0,
-            padding: 0,
           }}>
             {children}
           </main>

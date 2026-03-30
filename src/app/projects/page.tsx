@@ -33,7 +33,6 @@ export default function ProjectsPage() {
   return (
     <main className="projects-page">
       <h1 className="projects-title">Project Samples</h1>
-
       <p className="projects-subtitle">
         Here are some project samples. Please click on each to see details:
       </p>
