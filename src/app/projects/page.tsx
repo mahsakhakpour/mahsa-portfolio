@@ -22,7 +22,7 @@ export default function ProjectsPage() {
     },
     {
       title: "interiYOUR",
-      image: "/interiYOUR/interiYOUR.png",
+      image: "/interiYour/interiYOUR.png",
       link: "/InteriYOUR-Design_Final-Project.pdf"
     },
 
