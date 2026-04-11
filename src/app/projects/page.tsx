@@ -15,11 +15,7 @@ export default function ProjectsPage() {
       image: "/course output Screenshot.png",
       link: "/projects/course-analytics"
     },
-    {
-      title: "MCCP",
-      image: "/MCCP/MCCP.png",
-      link: "/projects/MCCP"
-    },
+
     {
       title: "interiYOUR",
       image: "/interiYour/interiYOUR.png",
