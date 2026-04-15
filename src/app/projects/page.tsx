@@ -25,9 +25,6 @@ export default function ProjectsPage() {
       image: "/interiYour/interiYOUR.png",
       link: "/InteriYOUR-Design_Final-Project.pdf"
     },
-
-
-  
   ];
 
   return (
