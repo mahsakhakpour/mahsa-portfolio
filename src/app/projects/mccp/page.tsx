@@ -70,30 +70,7 @@ export default function MCCPPage() {
   const [hotspots, setHotspots] = useState<HotspotsResponse | null>(null);
   const [insights, setInsights] = useState<InsightsResponse | null>(null);
   const [activeTab, setActiveTab] = useState<string>('results');
-  const [isLightMode, setIsLightMode] = useState<boolean>(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  // Detect theme from website
-  useEffect(() => {
-    const detectTheme = () => {
-      // Check for light mode on html, body, or any parent element
-      const isLight = document.documentElement.classList.contains('light') ||
-                     document.body.classList.contains('light') ||
-                     document.documentElement.getAttribute('data-theme') === 'light' ||
-                     document.body.getAttribute('data-theme') === 'light' ||
-                     (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches);
-      setIsLightMode(isLight);
-    };
-    
-    detectTheme();
-    
-    // Listen for theme changes
-    const observer = new MutationObserver(detectTheme);
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class', 'data-theme'] });
-    observer.observe(document.body, { attributes: true, attributeFilter: ['class', 'data-theme'] });
-    
-    return () => observer.disconnect();
-  }, []);
 
   const parsePoints = (pointsText: string): Point[] => {
     const lines = pointsText.trim().split('\n');
@@ -199,15 +176,42 @@ export default function MCCPPage() {
       const suggestions = suggestAIParameters(pointsArray);
       setAiSuggestions(suggestions);
       
-      setEps(suggestions.suggested_eps.toString());
-      setMinSamples(suggestions.suggested_min_samples.toString());
-      setRadius(suggestions.suggested_radius.toString());
-      
       setActiveTab('ai');
     } catch (err: any) {
       setError(err.message);
     } finally {
       setLoadingAI(false);
+    }
+  };
+
+  // Apply a single parameter and re-run the algorithm
+  const applyAndRun = async (param: string, value: number) => {
+    if (param === 'eps') {
+      setEps(value.toString());
+    } else if (param === 'minSamples') {
+      setMinSamples(value.toString());
+    } else if (param === 'radius') {
+      setRadius(value.toString());
+    }
+    
+    // Small delay to ensure state updates
+    setTimeout(() => {
+      const fakeEvent = { preventDefault: () => {} } as React.FormEvent;
+      handleSubmit(fakeEvent);
+    }, 50);
+  };
+
+  // Apply all parameters and re-run the algorithm
+  const applyAllAndRun = async () => {
+    if (aiSuggestions) {
+      setEps(aiSuggestions.suggested_eps.toString());
+      setMinSamples(aiSuggestions.suggested_min_samples.toString());
+      setRadius(aiSuggestions.suggested_radius.toString());
+      
+      setTimeout(() => {
+        const fakeEvent = { preventDefault: () => {} } as React.FormEvent;
+        handleSubmit(fakeEvent);
+      }, 50);
     }
   };
 
@@ -223,7 +227,7 @@ export default function MCCPPage() {
       }
       
       if (pointsArray.length < 3) {
-        throw new Error("Need at least 3 points");
+        throw new Error("Need at least 3 points for hotspot detection");
       }
       
       const hotspotsResult = predictHotspots(pointsArray, parseFloat(radius));
@@ -294,7 +298,6 @@ export default function MCCPPage() {
     setPoints(randomPoints.join('\n'));
   };
 
-  // Draw visualization
   useEffect(() => {
     if (!result || !result.best_center || !canvasRef.current) return;
 
@@ -305,8 +308,7 @@ export default function MCCPPage() {
     const width = canvas.width;
     const height = canvas.height;
 
-    // Use theme-aware background color
-    ctx.fillStyle = isLightMode ? '#f5f5f5' : '#0a0e27';
+    ctx.fillStyle = '#0a0e27';
     ctx.fillRect(0, 0, width, height);
 
     let pointsArray: Point[];
@@ -346,8 +348,7 @@ export default function MCCPPage() {
     const transformX = (x: number) => padding + (x - minX) * scaleX;
     const transformY = (y: number) => height - padding - (y - minY) * scaleY;
 
-    // Draw grid
-    ctx.strokeStyle = isLightMode ? 'rgba(0, 0, 0, 0.1)' : 'rgba(255, 215, 0, 0.2)';
+    ctx.strokeStyle = 'rgba(255, 215, 0, 0.2)';
     ctx.lineWidth = 1;
     for (let i = 0; i <= 10; i++) {
       const x = minX + (i / 10) * (maxX - minX);
@@ -362,7 +363,6 @@ export default function MCCPPage() {
       ctx.stroke();
     }
 
-    // Draw Brute Force Circle
     if (bruteCenter) {
       const bruteCenterX = transformX(bruteCenter[0]);
       const bruteCenterY = transformY(bruteCenter[1]);
@@ -378,17 +378,16 @@ export default function MCCPPage() {
       
       ctx.fillStyle = '#22c55e';
       ctx.font = '14px monospace';
-      ctx.fillText(`Optimal: ${result.brute_force_count} pts`, bruteCenterX - 45, bruteCenterY - 10);
+      ctx.fillText(`Brute: ${result.brute_force_count} pts`, bruteCenterX - 45, bruteCenterY - 10);
     }
 
-    // Draw Sliding Circle
     const slidingCenterX = transformX(slidingCenter[0]);
     const slidingCenterY = transformY(slidingCenter[1]);
     const slidingRadiusPx = circleRadius * scaleX;
     
     ctx.beginPath();
     ctx.arc(slidingCenterX, slidingCenterY, slidingRadiusPx, 0, 2 * Math.PI);
-    ctx.fillStyle = isLightMode ? 'rgba(100, 100, 200, 0.1)' : 'rgba(184, 198, 255, 0.1)';
+    ctx.fillStyle = 'rgba(184, 198, 255, 0.1)';
     ctx.fill();
     ctx.strokeStyle = '#ffd700';
     ctx.lineWidth = 3;
@@ -403,7 +402,6 @@ export default function MCCPPage() {
     ctx.font = '14px monospace';
     ctx.fillText(`Sliding: ${result.max_count} pts`, slidingCenterX - 40, slidingCenterY - 20);
 
-    // Draw points
     const clusterColors = ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899', '#06b6d4'];
     
     pointsArray.forEach((point, idx) => {
@@ -411,7 +409,7 @@ export default function MCCPPage() {
       const y = transformY(point.y);
       const isInside = Math.sqrt(Math.pow(point.x - slidingCenter[0], 2) + Math.pow(point.y - slidingCenter[1], 2)) <= circleRadius;
       
-      let pointColor = isLightMode ? '#9ca3af' : '#6b7280';
+      let pointColor = '#6b7280';
       if (result.cluster_labels && result.cluster_labels[idx] !== -1 && result.cluster_labels[idx] !== undefined) {
         pointColor = clusterColors[result.cluster_labels[idx] % clusterColors.length];
       }
@@ -421,18 +419,18 @@ export default function MCCPPage() {
       ctx.arc(x, y, 7, 0, 2 * Math.PI);
       ctx.fillStyle = pointColor;
       ctx.fill();
-      ctx.strokeStyle = isLightMode ? '#333333' : '#ffffff';
+      ctx.strokeStyle = '#ffffff';
       ctx.lineWidth = 2;
       ctx.stroke();
     });
 
     ctx.fillStyle = '#ffd700';
-    ctx.font = 'bold 12px monospace';
+    ctx.font = 'bold 14px monospace';
     ctx.fillText('Yellow Circle = Sliding Circle Result | Green Dashed = Optimal Solution', 20, 35);
-  }, [result, points, radius, isLightMode]);
+  }, [result, points, radius]);
 
   return (
-    <div className={`mccp-container ${isLightMode ? 'light' : 'dark'}`}>
+    <div className="mccp-container">
       {/* Hero Section */}
       <div className="hero-section">
         <div className="hero-content">
@@ -509,47 +507,6 @@ export default function MCCPPage() {
           <video id="modalVideo" controls style={{ display: 'none' }}>
             <source src="" type="video/mp4" />
           </video>
-        </div>
-      </div>
-
-      {/* How It Works */}
-      <div className="how-it-works">
-        <h2>How It Works</h2>
-        <div className="simple-grid">
-          <div className="simple-card">
-            <div className="step-num">1</div>
-            <h3>Group Nearby Points</h3>
-            <p>The algorithm first identifies dense clusters of points using DBSCAN, ignoring sparse areas.</p>
-          </div>
-          <div className="simple-card">
-            <div className="step-num">2</div>
-            <h3>Find Best Circle</h3>
-            <p>Inside each cluster, it slides a circle to find the position that covers the most points.</p>
-          </div>
-          <div className="simple-card">
-            <div className="step-num">3</div>
-            <h3>Verify Accuracy</h3>
-            <p>Results are compared with brute force to confirm 96-99% accuracy at 99% faster speed.</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Built With */}
-      <div className="tech-stack-simple">
-        <h2>Built With</h2>
-        <div className="simple-grid">
-          <div className="simple-card">
-            <h3>Frontend</h3>
-            <p>Next.js + TypeScript for interactive visualization</p>
-          </div>
-          <div className="simple-card">
-            <h3>Backend</h3>
-            <p>Python + FastAPI for high-performance algorithms</p>
-          </div>
-          <div className="simple-card">
-            <h3>AI Features</h3>
-            <p>Smart parameter suggestions, dense area detection, data insights</p>
-          </div>
         </div>
       </div>
 
@@ -634,6 +591,11 @@ export default function MCCPPage() {
       {activeTab === 'results' && result && (
         <div className="results-section">
           <h2>Results</h2>
+          
+          <div className="visualization">
+            <canvas ref={canvasRef} width={750} height={500} />
+          </div>
+
           <div className="results-grid">
             <div className="result-card">
               <h3>Points Covered</h3>
@@ -657,10 +619,6 @@ export default function MCCPPage() {
             </div>
           </div>
 
-          <div className="visualization">
-            <canvas ref={canvasRef} width={750} height={500} />
-          </div>
-
           <div className="info-box">
             <p><strong>Circle Center:</strong> ({result.best_center[0].toFixed(2)}, {result.best_center[1].toFixed(2)})</p>
             <p><strong>Time:</strong> {result.sliding_time.toFixed(4)} seconds vs {result.brute_force_time.toFixed(4)} seconds for brute force</p>
@@ -676,39 +634,54 @@ export default function MCCPPage() {
             <div className="result-card">
               <h3>Recommended eps</h3>
               <div className="result-value">{aiSuggestions.suggested_eps}</div>
-              <button className="btn-use" onClick={() => setEps(aiSuggestions.suggested_eps.toString())}>Apply</button>
+              <button className="btn-use" onClick={() => applyAndRun('eps', aiSuggestions.suggested_eps)}>
+                Apply & Run
+              </button>
             </div>
             <div className="result-card">
               <h3>Recommended minPts</h3>
               <div className="result-value">{aiSuggestions.suggested_min_samples}</div>
-              <button className="btn-use" onClick={() => setMinSamples(aiSuggestions.suggested_min_samples.toString())}>Apply</button>
+              <button className="btn-use" onClick={() => applyAndRun('minSamples', aiSuggestions.suggested_min_samples)}>
+                Apply & Run
+              </button>
             </div>
             <div className="result-card">
               <h3>Recommended Radius</h3>
               <div className="result-value">{aiSuggestions.suggested_radius}</div>
-              <button className="btn-use" onClick={() => setRadius(aiSuggestions.suggested_radius.toString())}>Apply</button>
+              <button className="btn-use" onClick={() => applyAndRun('radius', aiSuggestions.suggested_radius)}>
+                Apply & Run
+              </button>
             </div>
           </div>
+          
+          <div style={{ textAlign: 'center', marginBottom: '24px' }}>
+            <button className="btn-primary" onClick={applyAllAndRun} style={{ width: 'auto', padding: '12px 30px' }}>
+              Apply All & Run Algorithm
+            </button>
+          </div>
+          
           <div className="info-box">
             <p><strong>Why these values?</strong> {aiSuggestions.reasoning}</p>
+            <p><strong>Data Density:</strong> {aiSuggestions.density} points per unit area</p>
             <p><strong>Confidence:</strong> {(aiSuggestions.confidence * 100).toFixed(0)}%</p>
+            <p><strong>Analysis:</strong> {aiSuggestions.message}</p>
           </div>
         </div>
       )}
 
-      {/* Dense Areas Tab */}
+      {/* Hotspots Tab */}
       {activeTab === 'hotspots' && hotspots && (
         <div className="ai-section">
-          <h2>Dense Areas</h2>
+          <h2>Dense Areas Detected</h2>
           <p className="section-subtitle">{hotspots.message}</p>
           <div className="hotspots-list">
             {hotspots.hotspots.map((spot, idx) => (
               <div key={idx} className="hotspot-card">
                 <div className={`hotspot-priority ${spot.priority}`}>
-                  {spot.priority === 'high' ? 'High Density' : 'Medium Density'} - Area {idx + 1}
+                  {spot.priority === 'high' ? 'High Density Area' : 'Medium Density Area'} - Location {idx + 1}
                 </div>
                 <div className="hotspot-location">
-                  Center: ({spot.center[0].toFixed(2)}, {spot.center[1].toFixed(2)})
+                  Coordinates: ({spot.center[0].toFixed(2)}, {spot.center[1].toFixed(2)})
                 </div>
                 <div className="hotspot-coverage">
                   Estimated Points: {spot.potential_coverage}
@@ -717,7 +690,7 @@ export default function MCCPPage() {
             ))}
           </div>
           <div className="info-box">
-            <p><strong>Use case:</strong> These are the best locations for placing service centers, stores, or facilities.</p>
+            <p><strong>Use case:</strong> These are the best locations for placing service centers or cell towers.</p>
           </div>
         </div>
       )}
@@ -745,6 +718,47 @@ export default function MCCPPage() {
           )}
         </div>
       )}
+
+      {/* How It Works Section */}
+      <div className="how-it-works">
+        <h2>How It Works</h2>
+        <div className="simple-grid">
+          <div className="simple-card">
+            <div className="step-num">1</div>
+            <h3>Group Nearby Points</h3>
+            <p>The algorithm first identifies dense clusters of points using DBSCAN, ignoring sparse areas.</p>
+          </div>
+          <div className="simple-card">
+            <div className="step-num">2</div>
+            <h3>Find Best Circle</h3>
+            <p>Inside each cluster, it slides a circle to find the position that covers the most points.</p>
+          </div>
+          <div className="simple-card">
+            <div className="step-num">3</div>
+            <h3>Verify Accuracy</h3>
+            <p>Results are compared with brute force to confirm 96-99% accuracy at 99% faster speed.</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Built With Section */}
+      <div className="tech-stack-simple">
+        <h2>Built With</h2>
+        <div className="simple-grid">
+          <div className="simple-card">
+            <h3>Frontend</h3>
+            <p>Next.js + TypeScript for interactive visualization</p>
+          </div>
+          <div className="simple-card">
+            <h3>Backend</h3>
+            <p>Python + FastAPI for high-performance algorithms</p>
+          </div>
+          <div className="simple-card">
+            <h3>AI Features</h3>
+            <p>Smart parameter suggestions, dense area detection, data insights</p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
