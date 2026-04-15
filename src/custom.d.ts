@@ -1,6 +1,6 @@
-// src/declarations.d.ts
+// src/custom.d.ts
 declare module '*.css' {
-  const content: any;
+  const content: { [key: string]: string };
   export default content;
 }
 
