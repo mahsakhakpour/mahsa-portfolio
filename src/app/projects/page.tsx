@@ -17,8 +17,8 @@ export default function ProjectsPage() {
     },
     {
       title: "MCCP",
-      image: "/MCCP/MCCP.png",
-      link: "/projects/MCCP"
+      image: "/MCCP/MCCPposter.png",
+      link: "/projects/mccp"
     },
     {
       title: "interiYOUR",
