@@ -62,8 +62,8 @@ export function slidingCircleAlgorithm(
     (a, b) => b[1].length - a[1].length
   );
   
-  // Fixed: Removed unused underscore variable
-  for (const [, cpoints] of sortedClusters) {
+  
+ for (const cpoints of sortedClusters.map(([, points]) => points)) {
     const currentPoints = cpoints;
     
     if (currentPoints.length < maxCount) continue;

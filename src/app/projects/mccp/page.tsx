@@ -57,7 +57,6 @@ interface InsightsResponse {
   };
 }
 
-// Custom error type
 interface ErrorWithMessage {
   message: string;
   response?: {
@@ -80,6 +79,7 @@ export default function MCCPPage() {
   const [hotspots, setHotspots] = useState<HotspotsResponse | null>(null);
   const [insights, setInsights] = useState<InsightsResponse | null>(null);
   const [activeTab, setActiveTab] = useState<string>('results');
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(true);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const parsePoints = (pointsText: string): Point[] => {
@@ -93,6 +93,54 @@ export default function MCCPPage() {
   const pointsToArray = (pointsObj: Point[]): number[][] => {
     return pointsObj.map(p => [p.x, p.y]);
   };
+
+  // Listen for theme changes from the header - with immediate response
+  useEffect(() => {
+    const checkTheme = () => {
+      const isDark = document.body.classList.contains('dark');
+      setIsDarkMode(isDark);
+      // Also force apply to any elements that need it
+      if (isDark) {
+        document.documentElement.style.colorScheme = 'dark';
+      } else {
+        document.documentElement.style.colorScheme = 'light';
+      }
+    };
+    
+    // Initial check immediately
+    checkTheme();
+    
+    // Also check on every animation frame for the first second (to catch initial theme)
+    let frames = 0;
+    const interval = setInterval(() => {
+      checkTheme();
+      frames++;
+      if (frames > 60) clearInterval(interval);
+    }, 16);
+    
+    // Create a mutation observer to watch for class changes on body
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'class') {
+          checkTheme();
+        }
+      });
+    });
+    
+    observer.observe(document.body, { attributes: true });
+    
+    // Also listen for click events on the theme toggle button
+    const handleDocumentClick = () => {
+      setTimeout(checkTheme, 10);
+    };
+    document.addEventListener('click', handleDocumentClick);
+    
+    return () => {
+      observer.disconnect();
+      clearInterval(interval);
+      document.removeEventListener('click', handleDocumentClick);
+    };
+  }, []);
 
   const openModal = (src: string, type: string) => {
     const modal = document.getElementById('imageModal');
@@ -122,13 +170,6 @@ export default function MCCPPage() {
       modal.classList.remove('active');
       if (modalVideo) modalVideo.pause();
     }
-  };
-
-  const getErrorMessage = (err: ErrorWithMessage): string => {
-    if (err.response?.data?.detail) {
-      return err.response.data.detail;
-    }
-    return err.message;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -292,6 +333,7 @@ export default function MCCPPage() {
     setPoints(randomPoints.join('\n'));
   };
 
+  // Draw visualization - depends on isDarkMode
   useEffect(() => {
     if (!result || !result.best_center || !canvasRef.current) return;
 
@@ -302,7 +344,10 @@ export default function MCCPPage() {
     const width = canvas.width;
     const height = canvas.height;
 
-    ctx.fillStyle = '#0a0e27';
+    // Use dark/light mode based on body class
+    const isLight = !isDarkMode;
+    
+    ctx.fillStyle = isLight ? '#f8f9fa' : '#0a0e27';
     ctx.fillRect(0, 0, width, height);
 
     let pointsArray: Point[];
@@ -342,7 +387,8 @@ export default function MCCPPage() {
     const transformX = (x: number) => padding + (x - minX) * scaleX;
     const transformY = (y: number) => height - padding - (y - minY) * scaleY;
 
-    ctx.strokeStyle = 'rgba(255, 215, 0, 0.2)';
+    // Draw grid
+    ctx.strokeStyle = isLight ? 'rgba(0, 0, 0, 0.1)' : 'rgba(255, 215, 0, 0.2)';
     ctx.lineWidth = 1;
     for (let i = 0; i <= 10; i++) {
       const x = minX + (i / 10) * (maxX - minX);
@@ -381,7 +427,7 @@ export default function MCCPPage() {
     
     ctx.beginPath();
     ctx.arc(slidingCenterX, slidingCenterY, slidingRadiusPx, 0, 2 * Math.PI);
-    ctx.fillStyle = 'rgba(184, 198, 255, 0.1)';
+    ctx.fillStyle = isLight ? 'rgba(170, 59, 255, 0.1)' : 'rgba(184, 198, 255, 0.1)';
     ctx.fill();
     ctx.strokeStyle = '#ffd700';
     ctx.lineWidth = 3;
@@ -403,11 +449,11 @@ export default function MCCPPage() {
       const y = transformY(point.y);
       const isInside = Math.sqrt(Math.pow(point.x - slidingCenter[0], 2) + Math.pow(point.y - slidingCenter[1], 2)) <= circleRadius;
       
-      let pointColor = '#6b7280';
+      let pointColor = isLight ? '#6c757d' : '#6b7280';
       if (result.cluster_labels && result.cluster_labels[idx] !== -1 && result.cluster_labels[idx] !== undefined) {
         pointColor = clusterColors[result.cluster_labels[idx] % clusterColors.length];
       }
-      if (isInside) pointColor = '#b8c6ff';
+      if (isInside) pointColor = isLight ? '#aa3bff' : '#b8c6ff';
       
       ctx.beginPath();
       ctx.arc(x, y, 7, 0, 2 * Math.PI);
@@ -421,20 +467,20 @@ export default function MCCPPage() {
     ctx.fillStyle = '#ffd700';
     ctx.font = 'bold 14px monospace';
     ctx.fillText('Yellow Circle = Sliding Circle Result | Green Dashed = Optimal Solution', 20, 35);
-  }, [result, points, radius]);
+  }, [result, points, radius, isDarkMode]);
 
   return (
-    <div className="mccp-container">
+    <div className={`mccp-container ${isDarkMode ? 'dark-theme' : 'light-theme'}`}>
       {/* Hero Section */}
       <div className="hero-section">
         <div className="hero-content">
           <h1>Maximum Circular Coverage Problem</h1>
           <p className="hero-description">
-            The <strong>Sliding Circle Algorithm</strong> finds the best location for a fixed-radius circle to cover the maximum 
+            The Sliding Circle Algorithm finds the best location for a fixed-radius circle to cover the maximum 
             number of points in 2D space. This two-phase hybrid algorithm combines DBSCAN clustering with sliding optimization, 
             making it 99.5% faster than traditional methods while maintaining 96-99% accuracy.
             <br /><br />
-            Built as a <strong>full-stack application</strong> with Next.js, TypeScript, Python, and FastAPI. The <strong>AI layer</strong> 
+            Built as a full-stack application with Next.js, TypeScript, Python, and FastAPI. The AI layer 
             recommends optimal parameters, predicts coverage, finds dense areas, and provides real-time insights.
           </p>
           <div className="hero-tags">
@@ -584,17 +630,15 @@ export default function MCCPPage() {
         </div>
       )}
 
-      {/* Results Tab - Visualization FIRST, then Results Cards UNDERNEATH */}
+      {/* Results Tab */}
       {activeTab === 'results' && result && (
         <div className="results-section">
           <h2>Results</h2>
           
-          {/* Visualization - This appears FIRST */}
           <div className="visualization">
             <canvas ref={canvasRef} width={750} height={500} />
           </div>
 
-          {/* Results Cards - These appear UNDERNEATH the visualization */}
           <div className="results-grid">
             <div className="result-card">
               <h3>Points Covered</h3>
@@ -653,7 +697,7 @@ export default function MCCPPage() {
         </div>
       )}
 
-      {/* Hotspots Tab - Dense Areas */}
+      {/* Hotspots Tab */}
       {activeTab === 'hotspots' && hotspots && (
         <div className="ai-section">
           <h2>Dense Areas Detected</h2>
@@ -703,7 +747,7 @@ export default function MCCPPage() {
         </div>
       )}
 
-      {/* How It Works Section - Bottom */}
+      {/* How It Works Section */}
       <div className="how-it-works">
         <h2>How It Works</h2>
         <div className="simple-grid">
@@ -725,7 +769,7 @@ export default function MCCPPage() {
         </div>
       </div>
 
-      {/* Built With Section - Bottom */}
+      {/* Built With Section */}
       <div className="tech-stack-simple">
         <h2>Built With</h2>
         <div className="simple-grid">
@@ -743,6 +787,7 @@ export default function MCCPPage() {
           </div>
         </div>
       </div>
+
     </div>
   );
 }
