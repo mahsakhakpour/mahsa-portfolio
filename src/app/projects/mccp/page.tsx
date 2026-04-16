@@ -57,6 +57,16 @@ interface InsightsResponse {
   };
 }
 
+// Custom error type
+interface ErrorWithMessage {
+  message: string;
+  response?: {
+    data?: {
+      detail?: string;
+    };
+  };
+}
+
 export default function MCCPPage() {
   const [points, setPoints] = useState<string>('');
   const [eps, setEps] = useState<string>('2.0');
@@ -114,6 +124,13 @@ export default function MCCPPage() {
     }
   };
 
+  const getErrorMessage = (err: ErrorWithMessage): string => {
+    if (err.response?.data?.detail) {
+      return err.response.data.detail;
+    }
+    return err.message;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -151,8 +168,9 @@ export default function MCCPPage() {
         cluster_labels: mccpResult.clusterLabels
       });
       setActiveTab('results');
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      const error = err as ErrorWithMessage;
+      setError(error.message);
     } finally {
       setLoading(false);
     }
@@ -176,42 +194,16 @@ export default function MCCPPage() {
       const suggestions = suggestAIParameters(pointsArray);
       setAiSuggestions(suggestions);
       
+      setEps(suggestions.suggested_eps.toString());
+      setMinSamples(suggestions.suggested_min_samples.toString());
+      setRadius(suggestions.suggested_radius.toString());
+      
       setActiveTab('ai');
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      const error = err as ErrorWithMessage;
+      setError(error.message);
     } finally {
       setLoadingAI(false);
-    }
-  };
-
-  // Apply a single parameter and re-run the algorithm
-  const applyAndRun = async (param: string, value: number) => {
-    if (param === 'eps') {
-      setEps(value.toString());
-    } else if (param === 'minSamples') {
-      setMinSamples(value.toString());
-    } else if (param === 'radius') {
-      setRadius(value.toString());
-    }
-    
-    // Small delay to ensure state updates
-    setTimeout(() => {
-      const fakeEvent = { preventDefault: () => {} } as React.FormEvent;
-      handleSubmit(fakeEvent);
-    }, 50);
-  };
-
-  // Apply all parameters and re-run the algorithm
-  const applyAllAndRun = async () => {
-    if (aiSuggestions) {
-      setEps(aiSuggestions.suggested_eps.toString());
-      setMinSamples(aiSuggestions.suggested_min_samples.toString());
-      setRadius(aiSuggestions.suggested_radius.toString());
-      
-      setTimeout(() => {
-        const fakeEvent = { preventDefault: () => {} } as React.FormEvent;
-        handleSubmit(fakeEvent);
-      }, 50);
     }
   };
 
@@ -233,8 +225,9 @@ export default function MCCPPage() {
       const hotspotsResult = predictHotspots(pointsArray, parseFloat(radius));
       setHotspots(hotspotsResult);
       setActiveTab('hotspots');
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      const error = err as ErrorWithMessage;
+      setError(error.message);
     } finally {
       setLoadingAI(false);
     }
@@ -263,8 +256,9 @@ export default function MCCPPage() {
       );
       setInsights(insightsResult);
       setActiveTab('insights');
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      const error = err as ErrorWithMessage;
+      setError(error.message);
     } finally {
       setLoadingAI(false);
     }
@@ -319,7 +313,7 @@ export default function MCCPPage() {
         const rawPoints = JSON.parse(points) as number[][];
         pointsArray = rawPoints.map(p => ({ x: p[0], y: p[1] }));
       }
-    } catch(e) {
+    } catch {
       return;
     }
 
@@ -460,6 +454,7 @@ export default function MCCPPage() {
         <div className="media-card">
           <div className="media-title">Research Poster</div>
           <div className="media-content">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img 
               src="/mccp/MCCPposter.png" 
               alt="MCCP Research Poster"
@@ -488,6 +483,7 @@ export default function MCCPPage() {
         <div className="media-card">
           <div className="media-title">Algorithm Flowchart</div>
           <div className="media-content">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img 
               src="/mccp/chart.png" 
               alt="MCCP Algorithm Flowchart"
@@ -503,6 +499,7 @@ export default function MCCPPage() {
       <div id="imageModal" className="modal" onClick={closeModal}>
         <span className="close-modal" onClick={closeModal}>&times;</span>
         <div className="modal-content">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img id="modalImage" src="" alt="" style={{ display: 'none' }} />
           <video id="modalVideo" controls style={{ display: 'none' }}>
             <source src="" type="video/mp4" />
@@ -587,15 +584,17 @@ export default function MCCPPage() {
         </div>
       )}
 
-      {/* Results Tab */}
+      {/* Results Tab - Visualization FIRST, then Results Cards UNDERNEATH */}
       {activeTab === 'results' && result && (
         <div className="results-section">
           <h2>Results</h2>
           
+          {/* Visualization - This appears FIRST */}
           <div className="visualization">
             <canvas ref={canvasRef} width={750} height={500} />
           </div>
 
+          {/* Results Cards - These appear UNDERNEATH the visualization */}
           <div className="results-grid">
             <div className="result-card">
               <h3>Points Covered</h3>
@@ -634,42 +633,27 @@ export default function MCCPPage() {
             <div className="result-card">
               <h3>Recommended eps</h3>
               <div className="result-value">{aiSuggestions.suggested_eps}</div>
-              <button className="btn-use" onClick={() => applyAndRun('eps', aiSuggestions.suggested_eps)}>
-                Apply & Run
-              </button>
+              <button className="btn-use" onClick={() => setEps(aiSuggestions.suggested_eps.toString())}>Apply</button>
             </div>
             <div className="result-card">
               <h3>Recommended minPts</h3>
               <div className="result-value">{aiSuggestions.suggested_min_samples}</div>
-              <button className="btn-use" onClick={() => applyAndRun('minSamples', aiSuggestions.suggested_min_samples)}>
-                Apply & Run
-              </button>
+              <button className="btn-use" onClick={() => setMinSamples(aiSuggestions.suggested_min_samples.toString())}>Apply</button>
             </div>
             <div className="result-card">
               <h3>Recommended Radius</h3>
               <div className="result-value">{aiSuggestions.suggested_radius}</div>
-              <button className="btn-use" onClick={() => applyAndRun('radius', aiSuggestions.suggested_radius)}>
-                Apply & Run
-              </button>
+              <button className="btn-use" onClick={() => setRadius(aiSuggestions.suggested_radius.toString())}>Apply</button>
             </div>
           </div>
-          
-          <div style={{ textAlign: 'center', marginBottom: '24px' }}>
-            <button className="btn-primary" onClick={applyAllAndRun} style={{ width: 'auto', padding: '12px 30px' }}>
-              Apply All & Run Algorithm
-            </button>
-          </div>
-          
           <div className="info-box">
             <p><strong>Why these values?</strong> {aiSuggestions.reasoning}</p>
-            <p><strong>Data Density:</strong> {aiSuggestions.density} points per unit area</p>
             <p><strong>Confidence:</strong> {(aiSuggestions.confidence * 100).toFixed(0)}%</p>
-            <p><strong>Analysis:</strong> {aiSuggestions.message}</p>
           </div>
         </div>
       )}
 
-      {/* Hotspots Tab */}
+      {/* Hotspots Tab - Dense Areas */}
       {activeTab === 'hotspots' && hotspots && (
         <div className="ai-section">
           <h2>Dense Areas Detected</h2>
@@ -719,7 +703,7 @@ export default function MCCPPage() {
         </div>
       )}
 
-      {/* How It Works Section */}
+      {/* How It Works Section - Bottom */}
       <div className="how-it-works">
         <h2>How It Works</h2>
         <div className="simple-grid">
@@ -741,7 +725,7 @@ export default function MCCPPage() {
         </div>
       </div>
 
-      {/* Built With Section */}
+      {/* Built With Section - Bottom */}
       <div className="tech-stack-simple">
         <h2>Built With</h2>
         <div className="simple-grid">

@@ -62,7 +62,8 @@ export function slidingCircleAlgorithm(
     (a, b) => b[1].length - a[1].length
   );
   
-  for (const [_, cpoints] of sortedClusters) {
+  // Fixed: Removed unused underscore variable
+  for (const [, cpoints] of sortedClusters) {
     const currentPoints = cpoints;
     
     if (currentPoints.length < maxCount) continue;
@@ -302,7 +303,6 @@ export function predictHotspots(points: number[][], radius: number): {
   };
 }
 
-// THIS IS THE FIXED FUNCTION - It now accepts 4 parameters
 export function getDataInsights(
   points: number[][], 
   eps: number, 
@@ -387,7 +387,7 @@ export function runMCCP(
   accuracyPercentage: number;
   clusterLabels: number[];
 } {
-  const startTime = performance.now();
+  // Removed unused startTime variable
   
   const clusterLabels = dbscan(points, eps, minSamples);
   
