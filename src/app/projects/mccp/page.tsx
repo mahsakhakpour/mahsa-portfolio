@@ -481,53 +481,55 @@ export default function MCCPPage() {
       </div>
 
       {/* Media Gallery */}
-      <div className="media-gallery">
-        {/* Poster Image */}
-        <div className="media-card">
-          <div className="media-title">Research Poster</div>
-          <div className="media-content">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img 
-              src="/MCCP/MCCPposter.png" 
-              alt="MCCP Research Poster"
-              className="media-image"
-              onClick={() => openModal('/MCCP/MCCPposter.png', 'image')}
-            />
-            <div className="media-caption">Algorithm overview and results</div>
-          </div>
-        </div>
+<div className="media-gallery">
+  {/* Poster Image */}
+  <div className="media-card">
+    <div className="media-title">Research Poster</div>
+    <div className="media-content">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img 
+        src="/mccp/MCCPposter.png" 
+        alt="MCCP Research Poster"
+        className="media-image"
+        onClick={() => openModal('/mccp/MCCPposter.png', 'image')}
+      />
+      <div className="media-caption">Algorithm overview and results</div>
+    </div>
+  </div>
 
-        {/* Video Explanation */}
-        <div className="media-card">
-          <div className="media-title">Algorithm Explanation</div>
-          <div className="media-content">
-            <video 
-              controls
-              className="media-video"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <source src="/mccp/MCCPvideo.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-            <div className="media-caption">How the Sliding Circle works</div>
-          </div>
-        </div>
+  {/* Video Explanation */}
+  <div className="media-card">
+    <div className="media-title">Algorithm Explanation</div>
+    <div className="media-content">
+      <video 
+  controls
+  className="media-video"
+  onClick={(e) => e.stopPropagation()}
+>
+  <source src="/mccp/MCCPvideo.mp4" type="video/mp4" />
+  <source src="/mccp/MCCPvideo.webm" type="video/webm" />
+  <source src="/mccp/MCCPvideo.ogg" type="video/ogg" />
+  Your browser does not support the video tag.
+</video>
+      <div className="media-caption">How the Sliding Circle works</div>
+    </div>
+  </div>
 
-        {/* Flowchart */}
-        <div className="media-card">
-          <div className="media-title">Algorithm Flowchart</div>
-          <div className="media-content">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img 
-              src="/mccp/chart.png" 
-              alt="MCCP Algorithm Flowchart"
-              className="media-image"
-              onClick={() => openModal('/mccp/chart.png', 'image')}
-            />
-            <div className="media-caption">Step-by-step workflow</div>
-          </div>
-        </div>
-      </div>
+  {/* Flowchart */}
+  <div className="media-card">
+    <div className="media-title">Algorithm Flowchart</div>
+    <div className="media-content">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img 
+        src="/mccp/chart.png" 
+        alt="MCCP Algorithm Flowchart"
+        className="media-image"
+        onClick={() => openModal('/mccp/chart.png', 'image')}
+      />
+      <div className="media-caption">Step-by-step workflow</div>
+    </div>
+  </div>
+</div>
 
       {/* Modal */}
       <div id="imageModal" className="modal" onClick={closeModal}>
