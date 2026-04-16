@@ -1,16 +1,16 @@
-/* Light Mode Colors (default) - White background + Navy accents */
+/* Light Mode Colors (default) - White background + Navy Blue accents */
 :root {
   --bg-primary: #ffffff;
   --bg-card: #f8f9fa;
   --bg-input: #ffffff;
   --text-primary: #0a0e27;
-  --text-secondary: #1a1a2e;
+  --text-secondary: #1a2a4a;
   --border-color: #e5e4e7;
   --card-bg: #ffffff;
   
-  /* Light mode accents - Navy blue (same as dark mode background) */
+  /* Light mode accents - Navy blue */
   --accent-primary: #0a0e27;
-  --accent-secondary: #1a2a4a;
+  --accent-secondary: #2027a8;
   --accent-purple: #2027a8;
   --accent-purple-light: #b0b1df;
   
@@ -23,7 +23,7 @@
   --mono: 'Fira Code', 'JetBrains Mono', monospace;
 }
 
-/* Dark Mode - Navy background + Yellow accents (unchanged) */
+/* Dark Mode - Navy background + Yellow accents */
 body.dark {
   --bg-primary: linear-gradient(135deg, #0a0e27 0%, #0f1535 50%, #151d45 100%);
   --bg-card: rgba(15, 21, 53, 0.8);

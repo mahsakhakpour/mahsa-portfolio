@@ -94,12 +94,11 @@ export default function MCCPPage() {
     return pointsObj.map(p => [p.x, p.y]);
   };
 
-  // Listen for theme changes from the header - with immediate response
+  // Listen for theme changes from the header
   useEffect(() => {
     const checkTheme = () => {
       const isDark = document.body.classList.contains('dark');
       setIsDarkMode(isDark);
-      // Also force apply to any elements that need it
       if (isDark) {
         document.documentElement.style.colorScheme = 'dark';
       } else {
@@ -107,18 +106,8 @@ export default function MCCPPage() {
       }
     };
     
-    // Initial check immediately
     checkTheme();
     
-    // Also check on every animation frame for the first second (to catch initial theme)
-    let frames = 0;
-    const interval = setInterval(() => {
-      checkTheme();
-      frames++;
-      if (frames > 60) clearInterval(interval);
-    }, 16);
-    
-    // Create a mutation observer to watch for class changes on body
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         if (mutation.attributeName === 'class') {
@@ -129,7 +118,6 @@ export default function MCCPPage() {
     
     observer.observe(document.body, { attributes: true });
     
-    // Also listen for click events on the theme toggle button
     const handleDocumentClick = () => {
       setTimeout(checkTheme, 10);
     };
@@ -137,7 +125,6 @@ export default function MCCPPage() {
     
     return () => {
       observer.disconnect();
-      clearInterval(interval);
       document.removeEventListener('click', handleDocumentClick);
     };
   }, []);
@@ -333,7 +320,7 @@ export default function MCCPPage() {
     setPoints(randomPoints.join('\n'));
   };
 
-  // Draw visualization - depends on isDarkMode
+  // Draw visualization
   useEffect(() => {
     if (!result || !result.best_center || !canvasRef.current) return;
 
@@ -344,7 +331,6 @@ export default function MCCPPage() {
     const width = canvas.width;
     const height = canvas.height;
 
-    // Use dark/light mode based on body class
     const isLight = !isDarkMode;
     
     ctx.fillStyle = isLight ? '#f8f9fa' : '#0a0e27';
@@ -387,7 +373,6 @@ export default function MCCPPage() {
     const transformX = (x: number) => padding + (x - minX) * scaleX;
     const transformY = (y: number) => height - padding - (y - minY) * scaleY;
 
-    // Draw grid
     ctx.strokeStyle = isLight ? 'rgba(0, 0, 0, 0.1)' : 'rgba(255, 215, 0, 0.2)';
     ctx.lineWidth = 1;
     for (let i = 0; i <= 10; i++) {
@@ -427,18 +412,18 @@ export default function MCCPPage() {
     
     ctx.beginPath();
     ctx.arc(slidingCenterX, slidingCenterY, slidingRadiusPx, 0, 2 * Math.PI);
-    ctx.fillStyle = isLight ? 'rgba(170, 59, 255, 0.1)' : 'rgba(184, 198, 255, 0.1)';
+    ctx.fillStyle = isLight ? 'rgba(32, 39, 168, 0.1)' : 'rgba(184, 198, 255, 0.1)';
     ctx.fill();
-    ctx.strokeStyle = '#ffd700';
+    ctx.strokeStyle = isLight ? '#0a0e27' : '#ffd700';
     ctx.lineWidth = 3;
     ctx.setLineDash([]);
     ctx.stroke();
 
-    ctx.fillStyle = '#ffd700';
+    ctx.fillStyle = isLight ? '#0a0e27' : '#ffd700';
     ctx.font = 'bold 22px monospace';
     ctx.fillText('×', slidingCenterX - 7, slidingCenterY + 8);
     
-    ctx.fillStyle = '#ffd700';
+    ctx.fillStyle = isLight ? '#0a0e27' : '#ffd700';
     ctx.font = '14px monospace';
     ctx.fillText(`Sliding: ${result.max_count} pts`, slidingCenterX - 40, slidingCenterY - 20);
 
@@ -453,7 +438,7 @@ export default function MCCPPage() {
       if (result.cluster_labels && result.cluster_labels[idx] !== -1 && result.cluster_labels[idx] !== undefined) {
         pointColor = clusterColors[result.cluster_labels[idx] % clusterColors.length];
       }
-      if (isInside) pointColor = isLight ? '#aa3bff' : '#b8c6ff';
+      if (isInside) pointColor = isLight ? '#2027a8' : '#b8c6ff';
       
       ctx.beginPath();
       ctx.arc(x, y, 7, 0, 2 * Math.PI);
@@ -464,7 +449,7 @@ export default function MCCPPage() {
       ctx.stroke();
     });
 
-    ctx.fillStyle = '#ffd700';
+    ctx.fillStyle = isLight ? '#0a0e27' : '#ffd700';
     ctx.font = 'bold 14px monospace';
     ctx.fillText('Yellow Circle = Sliding Circle Result | Green Dashed = Optimal Solution', 20, 35);
   }, [result, points, radius, isDarkMode]);
@@ -476,11 +461,11 @@ export default function MCCPPage() {
         <div className="hero-content">
           <h1>Maximum Circular Coverage Problem</h1>
           <p className="hero-description">
-            The Sliding Circle Algorithm finds the best location for a fixed-radius circle to cover the maximum 
+            The <strong>Sliding Circle Algorithm</strong> finds the best location for a fixed-radius circle to cover the maximum 
             number of points in 2D space. This two-phase hybrid algorithm combines DBSCAN clustering with sliding optimization, 
             making it 99.5% faster than traditional methods while maintaining 96-99% accuracy.
             <br /><br />
-            Built as a full-stack application with Next.js, TypeScript, Python, and FastAPI. The AI layer 
+            Built as a <strong>full-stack application</strong> with Next.js, TypeScript, Python, and FastAPI. The <strong>AI layer</strong> 
             recommends optimal parameters, predicts coverage, finds dense areas, and provides real-time insights.
           </p>
           <div className="hero-tags">
@@ -497,6 +482,7 @@ export default function MCCPPage() {
 
       {/* Media Gallery */}
       <div className="media-gallery">
+        {/* Poster Image */}
         <div className="media-card">
           <div className="media-title">Research Poster</div>
           <div className="media-content">
@@ -511,6 +497,7 @@ export default function MCCPPage() {
           </div>
         </div>
 
+        {/* Video Explanation */}
         <div className="media-card">
           <div className="media-title">Algorithm Explanation</div>
           <div className="media-content">
@@ -526,6 +513,7 @@ export default function MCCPPage() {
           </div>
         </div>
 
+        {/* Flowchart */}
         <div className="media-card">
           <div className="media-title">Algorithm Flowchart</div>
           <div className="media-content">
