@@ -502,10 +502,10 @@ export default function MCCPPage() {
           <div className="media-content">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img 
-              src="/mccp/MCCPposter.png" 
+              src="/MCCP/MCCPposter.png" 
               alt="MCCP Research Poster"
               className="media-image"
-              onClick={() => openModal('/mccp/MCCPposter.png', 'image')}
+              onClick={() => openModal('/MCCP/MCCPposter.png', 'image')}
             />
             <div className="media-caption">Algorithm overview and results</div>
           </div>
