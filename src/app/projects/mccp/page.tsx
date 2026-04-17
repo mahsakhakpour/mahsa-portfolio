@@ -461,11 +461,11 @@ export default function MCCPPage() {
         <div className="hero-content">
           <h1>Maximum Circular Coverage Problem</h1>
           <p className="hero-description">
-            The <strong>Sliding Circle Algorithm</strong> finds the best location for a fixed-radius circle to cover the maximum 
+            The Sliding Circle Algorithm finds the best location for a fixed-radius circle to cover the maximum 
             number of points in 2D space. This two-phase hybrid algorithm combines DBSCAN clustering with sliding optimization, 
             making it 99.5% faster than traditional methods while maintaining 96-99% accuracy.
             <br /><br />
-            Built as a <strong>full-stack application</strong> with Next.js, TypeScript, Python, and FastAPI. The <strong>AI layer</strong> 
+            Built as a full-stack application with Next.js, TypeScript, Python, and FastAPI. The AI layer 
             recommends optimal parameters, predicts coverage, finds dense areas, and provides real-time insights.
           </p>
           <div className="hero-tags">
