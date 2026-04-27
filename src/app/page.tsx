@@ -1,6 +1,7 @@
 "use client";
 
-import { FaCode, FaLaptopCode, FaPalette, FaChartLine, FaSearch } from "react-icons/fa";
+import { FaCode, FaLaptopCode, FaPalette, FaChartLine, FaSearch, FaGithub, FaLinkedin } from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
 import Chat from "../../components/Chat";
 
 export default function HomePage() {
@@ -30,8 +31,7 @@ export default function HomePage() {
             In the Digital World
           </h1>
           <p>
-            Front-end developer focused on creating structured, user-friendly
-            and modern web experiences.
+            Full-stack developer with a passion for front-end experiences and intuitive user interfaces.
           </p>
         </section>
 
@@ -43,32 +43,45 @@ export default function HomePage() {
             <div className="about-text">
               <h2>About Me</h2>
               <p>
-                I am a web developer who combines design and development to turn ideas into
-                functional, user-centered applications. From front-end interfaces to back-end
-                systems and databases, I apply technical skills, structured design, and careful
-                planning to deliver modern, responsive, and accessible digital experiences.
+                I am a full-stack web developer who thrives at the intersection of logic 
+                and creativity. While my technical foundation spans front-end interfaces, 
+                back-end systems, and database architecture, my true passion lies in 
+                crafting exceptional front-end experiences and intuitive user interfaces.
+              </p>
+              <p>
+                I am deeply driven by how users interact with technology — translating 
+                complex requirements into seamless, accessible, and human-centered digital 
+                journeys. My full-stack expertise allows me to bridge design and 
+                development, ensuring that every visual detail is supported by robust, 
+                scalable architecture.
+              </p>
+              <p>
+                I hold a Bachelor's degree in Computer-Software Engineering, an Associate 
+                Certificate in Web Development from the British Columbia Institute of 
+                Technology (BCIT), and a Master of Science in Computer Science from 
+                Northeastern University.
               </p>
             </div>
           </div>
         </section>
 
-        {/* Professional Summary */}
+        {/* Professional Summary - Improved */}
         <section className="summary">
           <h2>Professional Summary</h2>
           <p>
-            I approach projects with a balance of structure and flexibility,
-            focusing on clarity, maintainability, and long-term value.
+            I deliver clean, maintainable code with a focus on long-term value and user-centered design.
+            Every project receives structured planning, iterative development, and rigorous testing
+            to ensure performance, accessibility, and scalability across all devices and platforms.
           </p>
         </section>
 
-        {/* Skills */}
+        {/* Skills - No more duplicates */}
         <section className="skills" id="skills">
           <h2>Skills Overview</h2>
 
           <div className="skills-marquee">
             <div className="skills-track">
-
-              {skills.concat(skills).map((skill, idx) => (
+              {skills.map((skill, idx) => (
                 <div key={idx} className="skill-item">
                   <img
                     src={skill.file}
@@ -78,18 +91,15 @@ export default function HomePage() {
                   <span>{skill.name}</span>
                 </div>
               ))}
-
             </div>
           </div>
         </section>
 
         {/* What I Offer */}
         <section className="offer">
-
           <h2>What I Offer</h2>
 
           <div className="offer-grid">
-
             <div className="offer-card">
               <FaLaptopCode className="offer-icon" />
               <h3>Front-End Development</h3>
@@ -134,35 +144,33 @@ export default function HomePage() {
                 and improving visibility.
               </p>
             </div>
-
           </div>
-
         </section>
 
         {/* Contact */}
         <section className="contact" id="contact">
           <h2>Contact</h2>
-
           <p>
             If you&apos;d like to work together or have any questions:
           </p>
 
-        <a
-          href="https://mail.google.com/mail/?view=cm&fs=1&to=mahsa54@gmail.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="cta-button"
-        >
-          Send Email
-        </a>
-
+          <div className="contact-links">
+            <a
+              href="https://mail.google.com/mail/?view=cm&fs=1&to=mahsa54@gmail.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cta-button"
+            >
+              <MdEmail /> Send Email
+            </a>
+            
+            
+          </div>
         </section>
 
       </main>
       
-   
       <Chat />
-
     </>
   );
 }

@@ -26,23 +26,16 @@ html, body {
   width: 100%;
 }
 
-
 img, video {
   max-width: 100%;
   height: auto;
 }
-
 
 .grid-container,
 .offer-grid,
 .features-grid {
   max-width: 100%;
   overflow-x: hidden;
-}
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
 }
 
 body {
@@ -437,6 +430,9 @@ section:has(.tech-grid) {
   box-shadow: 0 8px 15px -5px var(--shadow);
   position: relative;
   overflow: hidden;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
 }
 
 .cta-button::before {
@@ -462,23 +458,24 @@ section:has(.tech-grid) {
   box-shadow: 0 15px 25px -5px var(--shadow);
 }
 
-/* Links */
+/* Links Section - No box, just centered buttons */
 .links {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  margin-top: 20px !important;
-  gap: 20px;
-  background: var(--offer-card-bg);
-  padding: 20px 30px;
-  border-radius: 60px;
-  box-shadow: 0 10px 25px -8px var(--shadow);
-  border: 1px solid var(--border-color);
+  margin-top: 60px !important;
+  margin-bottom: 20px !important;
+  background: transparent;
+  padding: 0;
+  box-shadow: none;
+  border: none;
 }
 
-.links div {
+.links .button-group {
   display: flex;
-  gap: 15px;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Responsive */
@@ -536,19 +533,19 @@ section:has(.tech-grid) {
   }
 
   .links {
-    flex-direction: column;
-    border-radius: 32px;
-    padding: 20px;
+    margin-top: 40px !important;
+    margin-bottom: 20px !important;
   }
   
-  .links div {
+  .links .button-group {
     width: 100%;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
   }
   
-  .cta-button {
+  .links .cta-button {
     width: 100%;
+    text-align: center;
   }
 
   .main-header {

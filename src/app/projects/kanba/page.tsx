@@ -108,10 +108,23 @@ export default function KanbaPage() {
       </section>
 
       <section className="section links">
-        <button className="cta-button">View Source Code</button>
-        <div>
-          <button className="cta-button">Front-End</button>
-          <button className="cta-button">Back-End</button>
+        <div className="button-group">
+          <a
+            href="https://github.com/mahsakhakpour/kanbas-react-web-app-webdevelopment"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="cta-button"
+          >
+            Front-End
+          </a>
+          <a
+            href="https://github.com/mahsakhakpour/kanbas-node-server-app"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="cta-button"
+          >
+            Back-End
+          </a>
         </div>
       </section>
     </div>
