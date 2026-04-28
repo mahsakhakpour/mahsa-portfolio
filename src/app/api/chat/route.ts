@@ -76,7 +76,6 @@ export async function POST(req: Request) {
     // Check if Groq API key exists
     if (!process.env.GROQ_API_KEY) {
       console.warn("GROQ_API_KEY not set, using fallback responses");
-      // Fallback responses when API key is missing
       const fallbackReply = getFallbackResponse(message);
       history.push({ role: 'assistant', content: fallbackReply });
       conversations.set(sessionId, history.slice(-10));
@@ -125,7 +124,7 @@ export async function POST(req: Request) {
     console.error('Chat API error:', error);
     
     const fallbackId = `conv_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
-    const fallbackReply = "Hi! I'm Mahsa's assistant. Feel free to ask about my skills in React, Next.js, web development, education, or projects like Kanba!";
+    const fallbackReply = getFallbackResponse("default");
     
     return NextResponse.json({ 
       reply: fallbackReply,
@@ -134,37 +133,80 @@ export async function POST(req: Request) {
   }
 }
 
-// Fallback responses when Groq API is not available
+// Comprehensive fallback responses when Groq API is not available
 function getFallbackResponse(message: string): string {
   const lowerMsg = message.toLowerCase();
   
-  if (lowerMsg.includes('skill') || lowerMsg.includes('technolog')) {
-    return "Mahsa's core skills include React, Next.js, TypeScript, Node.js, Express, MongoDB, PostgreSQL, Python, and Angular. She specializes in full-stack development with a passion for front-end!";
-  }
-  if (lowerMsg.includes('react')) {
-    return "Mahsa is highly proficient in React.js including hooks, context API, Redux, and React Router. She's built several full-stack applications with React.";
-  }
-  if (lowerMsg.includes('next')) {
-    return "Mahsa specializes in Next.js for server-side rendering, static site generation, and API routes. Her portfolio is built with Next.js 15!";
-  }
-  if (lowerMsg.includes('education') || lowerMsg.includes('degree')) {
-    return "Mahsa holds a Master's in Computer Science from Northeastern University, an Associate Certificate in Web Development from BCIT, and a Bachelor's in Computer-Software Engineering.";
-  }
-  if (lowerMsg.includes('experience')) {
-    return "Mahsa is a full-stack developer who bridges design and development. She has experience with front-end interfaces, back-end systems, and database architecture.";
-  }
-  if (lowerMsg.includes('kanba')) {
-    return "Kanba is Mahsa's comprehensive LMS built with React, Redux, Node.js, Express, and MongoDB. It features course management, assignments, gradebook, and multi-role support!";
-  }
-  if (lowerMsg.includes('project')) {
-    return "Mahsa's main projects include Kanba (LMS platform), MCCP (AI-powered coding platform), and this portfolio website. Check them out in the Portfolio dropdown!";
-  }
-  if (lowerMsg.includes('contact') || lowerMsg.includes('email')) {
-    return "You can email Mahsa at mahsa54@gmail.com or connect with her on GitHub and LinkedIn. Links are in the footer!";
-  }
-  if (lowerMsg.includes('hello') || lowerMsg.includes('hi')) {
+  // Greetings
+  if (lowerMsg.match(/^(hi|hello|hey|greetings|sup)/)) {
     return "Hello! I'm Mahsa's AI assistant. I can tell you about her skills, experience, education, projects, or how to contact her. What would you like to know?";
   }
   
-  return "Thanks for your question! Mahsa is a full-stack developer with a Master's in CS from Northeastern University. She specializes in React, Next.js, Node.js, and has a passion for front-end development and UX/UI. Feel free to ask about her skills, projects like Kanba, or experience!";
+  // Skills
+  if (lowerMsg.includes('skill') || lowerMsg.includes('technolog') || lowerMsg.includes('tech stack')) {
+    return "Mahsa's core skills include React, Next.js, TypeScript, Node.js, Express, MongoDB, PostgreSQL, Python, Angular, and PHP. She specializes in full-stack development with a passion for front-end and UX/UI!";
+  }
+  
+  // React
+  if (lowerMsg.includes('react')) {
+    return "Mahsa is highly proficient in React.js including hooks, context API, Redux, and React Router. She's built several full-stack applications including Kanba (LMS platform) with React!";
+  }
+  
+  // Next.js
+  if (lowerMsg.includes('next.js') || lowerMsg.includes('nextjs') || lowerMsg.includes('next')) {
+    return "Mahsa specializes in Next.js for server-side rendering, static site generation, API routes, and the App Router. Her portfolio is built with Next.js 15!";
+  }
+  
+  // Education
+  if (lowerMsg.includes('education') || lowerMsg.includes('degree') || lowerMsg.includes('study') || lowerMsg.includes('university')) {
+    return "Mahsa holds a Master's in Computer Science from Northeastern University, an Associate Certificate in Web Development from BCIT, and a Bachelor's in Computer-Software Engineering.";
+  }
+  
+  // Experience
+  if (lowerMsg.includes('experience') || lowerMsg.includes('background') || lowerMsg.includes('work')) {
+    return "Mahsa is a full-stack developer who bridges design and development. She has experience with front-end interfaces, back-end systems, database architecture, and creating user-centered digital experiences.";
+  }
+  
+  // Kanba project
+  if (lowerMsg.includes('kanba')) {
+    return "Kanba is Mahsa's comprehensive Learning Management System (LMS) built with React, Redux, Node.js, Express, and MongoDB. It features course management, assignments, gradebook, and multi-role support (students/faculty/admin)!";
+  }
+  
+  // MCCP project
+  if (lowerMsg.includes('mccp')) {
+    return "MCCP (Multi-modal Code Collaboration Platform) is an AI-powered coding platform Mahsa developed. It integrates multiple AI models for code assistance, real-time collaboration, and intelligent code review features.";
+  }
+  
+  // Projects general
+  if (lowerMsg.includes('project') || lowerMsg.includes('portfolio') || lowerMsg.includes('work')) {
+    return "Mahsa's main projects include:\n\n• Kanba - Full-stack LMS platform\n• MCCP - AI-powered coding platform\n• This portfolio website\n\nCheck them out in the Portfolio dropdown menu!";
+  }
+  
+  // Contact
+  if (lowerMsg.includes('contact') || lowerMsg.includes('email') || lowerMsg.includes('reach')) {
+    return "You can email Mahsa at mahsa54@gmail.com or connect with her on GitHub and LinkedIn. Links are in the footer of this website!";
+  }
+  
+  // GitHub
+  if (lowerMsg.includes('github')) {
+    return "Mahsa's GitHub is github.com/mahsakhakpour. Check out her repositories including Kanba LMS and MCCP!";
+  }
+  
+  // LinkedIn
+  if (lowerMsg.includes('linkedin')) {
+    return "Connect with Mahsa on LinkedIn at linkedin.com/in/mahsakhakpour";
+  }
+  
+  // About
+  if (lowerMsg.includes('about') || lowerMsg.includes('who is')) {
+    return "Mahsa Khakpour is a full-stack web developer who thrives at the intersection of logic and creativity. She has a Master's in CS from Northeastern and a passion for crafting exceptional front-end experiences!";
+  }
+  
+  // Passion
+  if (lowerMsg.includes('passion') || lowerMsg.includes('love')) {
+    return "Mahsa's true passion is front-end development and UX/UI design! While she's a full-stack developer, she loves creating intuitive, beautiful, and accessible user interfaces.";
+  }
+  
+  // Default response
+  return "Thanks for your question! Mahsa is a full-stack developer with a Master's in CS from Northeastern University. She specializes in React, Next.js, Node.js, and has a passion for front-end development and UX/UI. Feel free to ask about her skills, projects like Kanba, education, or how to contact her!";
 }
