@@ -5,40 +5,42 @@ const portfolioContext = `
 You are an AI assistant for Mahsa Khakpour's portfolio website. Be helpful and honest.
 
 About Mahsa:
-- Front-end and Full-stack developer who builds web applications
-- She focuses on creating user-friendly, functional digital experiences
-- Her work combines front-end development with back-end systems
-- Currently working with React, Next.js, TypeScript, Node.js, and Python
+- Full-stack web developer with a Master's in Computer Science from Northeastern University
+- Associate Certificate in Web Development from BCIT
+- Bachelor's degree in Computer-Software Engineering
+- Combines full-stack capabilities with a passion for front-end development and UX/UI design
+- Focuses on creating user-friendly, functional digital experiences
 
 Skills:
-- Frontend: HTML, CSS, JavaScript, React, Next.js, Angular
-- Backend: Node.js, Python, PHP
-- Databases: SQL, MongoDB
-- Also has experience with UI/UX design and business analysis
+- Frontend: React, Next.js, TypeScript, Angular, HTML5, CSS3, Tailwind CSS
+- Backend: Node.js, Express, Python, PHP
+- Databases: MongoDB, PostgreSQL, MySQL, SQL
+- Tools: Git, Redux, REST APIs, Vercel
 
 Projects:
-- Portfolio website - built with Next.js 15 and TypeScript
-- Various web applications (both front-end and full-stack)
+- Kanba: Full-stack Learning Management System (LMS) with React, Redux, Node.js, Express, MongoDB
+- MCCP: AI-powered coding platform with multi-model integration
+- Portfolio website: Built with Next.js 15, TypeScript, and modern CSS
+
+Education:
+- M.S. in Computer Science - Northeastern University
+- Associate Certificate in Web Development - BCIT
+- Bachelor's in Computer-Software Engineering
 
 Contact:
 - Email: mahsa54@gmail.com
+- GitHub: github.com/mahsakhakpour
+- LinkedIn: linkedin.com/in/mahsakhakpour
 
 Instructions:
-- Be helpful and straightforward
-- Don't over-praise - just state facts
-- If you don't know something, say: "I don't have that information"
-- Keep responses concise (1-3 sentences)
-- Be polite but natural, not overly enthusiastic
+- Be helpful and conversational
+- Keep responses concise (1-2 sentences if possible)
+- Be polite and natural
+- If asked about something not in this context, say politely that you don't have that information
 `;
 
-// Define type for conversation messages
-interface ConversationMessage {
-  role: 'user' | 'assistant';
-  content: string;
-}
-
 // Store conversation history
-const conversations = new Map<string, ConversationMessage[]>();
+const conversations = new Map<string, { role: string; content: string }[]>();
 
 export async function POST(req: Request) {
   try {
@@ -46,23 +48,18 @@ export async function POST(req: Request) {
     const { message, conversationId } = body;
 
     if (!message) {
-      return NextResponse.json(
-        { reply: 'Please say something!' }
-      );
+      return NextResponse.json({ reply: 'Please ask me something!' });
     }
 
-    console.log("Received message:", message);
-    console.log("Groq API Key exists:", !!process.env.GROQ_API_KEY);
-
     // Generate or use existing conversation ID
-    const sessionId: string = conversationId ? String(conversationId) : `conv_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
+    const sessionId = conversationId || `conv_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
     
     // Get or create conversation history
     if (!conversations.has(sessionId)) {
       conversations.set(sessionId, []);
     }
     
-    const history = conversations.get(sessionId) as ConversationMessage[];
+    const history = conversations.get(sessionId) || [];
     
     // Add user message to history
     history.push({ role: 'user', content: message });
@@ -76,9 +73,17 @@ export async function POST(req: Request) {
       }))
     ];
 
-    console.log("Sending request to Groq...");
+    // Check if Groq API key exists
+    if (!process.env.GROQ_API_KEY) {
+      console.warn("GROQ_API_KEY not set, using fallback responses");
+      // Fallback responses when API key is missing
+      const fallbackReply = getFallbackResponse(message);
+      history.push({ role: 'assistant', content: fallbackReply });
+      conversations.set(sessionId, history.slice(-10));
+      return NextResponse.json({ reply: fallbackReply, conversationId: sessionId });
+    }
 
-    // Direct API call to Groq (no SDK needed)
+    // Call Groq API
     const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -96,42 +101,70 @@ export async function POST(req: Request) {
     if (!response.ok) {
       const errorText = await response.text();
       console.error("Groq API error:", errorText);
-      throw new Error(`Groq API returned ${response.status}: ${errorText}`);
+      throw new Error(`Groq API returned ${response.status}`);
     }
 
     const result = await response.json();
     let reply = result.choices[0]?.message?.content || "";
-    console.log("Received response from Groq");
-
+    
     // Clean up the reply
     reply = reply.replace(/^Mahsa:/i, '').trim();
     reply = reply.replace(/^Assistant:/i, '').trim();
     
     if (!reply) {
-      reply = "I'm not sure how to answer that. Feel free to ask about my skills or projects!";
+      reply = getFallbackResponse(message);
     }
 
     // Add assistant response to history
     history.push({ role: 'assistant', content: reply });
-    
-    // Keep only last 10 exchanges
-    if (history.length > 10) {
-      conversations.set(sessionId, history.slice(-10));
-    }
+    conversations.set(sessionId, history.slice(-10));
 
-    return NextResponse.json({ 
-      reply,
-      conversationId: sessionId 
-    });
+    return NextResponse.json({ reply, conversationId: sessionId });
 
   } catch (error) {
-    console.error('Groq API error:', error);
+    console.error('Chat API error:', error);
     
     const fallbackId = `conv_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
+    const fallbackReply = "Hi! I'm Mahsa's assistant. Feel free to ask about my skills in React, Next.js, web development, education, or projects like Kanba!";
     
     return NextResponse.json({ 
-      reply: "Hi! I'm Mahsa's assistant. Feel free to ask about my skills in React, Next.js, or web development!",
+      reply: fallbackReply,
       conversationId: fallbackId
     });
   }
+}
+
+// Fallback responses when Groq API is not available
+function getFallbackResponse(message: string): string {
+  const lowerMsg = message.toLowerCase();
+  
+  if (lowerMsg.includes('skill') || lowerMsg.includes('technolog')) {
+    return "Mahsa's core skills include React, Next.js, TypeScript, Node.js, Express, MongoDB, PostgreSQL, Python, and Angular. She specializes in full-stack development with a passion for front-end!";
+  }
+  if (lowerMsg.includes('react')) {
+    return "Mahsa is highly proficient in React.js including hooks, context API, Redux, and React Router. She's built several full-stack applications with React.";
+  }
+  if (lowerMsg.includes('next')) {
+    return "Mahsa specializes in Next.js for server-side rendering, static site generation, and API routes. Her portfolio is built with Next.js 15!";
+  }
+  if (lowerMsg.includes('education') || lowerMsg.includes('degree')) {
+    return "Mahsa holds a Master's in Computer Science from Northeastern University, an Associate Certificate in Web Development from BCIT, and a Bachelor's in Computer-Software Engineering.";
+  }
+  if (lowerMsg.includes('experience')) {
+    return "Mahsa is a full-stack developer who bridges design and development. She has experience with front-end interfaces, back-end systems, and database architecture.";
+  }
+  if (lowerMsg.includes('kanba')) {
+    return "Kanba is Mahsa's comprehensive LMS built with React, Redux, Node.js, Express, and MongoDB. It features course management, assignments, gradebook, and multi-role support!";
+  }
+  if (lowerMsg.includes('project')) {
+    return "Mahsa's main projects include Kanba (LMS platform), MCCP (AI-powered coding platform), and this portfolio website. Check them out in the Portfolio dropdown!";
+  }
+  if (lowerMsg.includes('contact') || lowerMsg.includes('email')) {
+    return "You can email Mahsa at mahsa54@gmail.com or connect with her on GitHub and LinkedIn. Links are in the footer!";
+  }
+  if (lowerMsg.includes('hello') || lowerMsg.includes('hi')) {
+    return "Hello! I'm Mahsa's AI assistant. I can tell you about her skills, experience, education, projects, or how to contact her. What would you like to know?";
+  }
+  
+  return "Thanks for your question! Mahsa is a full-stack developer with a Master's in CS from Northeastern University. She specializes in React, Next.js, Node.js, and has a passion for front-end development and UX/UI. Feel free to ask about her skills, projects like Kanba, or experience!";
 }

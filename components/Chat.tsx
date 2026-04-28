@@ -3,10 +3,15 @@
 import { useState, useRef, useEffect } from "react";
 import { FaComments, FaTimes } from "react-icons/fa";
 
+interface Message {
+  user: string;
+  bot?: string;
+}
+
 export default function Chat() {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState("");
-  const [messages, setMessages] = useState<{ user: string; bot?: string }[]>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [conversationId, setConversationId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -26,9 +31,11 @@ export default function Chat() {
     if (!input.trim() || isLoading) return;
 
     const userMessage = input.trim();
-    
     setInput("");
     setIsLoading(true);
+
+    // Add user message immediately
+    setMessages(prev => [...prev, { user: userMessage }]);
 
     try {
       const res = await fetch("/api/chat", {
@@ -50,14 +57,30 @@ export default function Chat() {
         setConversationId(data.conversationId);
       }
 
-      setMessages(prev => [...prev, { user: userMessage, bot: data.reply }]);
+      // Update the last message with bot response
+      setMessages(prev => {
+        const newMessages = [...prev];
+        const lastIndex = newMessages.length - 1;
+        if (lastIndex >= 0 && newMessages[lastIndex].user === userMessage) {
+          newMessages[lastIndex] = { ...newMessages[lastIndex], bot: data.reply };
+        }
+        return newMessages;
+      });
       
     } catch (err) {
       console.error(err);
-      setMessages(prev => [...prev, { 
-        user: userMessage, 
-        bot: "Sorry, I'm having trouble connecting right now. Please try again later." 
-      }]);
+      // Update the last message with error response
+      setMessages(prev => {
+        const newMessages = [...prev];
+        const lastIndex = newMessages.length - 1;
+        if (lastIndex >= 0 && newMessages[lastIndex].user === userMessage) {
+          newMessages[lastIndex] = { 
+            ...newMessages[lastIndex], 
+            bot: "Sorry, I'm having trouble connecting right now. Please try again later." 
+          };
+        }
+        return newMessages;
+      });
     } finally {
       setIsLoading(false);
     }
@@ -112,7 +135,7 @@ export default function Chat() {
             <div className="chat-messages">
               {messages.length === 0 && (
                 <div className="chat-welcome">
-                  <div className="chat-welcome-icon"></div>
+                  <div className="chat-welcome-icon">💬</div>
                   <h3>Hi! I&apos;m Mahsa&apos;s AI assistant</h3>
                   <p>Ask me anything about her skills, projects, or experience!</p>
                   <div className="suggested-questions">
@@ -146,7 +169,7 @@ export default function Chat() {
               {isLoading && (
                 <div className="message-bot">
                   <div className="message-bot-content thinking">
-                    <span className="thinking-dots">Thinking</span>
+                    <span className="thinking-dots">Typing<span>.</span><span>.</span><span>.</span></span>
                   </div>
                 </div>
               )}
@@ -176,7 +199,7 @@ export default function Chat() {
                 className="chat-clear-btn"
                 title="Clear conversation"
               >
-                ↺
+                Clear
               </button>
             </div>
           </div>
