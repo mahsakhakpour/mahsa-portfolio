@@ -42,7 +42,7 @@ function getResponse(message: string): string {
     return "MCCP is Mahsa's AI-powered coding platform with multi-model integration for code assistance.";
   }
   if (m.includes('project')) {
-    return "Mahsa's main projects: Kanba (LMS), MCCP (AI coding platform), and this portfolio website.";
+    return "You can find her projects here: https://www.mahsa.website/projects";
   }
   if (m.includes('contact') || m.includes('email')) {
     return "Email Mahsa at mahsa54@gmail.com. Links to GitHub and LinkedIn are in the footer!";
