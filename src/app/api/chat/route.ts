@@ -208,5 +208,5 @@ function getFallbackResponse(message: string): string {
   }
   
   // Default response
-  return "Thanks for your question! Mahsa is a full-stack developer with a Master's in CS from Northeastern University. She specializes in React, Next.js, Node.js, and has a passion for front-end development and UX/UI. Feel free to ask about her skills, projects like Kanba, education, or how to contact her!";
+  return "Mahsa is a full-stack developer with a Master's in CS from Northeastern University. She specializes in React, Next.js, Node.js, and has a passion for front-end development and UX/UI. Feel free to ask about her skills, projects like Kanba, education, or how to contact her!";
 }
