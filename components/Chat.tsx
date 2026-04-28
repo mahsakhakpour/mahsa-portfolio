@@ -112,7 +112,7 @@ export default function Chat() {
             <div className="chat-messages">
               {messages.length === 0 && (
                 <div className="chat-welcome">
-                  <div className="chat-welcome-icon">👋</div>
+                  <div className="chat-welcome-icon"></div>
                   <h3>Hi! I&apos;m Mahsa&apos;s AI assistant</h3>
                   <p>Ask me anything about her skills, projects, or experience!</p>
                   <div className="suggested-questions">

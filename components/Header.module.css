@@ -80,18 +80,23 @@ body.dark .siteName {
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.2);
   z-index: 1000;
+  border: 1px solid var(--border-color);
 }
 
 .dropdownLink {
   padding: 10px 20px;
   text-decoration: none;
-  color: var(--dropdown-text);
-  transition: all 0.3s ease;
+  color: var(--dropdown-text) !important;
+  transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  background: transparent;
+  display: block;
 }
 
 .dropdownLink:hover {
-  background: var(--accent);
-  color: white;
+  background: var(--dropdown-hover-bg) !important;
+  color: var(--dropdown-hover-text) !important;
+  transform: scale(1.02) translateX(4px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
 
 .themeToggle {
@@ -120,7 +125,22 @@ body.dark .siteName {
   z-index: 101;
 }
 
-/* ========== MOBILE RESPONSIVE ========== */
+/* Dark mode dropdown */
+body.dark .dropdownMenu {
+  background: #1e293b !important;
+  border: 1px solid #334155 !important;
+}
+
+body.dark .dropdownLink {
+  color: #e2e8f0 !important;
+}
+
+body.dark .dropdownLink:hover {
+  background: #10b981 !important;
+  color: white !important;
+}
+
+/* Mobile responsive */
 @media screen and (max-width: 768px) {
   .mainHeader {
     padding: 0.875rem 1rem;
@@ -165,12 +185,33 @@ body.dark .siteName {
     left: 0;
     width: 100%;
     margin-top: 8px;
-    box-shadow: none;
-    background: rgba(255,255,255,0.1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    background: var(--dropdown-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
   }
 
   .dropdownLink {
     padding: 10px 16px;
+    color: var(--dropdown-text) !important;
+  }
+
+  .dropdownLink:hover {
+    background: var(--dropdown-hover-bg) !important;
+    color: var(--dropdown-hover-text) !important;
+  }
+
+  body.dark .dropdownMenu {
+    background: #1e293b !important;
+  }
+  
+  body.dark .dropdownLink {
+    color: #e2e8f0 !important;
+  }
+  
+  body.dark .dropdownLink:hover {
+    background: #10b981 !important;
+    color: white !important;
   }
 
   .themeToggle {
