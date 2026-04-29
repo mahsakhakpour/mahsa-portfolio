@@ -76,20 +76,7 @@ export default function CourseAnalyticsProject() {
   return (
     <div className={`project-page ${isDark ? 'dark' : ''}`}>
       {/* Hero Section */}
-      <section className="project-hero">
-        <div className="project-container">
-          <h1>Course Platform Analytics</h1>
-          <p>A full-stack survey platform for collecting and visualizing student preferences for BCIT course platforms</p>
-          <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-            <a href="https://github.com/mahsakhakpour/course-platform-analytics" target="_blank" rel="noopener noreferrer" className="project-btn project-btn-primary">
-              View Source Code
-            </a>
-            <a href="https://course-analytics.vercel.app" target="_blank" rel="noopener noreferrer" className="project-btn project-btn-secondary">
-              Live Demo
-            </a>
-          </div>
-        </div>
-      </section>
+
 
       <div className="project-container">
         {/* Features Section */}
