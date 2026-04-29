@@ -16,6 +16,72 @@ export default function Chat() {
   const [conversationId, setConversationId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  // Function to render markdown-style links as clickable HTML
+  const renderMessageWithLinks = (text: string) => {
+    if (!text) return null;
+    
+    // Regular expression to match [text](url) pattern
+    const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+    
+    const parts = [];
+    let lastIndex = 0;
+    let match;
+    
+    while ((match = linkRegex.exec(text)) !== null) {
+      // Add text before the link
+      if (match.index > lastIndex) {
+        parts.push(text.substring(lastIndex, match.index));
+      }
+      // Add the clickable link
+      parts.push(
+        <a
+          key={match.index}
+          href={match[2]}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="chat-link"
+          style={{
+            color: "#10b981",
+            textDecoration: "underline",
+            wordBreak: "break-all",
+            display: "inline-block"
+          }}
+        >
+          {match[1]}
+        </a>
+      );
+      lastIndex = match.index + match[0].length;
+    }
+    
+    // Add remaining text
+    if (lastIndex < text.length) {
+      parts.push(text.substring(lastIndex));
+    }
+    
+    // Handle line breaks if no links found
+    if (parts.length === 0) {
+      return text.split('\n').map((line, i) => (
+        <span key={i}>
+          {line}
+          {i < text.split('\n').length - 1 && <br />}
+        </span>
+      ));
+    }
+    
+    // Process parts and handle line breaks
+    return parts.map((part, i) => {
+      if (typeof part === 'string') {
+        return part.split('\n').map((line, j) => (
+          <span key={`${i}-${j}`}>
+            {line}
+            {j < part.split('\n').length - 1 && <br />}
+          </span>
+        ));
+      }
+      return part;
+    });
+  };
+
   // Auto-scroll to bottom of messages
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -161,7 +227,9 @@ export default function Chat() {
                   </div>
                   {m.bot && (
                     <div className="message-bot">
-                      <div className="message-bot-content">{m.bot}</div>
+                      <div className="message-bot-content">
+                        {renderMessageWithLinks(m.bot)}
+                      </div>
                     </div>
                   )}
                 </div>
