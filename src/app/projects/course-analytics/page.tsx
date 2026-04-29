@@ -60,7 +60,7 @@ export default function CourseAnalyticsProject() {
       <section className="project-hero">
         <div className="project-container">
           <h1>Course Platform Analytics</h1>
-          <p>A full-stack survey platform for collecting and visualizing student preferences for a course platforms. Built with Next.js, TypeScript, and Tailwind CSS, it features real-time data visualization with Recharts, persistent local storage, and a fully responsive design.</p>
+          <p>A full-stack survey platform for collecting and visualizing student preferences for course platforms. Built with Next.js, TypeScript, and Tailwind CSS, it features real-time data visualization with Recharts, persistent local storage, and a fully responsive design.</p>
           <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', justifyContent: 'center' }}>
    
           </div>
