@@ -8,22 +8,22 @@ export default function ProjectsPage() {
     {
       title: "Kanba",
       image: "/kanba/kanba.png",
-      link: "/projects/kanba"
+      link: "/projects/kanba",
     },
     {
       title: "Course Analytics",
       image: "/course output Screenshot.png",
-      link: "/projects/course-analytics"
+      link: "/projects/course-analytics",
     },
     {
       title: "MCCP",
       image: "/mccp/mccp-poster.png",
-      link: "/projects/mccp"
+      link: "/projects/mccp",
     },
     {
       title: "interiYOUR",
       image: "/interiYour/interiYOUR.png",
-      link: "/InteriYOUR-Design_Final-Project.pdf"
+      link: "/InteriYOUR-Design_Final-Project.pdf",
     },
   ];
 
@@ -37,7 +37,11 @@ export default function ProjectsPage() {
       <div className="projects-grid">
         {projects.map((project, index) => (
           <Link href={project.link} key={index} className="project-card">
-            <img src={project.image} alt={project.title} />
+            <img
+              src={project.image}
+              alt={project.title}
+              loading="lazy"
+            />
             <span className="project-title">{project.title}</span>
           </Link>
         ))}
