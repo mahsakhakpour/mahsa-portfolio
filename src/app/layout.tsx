@@ -17,21 +17,25 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Mahsa Khakpour | Developer Portfolio",
-  description: "Personal portfolio website showcasing front-end development projects, UI/UX designs, and full-stack applications.",
+  description:
+    "Personal portfolio website showcasing front-end development projects, UI/UX designs, and full-stack applications.",
+
   icons: {
-    icon: "/favicon.png",
+    icon: [
+      { url: "/favicon.png", type: "image/png" }
+    ],
   },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <ThemeProvider 
+        <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
