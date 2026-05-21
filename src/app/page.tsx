@@ -49,7 +49,7 @@ export default function HomePage() {
                 crafting exceptional front-end experiences and intuitive user interfaces.
               </p>
               <p>
-                I am deeply driven by how users interact with technology — translating 
+                I am deeply driven by how users interact with technology, translating 
                 complex requirements into seamless, accessible, and human-centered digital 
                 journeys. My full-stack expertise allows me to bridge design and 
                 development, ensuring that every visual detail is supported by robust, 
