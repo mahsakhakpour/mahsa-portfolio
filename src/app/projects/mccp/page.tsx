@@ -488,10 +488,10 @@ export default function MCCPPage() {
     <div className="media-content">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img 
-        src="/mccp/MCCPposter.png" 
+        src="/mccp/mccp-poster.png" 
         alt="MCCP Research Poster"
         className="media-image"
-        onClick={() => openModal('/mccp/MCCPposter.png', 'image')}
+        onClick={() => openModal('/mccp//mccp/mccp-poster.png', 'image')}
       />
       <div className="media-caption">Algorithm overview and results</div>
     </div>
@@ -506,7 +506,7 @@ export default function MCCPPage() {
   className="media-video"
   onClick={(e) => e.stopPropagation()}
 >
-  <source src="/mccp/MCCPvideo.mp4" type="video/mp4" />
+  <source src="/mccp/mccp-video.mp4" type="video/mp4" />
   <source src="/mccp/MCCPvideo.webm" type="video/webm" />
   <source src="/mccp/MCCPvideo.ogg" type="video/ogg" />
   Your browser does not support the video tag.
