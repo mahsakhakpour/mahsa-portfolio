@@ -21,9 +21,9 @@ export const metadata: Metadata = {
     "Personal portfolio website showcasing front-end development projects, UI/UX designs, and full-stack applications.",
 
   icons: {
-    icon: [
-      { url: "/favicon.png", type: "image/png" }
-    ],
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/favicon.ico",
   },
 };
 
@@ -34,7 +34,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
