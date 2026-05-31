@@ -19,7 +19,6 @@ export const metadata: Metadata = {
   title: "Mahsa Khakpour | Developer Portfolio",
   description:
     "Personal portfolio website showcasing front-end development projects, UI/UX designs, and full-stack applications.",
-
   icons: {
     icon: "/favicon.ico",
     shortcut: "/favicon.ico",
@@ -34,6 +33,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" href="/favicon.ico" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

@@ -47,7 +47,7 @@ export default function ConstructionAnalyticsProject() {
       tag: 'Geospatial',
     },
     {
-      src: '/constructionAnalytics/export.png',
+      src: '/constructionAnalytics/csv.png',
       title: 'CSV Export Feature',
       description: 'The dashboard includes an "Export to CSV" button that allows users to download all survey responses as a CSV file. This file can be opened in Excel, Google Sheets, or any data analysis tool. The export includes client names, project types, addresses, and timestamps.',
       tag: 'Data Export',
