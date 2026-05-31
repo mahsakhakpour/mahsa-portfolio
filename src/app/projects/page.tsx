@@ -11,10 +11,11 @@ export default function ProjectsPage() {
       link: "/projects/kanba",
     },
     {
-      title: "Course Analytics",
-      image: "/course output Screenshot.png",
-      link: "/projects/course-analytics",
+      title: "Construction Analytics",
+      image: "/constructionAnalytics/construction-analytics.png",
+      link: "/projects/construction-analytics",
     },
+ 
     {
       title: "MCCP",
       image: "/mccp/mccp-poster.png",

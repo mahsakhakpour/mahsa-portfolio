@@ -4,10 +4,11 @@ import "./style.css";
 
 export default function WebsitesPage() {
   const websites = [
-    { id: 1, url: "https://traditionallearning.com/" },
-    { id: 2, url: "https://www.uniquegettogethersociety.com/" },
-    { id: 3, url: "https://www.ciemployment.ca/" },
-    { id: 4, url: "https://unibuild.ca/" },
+    { id: 1, url: "https://www.uniquegettogethersociety.com/" },
+    { id: 2, url: "https://traditionallearning.com/" },
+    { id: 3, url: "https://unibuild.ca/" },
+    { id: 4, url: "https://www.ciemployment.ca/" },
+    
   ];
 
   return (
