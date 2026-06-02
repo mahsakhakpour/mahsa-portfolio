@@ -5,6 +5,12 @@ import Link from "next/link";
 
 export default function ProjectsPage() {
   const projects = [
+
+    {
+      title: "Health-Wellness",
+      image: "/healthWellness/health.png",
+      link: "/projects/health-wellness",
+    },
     {
       title: "Kanba",
       image: "/kanba/kanba.png",
