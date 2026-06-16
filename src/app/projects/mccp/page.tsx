@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { runMCCP, suggestAIParameters, predictHotspots, getDataInsights } from './algorithms';
+import { runMCCP } from './algorithms';
 import './style.css';
 
 interface Point {
@@ -21,49 +21,8 @@ interface OptimizationResult {
   cluster_labels: number[];
 }
 
-interface AISuggestions {
-  suggested_eps: number;
-  suggested_min_samples: number;
-  suggested_radius: number;
-  confidence: number;
-  density: number;
-  message: string;
-  reasoning: string;
-}
-
-interface Hotspot {
-  id: number;
-  center: [number, number];
-  potential_coverage: number;
-  priority: string;
-  suggested_radius: number;
-}
-
-interface HotspotsResponse {
-  hotspots: Hotspot[];
-  total_hotspots: number;
-  message: string;
-  analysis: string;
-}
-
-interface InsightsResponse {
-  insights: string[];
-  summary: string;
-  statistics: {
-    x_range: number;
-    y_range: number;
-    density: number;
-    total_points: number;
-  };
-}
-
 interface ErrorWithMessage {
   message: string;
-  response?: {
-    data?: {
-      detail?: string;
-    };
-  };
 }
 
 export default function MCCPPage() {
@@ -72,13 +31,8 @@ export default function MCCPPage() {
   const [minSamples, setMinSamples] = useState<string>('3');
   const [radius, setRadius] = useState<string>('1.5');
   const [loading, setLoading] = useState<boolean>(false);
-  const [loadingAI, setLoadingAI] = useState<boolean>(false);
   const [result, setResult] = useState<OptimizationResult | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [aiSuggestions, setAiSuggestions] = useState<AISuggestions | null>(null);
-  const [hotspots, setHotspots] = useState<HotspotsResponse | null>(null);
-  const [insights, setInsights] = useState<InsightsResponse | null>(null);
-  const [activeTab, setActiveTab] = useState<string>('results');
   const [isDarkMode, setIsDarkMode] = useState<boolean>(true);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -129,36 +83,6 @@ export default function MCCPPage() {
     };
   }, []);
 
-  const openModal = (src: string, type: string) => {
-    const modal = document.getElementById('imageModal');
-    const modalImg = document.getElementById('modalImage') as HTMLImageElement;
-    const modalVideo = document.getElementById('modalVideo') as HTMLVideoElement;
-    
-    if (modal && modalImg && modalVideo) {
-      if (type === 'image') {
-        modalImg.style.display = 'block';
-        modalVideo.style.display = 'none';
-        modalImg.src = src;
-      } else {
-        modalImg.style.display = 'none';
-        modalVideo.style.display = 'block';
-        const videoSource = modalVideo.querySelector('source') as HTMLSourceElement;
-        if (videoSource) videoSource.src = src;
-        modalVideo.load();
-      }
-      modal.classList.add('active');
-    }
-  };
-
-  const closeModal = () => {
-    const modal = document.getElementById('imageModal');
-    const modalVideo = document.getElementById('modalVideo') as HTMLVideoElement;
-    if (modal) {
-      modal.classList.remove('active');
-      if (modalVideo) modalVideo.pause();
-    }
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -195,119 +119,12 @@ export default function MCCPPage() {
         speedup_percentage: mccpResult.speedupPercentage,
         cluster_labels: mccpResult.clusterLabels
       });
-      setActiveTab('results');
     } catch (err) {
       const error = err as ErrorWithMessage;
       setError(error.message);
     } finally {
       setLoading(false);
     }
-  };
-
-  const getAISuggestions = async () => {
-    setLoadingAI(true);
-    setError(null);
-    try {
-      let pointsArray: number[][];
-      if (points.includes('\n')) {
-        pointsArray = pointsToArray(parsePoints(points));
-      } else {
-        pointsArray = JSON.parse(points);
-      }
-      
-      if (pointsArray.length < 2) {
-        throw new Error("Please enter at least 2 points");
-      }
-      
-      const suggestions = suggestAIParameters(pointsArray);
-      setAiSuggestions(suggestions);
-      
-      setEps(suggestions.suggested_eps.toString());
-      setMinSamples(suggestions.suggested_min_samples.toString());
-      setRadius(suggestions.suggested_radius.toString());
-      
-      setActiveTab('ai');
-    } catch (err) {
-      const error = err as ErrorWithMessage;
-      setError(error.message);
-    } finally {
-      setLoadingAI(false);
-    }
-  };
-
-  const getHotspots = async () => {
-    setLoadingAI(true);
-    setError(null);
-    try {
-      let pointsArray: number[][];
-      if (points.includes('\n')) {
-        pointsArray = pointsToArray(parsePoints(points));
-      } else {
-        pointsArray = JSON.parse(points);
-      }
-      
-      if (pointsArray.length < 3) {
-        throw new Error("Need at least 3 points for hotspot detection");
-      }
-      
-      const hotspotsResult = predictHotspots(pointsArray, parseFloat(radius));
-      setHotspots(hotspotsResult);
-      setActiveTab('hotspots');
-    } catch (err) {
-      const error = err as ErrorWithMessage;
-      setError(error.message);
-    } finally {
-      setLoadingAI(false);
-    }
-  };
-
-  const getInsights = async () => {
-    setLoadingAI(true);
-    setError(null);
-    try {
-      let pointsArray: number[][];
-      if (points.includes('\n')) {
-        pointsArray = pointsToArray(parsePoints(points));
-      } else {
-        pointsArray = JSON.parse(points);
-      }
-      
-      if (pointsArray.length < 2) {
-        throw new Error("Please enter at least 2 points");
-      }
-      
-      const insightsResult = getDataInsights(
-        pointsArray,
-        parseFloat(eps),
-        parseInt(minSamples),
-        parseFloat(radius)
-      );
-      setInsights(insightsResult);
-      setActiveTab('insights');
-    } catch (err) {
-      const error = err as ErrorWithMessage;
-      setError(error.message);
-    } finally {
-      setLoadingAI(false);
-    }
-  };
-
-  const loadSampleData = () => {
-    setPoints(`0,0
-1,1
-2,2
-10,10
-11,11
-12,12
-0,10
-1,11
-2,12
-5,5
-5.5,5.5
-6,6`);
-    setEps('2.0');
-    setMinSamples('3');
-    setRadius('1.5');
   };
 
   const loadRandomData = () => {
@@ -320,8 +137,9 @@ export default function MCCPPage() {
     setPoints(randomPoints.join('\n'));
   };
 
-  // Draw visualization
+  // Draw visualization - now depends on result and points
   useEffect(() => {
+    // Only draw if we have a result
     if (!result || !result.best_center || !canvasRef.current) return;
 
     const canvas = canvasRef.current;
@@ -396,14 +214,14 @@ export default function MCCPPage() {
       ctx.beginPath();
       ctx.arc(bruteCenterX, bruteCenterY, bruteRadiusPx, 0, 2 * Math.PI);
       ctx.strokeStyle = '#22c55e';
-      ctx.lineWidth = 3;
-      ctx.setLineDash([10, 5]);
+      ctx.lineWidth = 2;
+      ctx.setLineDash([8, 4]);
       ctx.stroke();
       ctx.setLineDash([]);
       
       ctx.fillStyle = '#22c55e';
-      ctx.font = '14px monospace';
-      ctx.fillText(`Brute: ${result.brute_force_count} pts`, bruteCenterX - 45, bruteCenterY - 10);
+      ctx.font = '12px monospace';
+      ctx.fillText(`Brute: ${result.brute_force_count} pts`, bruteCenterX - 40, bruteCenterY - 8);
     }
 
     const slidingCenterX = transformX(slidingCenter[0]);
@@ -412,20 +230,20 @@ export default function MCCPPage() {
     
     ctx.beginPath();
     ctx.arc(slidingCenterX, slidingCenterY, slidingRadiusPx, 0, 2 * Math.PI);
-    ctx.fillStyle = isLight ? 'rgba(32, 39, 168, 0.1)' : 'rgba(184, 198, 255, 0.1)';
+    ctx.fillStyle = isLight ? 'rgba(32, 39, 168, 0.08)' : 'rgba(184, 198, 255, 0.08)';
     ctx.fill();
     ctx.strokeStyle = isLight ? '#0a0e27' : '#ffd700';
-    ctx.lineWidth = 3;
+    ctx.lineWidth = 2;
     ctx.setLineDash([]);
     ctx.stroke();
 
     ctx.fillStyle = isLight ? '#0a0e27' : '#ffd700';
-    ctx.font = 'bold 22px monospace';
-    ctx.fillText('×', slidingCenterX - 7, slidingCenterY + 8);
+    ctx.font = 'bold 18px monospace';
+    ctx.fillText('×', slidingCenterX - 6, slidingCenterY + 6);
     
     ctx.fillStyle = isLight ? '#0a0e27' : '#ffd700';
-    ctx.font = '14px monospace';
-    ctx.fillText(`Sliding: ${result.max_count} pts`, slidingCenterX - 40, slidingCenterY - 20);
+    ctx.font = '12px monospace';
+    ctx.fillText(`Sliding: ${result.max_count} pts`, slidingCenterX - 35, slidingCenterY - 16);
 
     const clusterColors = ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899', '#06b6d4'];
     
@@ -434,24 +252,31 @@ export default function MCCPPage() {
       const y = transformY(point.y);
       const isInside = Math.sqrt(Math.pow(point.x - slidingCenter[0], 2) + Math.pow(point.y - slidingCenter[1], 2)) <= circleRadius;
       
-      let pointColor = isLight ? '#6c757d' : '#6b7280';
+      let pointColor = isLight ? '#9ca3af' : '#6b7280';
       if (result.cluster_labels && result.cluster_labels[idx] !== -1 && result.cluster_labels[idx] !== undefined) {
         pointColor = clusterColors[result.cluster_labels[idx] % clusterColors.length];
       }
       if (isInside) pointColor = isLight ? '#2027a8' : '#b8c6ff';
       
       ctx.beginPath();
-      ctx.arc(x, y, 7, 0, 2 * Math.PI);
+      ctx.arc(x, y, 5, 0, 2 * Math.PI);
       ctx.fillStyle = pointColor;
       ctx.fill();
       ctx.strokeStyle = '#ffffff';
-      ctx.lineWidth = 2;
+      ctx.lineWidth = 1.5;
       ctx.stroke();
     });
 
     ctx.fillStyle = isLight ? '#0a0e27' : '#ffd700';
-    ctx.font = 'bold 14px monospace';
-    ctx.fillText('Yellow Circle = Sliding Circle Result | Green Dashed = Optimal Solution', 20, 35);
+    ctx.font = '12px monospace';
+    ctx.fillText('Yellow = Sliding Circle | Green Dashed = Optimal', 20, 28);
+    
+    // Redraw on resize as well
+    const handleResize = () => {
+      // The canvas will redraw when result changes
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, [result, points, radius, isDarkMode]);
 
   return (
@@ -461,12 +286,11 @@ export default function MCCPPage() {
         <div className="hero-content">
           <h1>Maximum Circular Coverage Problem</h1>
           <p className="hero-description">
-            The Sliding Circle Algorithm finds the best location for a fixed-radius circle to cover the maximum 
+            The <strong>Sliding Circle Algorithm</strong> finds the best location for a fixed-radius circle to cover the maximum 
             number of points in 2D space. This two-phase hybrid algorithm combines DBSCAN clustering with sliding optimization, 
-            making it 99.5% faster than traditional methods while maintaining 96-99% accuracy.
+            making it 99.5% faster than traditional methods while maintaining up to 96-99% accuracy.
             <br /><br />
-            Built as a full-stack application with Next.js, TypeScript, Python, and FastAPI. The AI layer 
-            recommends optimal parameters, predicts coverage, finds dense areas, and provides real-time insights.
+            Built as a <strong>full-stack application</strong> with Next.js, TypeScript, Python, and FastAPI.
           </p>
           <div className="hero-tags">
             <span>DBSCAN</span>
@@ -475,71 +299,51 @@ export default function MCCPPage() {
             <span>TypeScript</span>
             <span>Python</span>
             <span>FastAPI</span>
-            <span>AI Integration</span>
           </div>
         </div>
       </div>
 
       {/* Media Gallery */}
-<div className="media-gallery">
-  {/* Poster Image */}
-  <div className="media-card">
-    <div className="media-title">Research Poster</div>
-    <div className="media-content">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img 
-        src="/mccp/mccp-poster.png" 
-        alt="MCCP Research Poster"
-        className="media-image"
-        onClick={() => openModal('/mccp//mccp/mccp-poster.png', 'image')}
-      />
-      <div className="media-caption">Algorithm overview and results</div>
-    </div>
-  </div>
+      <div className="media-gallery">
+        {/* Poster Image */}
+        <div className="media-card">
+          <div className="media-title">Research Poster</div>
+          <div className="media-content">
+            <img 
+              src="/mccp/mccp-poster.png" 
+              alt="MCCP Research Poster"
+              className="media-image"
+            />
+            <div className="media-caption">Algorithm overview and results</div>
+          </div>
+        </div>
 
-  {/* Video Explanation */}
-  <div className="media-card">
-    <div className="media-title">Algorithm Explanation</div>
-    <div className="media-content">
-      <video 
-  controls
-  className="media-video"
-  onClick={(e) => e.stopPropagation()}
->
-  <source src="/mccp/mccp-video.mp4" type="video/mp4" />
-  <source src="/mccp/MCCPvideo.webm" type="video/webm" />
-  <source src="/mccp/MCCPvideo.ogg" type="video/ogg" />
-  Your browser does not support the video tag.
-</video>
-      <div className="media-caption">How the Sliding Circle works</div>
-    </div>
-  </div>
+        {/* Video Explanation */}
+        <div className="media-card">
+          <div className="media-title">Algorithm Explanation</div>
+          <div className="media-content">
+            <video 
+              controls
+              className="media-video"
+            >
+              <source src="/mccp/mccp-video.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+            <div className="media-caption">How the Sliding Circle works</div>
+          </div>
+        </div>
 
-  {/* Flowchart */}
-  <div className="media-card">
-    <div className="media-title">Algorithm Flowchart</div>
-    <div className="media-content">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img 
-        src="/mccp/chart.png" 
-        alt="MCCP Algorithm Flowchart"
-        className="media-image"
-        onClick={() => openModal('/mccp/chart.png', 'image')}
-      />
-      <div className="media-caption">Step-by-step workflow</div>
-    </div>
-  </div>
-</div>
-
-      {/* Modal */}
-      <div id="imageModal" className="modal" onClick={closeModal}>
-        <span className="close-modal" onClick={closeModal}>&times;</span>
-        <div className="modal-content">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img id="modalImage" src="" alt="" style={{ display: 'none' }} />
-          <video id="modalVideo" controls style={{ display: 'none' }}>
-            <source src="" type="video/mp4" />
-          </video>
+        {/* Flowchart */}
+        <div className="media-card">
+          <div className="media-title">Algorithm Flowchart</div>
+          <div className="media-content">
+            <img 
+              src="/mccp/chart.png" 
+              alt="MCCP Algorithm Flowchart"
+              className="media-image"
+            />
+            <div className="media-caption">Step-by-step workflow</div>
+          </div>
         </div>
       </div>
 
@@ -549,16 +353,13 @@ export default function MCCPPage() {
           <div className="form-group">
             <label>Enter Your Points (x,y):</label>
             <textarea
-              rows={5}
+              rows={4}
               value={points}
               onChange={(e) => setPoints(e.target.value)}
               placeholder="0,0&#10;1,1&#10;2,2"
               required
             />
             <div className="button-group">
-              <button type="button" onClick={loadSampleData} className="btn-secondary">
-                Sample Data
-              </button>
               <button type="button" onClick={loadRandomData} className="btn-secondary">
                 Random Data
               </button>
@@ -587,153 +388,26 @@ export default function MCCPPage() {
             <button type="submit" disabled={loading} className="btn-primary">
               {loading ? 'Running...' : 'Run Algorithm'}
             </button>
-            <button type="button" onClick={getAISuggestions} disabled={loadingAI} className="btn-ai">
-              AI Suggest Parameters
-            </button>
-            <button type="button" onClick={getHotspots} disabled={loadingAI} className="btn-ai">
-              Find Dense Areas
-            </button>
-            <button type="button" onClick={getInsights} disabled={loadingAI} className="btn-ai">
-              Get Insights
-            </button>
           </div>
         </form>
 
         {error && <div className="error">Error: {error}</div>}
       </div>
 
-      {/* Results Tabs */}
-      {(result || aiSuggestions || hotspots || insights) && (
-        <div className="tabs">
-          <button className={`tab ${activeTab === 'results' ? 'active' : ''}`} onClick={() => setActiveTab('results')}>
-            Results
-          </button>
-          <button className={`tab ${activeTab === 'ai' ? 'active' : ''}`} onClick={() => setActiveTab('ai')}>
-            AI Suggestions
-          </button>
-          <button className={`tab ${activeTab === 'hotspots' ? 'active' : ''}`} onClick={() => setActiveTab('hotspots')}>
-            Dense Areas
-          </button>
-          <button className={`tab ${activeTab === 'insights' ? 'active' : ''}`} onClick={() => setActiveTab('insights')}>
-            Insights
-          </button>
-        </div>
-      )}
-
-      {/* Results Tab */}
-      {activeTab === 'results' && result && (
+      {/* Results Section - Simplified */}
+      {result && (
         <div className="results-section">
           <h2>Results</h2>
           
           <div className="visualization">
-            <canvas ref={canvasRef} width={750} height={500} />
-          </div>
-
-          <div className="results-grid">
-            <div className="result-card">
-              <h3>Points Covered</h3>
-              <div className="result-value">{result.max_count}</div>
-              <div className="result-detail">by Sliding Circle</div>
-            </div>
-            <div className="result-card">
-              <h3>Optimal Coverage</h3>
-              <div className="result-value">{result.brute_force_count}</div>
-              <div className="result-detail">by Brute Force</div>
-            </div>
-            <div className="result-card">
-              <h3>Speed</h3>
-              <div className="result-value">{result.speedup_percentage.toFixed(1)}%</div>
-              <div className="result-detail">faster than brute force</div>
-            </div>
-            <div className="result-card">
-              <h3>Accuracy</h3>
-              <div className="result-value">{result.accuracy_percentage.toFixed(1)}%</div>
-              <div className="result-detail">of optimal solution</div>
-            </div>
+            <canvas ref={canvasRef} width={750} height={450} />
           </div>
 
           <div className="info-box">
-            <p><strong>Circle Center:</strong> ({result.best_center[0].toFixed(2)}, {result.best_center[1].toFixed(2)})</p>
-            <p><strong>Time:</strong> {result.sliding_time.toFixed(4)} seconds vs {result.brute_force_time.toFixed(4)} seconds for brute force</p>
+            <p><strong>Sliding Circle Center:</strong> ({result.best_center[0].toFixed(2)}, {result.best_center[1].toFixed(2)})</p>
+            <p><strong>Points Covered:</strong> {result.max_count} points</p>
+            <p><strong>Time:</strong> {result.sliding_time.toFixed(4)} seconds</p>
           </div>
-        </div>
-      )}
-
-      {/* AI Suggestions Tab */}
-      {activeTab === 'ai' && aiSuggestions && (
-        <div className="ai-section">
-          <h2>AI Recommendations</h2>
-          <div className="results-grid">
-            <div className="result-card">
-              <h3>Recommended eps</h3>
-              <div className="result-value">{aiSuggestions.suggested_eps}</div>
-              <button className="btn-use" onClick={() => setEps(aiSuggestions.suggested_eps.toString())}>Apply</button>
-            </div>
-            <div className="result-card">
-              <h3>Recommended minPts</h3>
-              <div className="result-value">{aiSuggestions.suggested_min_samples}</div>
-              <button className="btn-use" onClick={() => setMinSamples(aiSuggestions.suggested_min_samples.toString())}>Apply</button>
-            </div>
-            <div className="result-card">
-              <h3>Recommended Radius</h3>
-              <div className="result-value">{aiSuggestions.suggested_radius}</div>
-              <button className="btn-use" onClick={() => setRadius(aiSuggestions.suggested_radius.toString())}>Apply</button>
-            </div>
-          </div>
-          <div className="info-box">
-            <p><strong>Why these values?</strong> {aiSuggestions.reasoning}</p>
-            <p><strong>Confidence:</strong> {(aiSuggestions.confidence * 100).toFixed(0)}%</p>
-          </div>
-        </div>
-      )}
-
-      {/* Hotspots Tab */}
-      {activeTab === 'hotspots' && hotspots && (
-        <div className="ai-section">
-          <h2>Dense Areas Detected</h2>
-          <p className="section-subtitle">{hotspots.message}</p>
-          <div className="hotspots-list">
-            {hotspots.hotspots.map((spot, idx) => (
-              <div key={idx} className="hotspot-card">
-                <div className={`hotspot-priority ${spot.priority}`}>
-                  {spot.priority === 'high' ? 'High Density Area' : 'Medium Density Area'} - Location {idx + 1}
-                </div>
-                <div className="hotspot-location">
-                  Coordinates: ({spot.center[0].toFixed(2)}, {spot.center[1].toFixed(2)})
-                </div>
-                <div className="hotspot-coverage">
-                  Estimated Points: {spot.potential_coverage}
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="info-box">
-            <p><strong>Use case:</strong> These are the best locations for placing service centers or cell towers.</p>
-          </div>
-        </div>
-      )}
-
-      {/* Insights Tab */}
-      {activeTab === 'insights' && insights && (
-        <div className="ai-section">
-          <h2>Data Insights</h2>
-          <p className="section-subtitle">{insights.summary}</p>
-          <div className="insights-list">
-            {insights.insights.map((insight, idx) => (
-              <div key={idx} className="insight-card">
-                {insight}
-              </div>
-            ))}
-          </div>
-          {insights.statistics && (
-            <div className="stats-box">
-              <h3>Statistics</h3>
-              <p>X Range: {insights.statistics.x_range}</p>
-              <p>Y Range: {insights.statistics.y_range}</p>
-              <p>Density: {insights.statistics.density}</p>
-              <p>Total Points: {insights.statistics.total_points}</p>
-            </div>
-          )}
         </div>
       )}
 
@@ -772,12 +446,16 @@ export default function MCCPPage() {
             <p>Python + FastAPI for high-performance algorithms</p>
           </div>
           <div className="simple-card">
-            <h3>AI Features</h3>
-            <p>Smart parameter suggestions, dense area detection, data insights</p>
+            <h3>Algorithm</h3>
+            <p>DBSCAN clustering + Sliding Circle optimization</p>
           </div>
         </div>
       </div>
 
+      <footer>
+        <p>© 2025 Mahsa Khakpour | Sliding Circle Algorithm | Full-Stack Implementation</p>
+        <p className="footer-note">Northeastern University, Vancouver Campus</p>
+      </footer>
     </div>
   );
 }
