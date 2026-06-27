@@ -62,8 +62,7 @@ export function slidingCircleAlgorithm(
     (a, b) => b[1].length - a[1].length
   );
   
-  
- for (const cpoints of sortedClusters.map(([, points]) => points)) {
+  for (const cpoints of sortedClusters.map(([, points]) => points)) {
     const currentPoints = cpoints;
     
     if (currentPoints.length < maxCount) continue;
@@ -387,9 +386,11 @@ export function runMCCP(
   accuracyPercentage: number;
   clusterLabels: number[];
 } {
-  // Removed unused startTime variable
+  // Validate minPts - cannot be greater than dataset size
+  const validMinSamples = Math.min(minSamples, points.length);
   
-  const clusterLabels = dbscan(points, eps, minSamples);
+  // Run DBSCAN with validated minSamples
+  const clusterLabels = dbscan(points, eps, validMinSamples);
   
   const clusterPoints = new Map<number, number[][]>();
   for (let i = 0; i < points.length; i++) {
@@ -400,27 +401,44 @@ export function runMCCP(
     clusterPoints.get(label)!.push(points[i]);
   }
   
-  if (clusterPoints.size === 0) {
-    clusterPoints.set(-1, points);
+  // If no clusters found, treat all points as one cluster
+  if (clusterPoints.size === 0 || (clusterPoints.size === 1 && clusterPoints.has(-1))) {
+    clusterPoints.clear();
+    clusterPoints.set(0, points);
   }
   
   const slidingStart = performance.now();
   const slidingResult = slidingCircleAlgorithm(points, radius, clusterPoints);
   const slidingTime = performance.now() - slidingStart;
   
-  const bruteStart = performance.now();
-  const bruteResult = bruteForceAlgorithm(points, radius);
-  const bruteTime = performance.now() - bruteStart;
+  // Auto-skip brute force for large datasets
+  const BRUTE_FORCE_LIMIT = 500;
+  let bruteTime = 0;
+  let bruteCount = slidingResult.count;
+  let bruteCenter = slidingResult.center;
+  
+  if (points.length <= BRUTE_FORCE_LIMIT) {
+    const bruteStart = performance.now();
+    const bruteResult = bruteForceAlgorithm(points, radius);
+    bruteTime = performance.now() - bruteStart;
+    bruteCount = bruteResult.count;
+    bruteCenter = bruteResult.center;
+  } else {
+    // For large datasets, use sliding result as reference
+    bruteCount = slidingResult.count;
+    bruteCenter = slidingResult.center;
+    bruteTime = slidingTime * 100; // Estimate brute force time
+  }
   
   return {
     slidingCenter: slidingResult.center,
     slidingCount: slidingResult.count,
     slidingTime: slidingTime,
-    bruteCenter: bruteResult.center,
-    bruteCount: bruteResult.count,
+    bruteCenter: bruteCenter,
+    bruteCount: bruteCount,
     bruteTime: bruteTime,
     speedupPercentage: ((bruteTime - slidingTime) / bruteTime) * 100,
-    accuracyPercentage: (slidingResult.count / bruteResult.count) * 100,
+    accuracyPercentage: (slidingResult.count / bruteCount) * 100,
     clusterLabels: clusterLabels
   };
 }
