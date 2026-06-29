@@ -386,11 +386,8 @@ export function runMCCP(
   accuracyPercentage: number;
   clusterLabels: number[];
 } {
-  // Validate minPts - cannot be greater than dataset size
-  const validMinSamples = Math.min(minSamples, points.length);
-  
-  // Run DBSCAN with validated minSamples
-  const clusterLabels = dbscan(points, eps, validMinSamples);
+  // minSamples is already validated in page.tsx, so we use it directly
+  const clusterLabels = dbscan(points, eps, minSamples);
   
   const clusterPoints = new Map<number, number[][]>();
   for (let i = 0; i < points.length; i++) {
@@ -411,24 +408,14 @@ export function runMCCP(
   const slidingResult = slidingCircleAlgorithm(points, radius, clusterPoints);
   const slidingTime = performance.now() - slidingStart;
   
-  // Auto-skip brute force for large datasets
-  const BRUTE_FORCE_LIMIT = 500;
-  let bruteTime = 0;
-  let bruteCount = slidingResult.count;
-  let bruteCenter = slidingResult.center;
+  // Always run brute force (validation is now in page.tsx)
+  const bruteStart = performance.now();
+  const bruteResult = bruteForceAlgorithm(points, radius);
+  const bruteTime = performance.now() - bruteStart;
   
-  if (points.length <= BRUTE_FORCE_LIMIT) {
-    const bruteStart = performance.now();
-    const bruteResult = bruteForceAlgorithm(points, radius);
-    bruteTime = performance.now() - bruteStart;
-    bruteCount = bruteResult.count;
-    bruteCenter = bruteResult.center;
-  } else {
-    // For large datasets, use sliding result as reference
-    bruteCount = slidingResult.count;
-    bruteCenter = slidingResult.center;
-    bruteTime = slidingTime * 100; // Estimate brute force time
-  }
+  // Get the brute force results
+  const bruteCount = bruteResult.count;
+  const bruteCenter = bruteResult.center;
   
   return {
     slidingCenter: slidingResult.center,

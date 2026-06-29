@@ -103,10 +103,26 @@ export default function MCCPPage() {
         throw new Error("Please enter at least 2 points");
       }
 
+      // FIX 1: Validate minPts - cannot be greater than dataset size
+      const minPts = parseInt(minSamples);
+      if (minPts > pointsArray.length) {
+        throw new Error(`minPts (${minPts}) cannot be greater than the dataset size (${pointsArray.length}). Please reduce minPts.`);
+      }
+
+      // FIX 2: Validate dataset size for brute force (max 500 points)
+      const BRUTE_FORCE_LIMIT = 500;
+      if (pointsArray.length > BRUTE_FORCE_LIMIT) {
+        throw new Error(
+          `Dataset contains ${pointsArray.length} points, which exceeds the ${BRUTE_FORCE_LIMIT} point limit for this web version.\n\n` +
+          `For larger datasets, please download the application and run it locally:\n` +
+          `https://github.com/mahsakhakpour/mahsa-portfolio`
+        );
+      }
+
       const mccpResult = runMCCP(
         pointsArray,
         parseFloat(eps),
-        parseInt(minSamples),
+        minPts,
         parseFloat(radius)
       );
       
@@ -131,29 +147,31 @@ export default function MCCPPage() {
 
   const loadRandomData = () => {
     const randomPoints: string[] = [];
+    // Generate up to 50 random points (well below the 500 limit)
     for (let i = 0; i < 50; i++) {
       const x = (Math.random() * 20).toFixed(2);
       const y = (Math.random() * 20).toFixed(2);
       randomPoints.push(`${x},${y}`);
     }
     setPoints(randomPoints.join('\n'));
+    // Clear previous result when loading new data
+    setResult(null);
   };
 
-  // Draw visualization with higher resolution
+  // Draw visualization - ONLY when result changes
   useEffect(() => {
+    // Only draw if we have a valid result
     if (!result || !result.best_center || !canvasRef.current) return;
 
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
     
-    // Use device pixel ratio for sharper rendering
     const dpr = window.devicePixelRatio || 1;
     const rect = canvas.getBoundingClientRect();
     const width = rect.width || 750;
     const height = 450;
     
-    // Set canvas size with device pixel ratio
     canvas.width = width * dpr;
     canvas.height = height * dpr;
     canvas.style.width = width + 'px';
@@ -290,7 +308,7 @@ export default function MCCPPage() {
     const legendText = isLight ? 'Navy = Sliding Circle | Green Dashed = Optimal' : 'Yellow = Sliding Circle | Green Dashed = Optimal';
     ctx.fillText(legendText, 20, 30);
     
-  }, [result, points, radius, isDarkMode]);
+  }, [result]);
 
   // Popup handlers
   const openPopup = (type: 'image' | 'video', src: string) => {
@@ -495,7 +513,7 @@ export default function MCCPPage() {
             <p><strong>Points Covered:</strong> {result.max_count} points</p>
             <p><strong>Accuracy:</strong> {result.accuracy_percentage.toFixed(1)}% of optimal solution</p>
             <p><strong>Speedup:</strong> {result.speedup_percentage.toFixed(1)}% faster than brute force</p>
-            <p><strong>Time:</strong> {result.sliding_time.toFixed(4)} seconds vs {result.brute_force_time.toFixed(4)} seconds for brute force</p>
+            <p><strong>Time:</strong> {result.sliding_time.toFixed(2)} ms vs {result.brute_force_time.toFixed(2)} ms for brute force</p>
           </div>
         </div>
       )}
