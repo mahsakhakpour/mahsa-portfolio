@@ -5,32 +5,32 @@ import Link from "next/link";
 
 export default function ProjectsPage() {
   const projects = [
-
+    // TOP ROW (3 items)
     {
       title: "Health-Wellness",
       image: "/healthWellness/health.png",
       link: "/projects/health-wellness",
     },
     {
-      title: "Kanba",
-      image: "/kanba/kanba.png",
-      link: "/projects/kanba",
+      title: "InteriYOUR",
+      image: "/interiYour/interiYOUR.png",
+      link: "/projects/interiyour",
     },
-    {
-      title: "Construction Analytics",
-      image: "/constructionAnalytics/construction-analytics.png",
-      link: "/projects/construction-analytics",
-    },
- 
     {
       title: "MCCP",
       image: "/mccp/mccp-poster.png",
       link: "/projects/mccp",
     },
+    // BOTTOM ROW (2 items)
     {
-      title: "interiYOUR",
-      image: "/interiYour/interiYOUR.png",
-      link: "/InteriYOUR-Design_Final-Project.pdf",
+      title: "Construction Analytics",
+      image: "/constructionAnalytics/construction-analytics.png",
+      link: "/projects/construction-analytics",
+    },
+    {
+      title: "Kanba",
+      image: "/kanba/kanba.png",
+      link: "/projects/kanba",
     },
   ];
 
