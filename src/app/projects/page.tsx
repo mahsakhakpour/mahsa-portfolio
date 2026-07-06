@@ -24,7 +24,7 @@ export default function ProjectsPage() {
     // BOTTOM ROW (3 items)
     {
       title: "360° Product Viewer",
-      image: "/product-viewer/icon.png",
+      image: "/product-viewer/Chanel.png",
       link: "/projects/product-viewer",
     },
     {
