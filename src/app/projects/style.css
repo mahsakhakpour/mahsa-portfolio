@@ -81,7 +81,7 @@ img, video {
   line-height: 1.6;
 }
 
-/* ========== GRID - USING FLEXBOX FOR BETTER CONTROL ========== */
+/* ========== PROJECT GRID - UPDATED FOR 6 PROJECTS ========== */
 .projects-grid {
   display: flex;
   flex-wrap: wrap;
@@ -138,7 +138,7 @@ img, video {
   box-shadow: 0 8px 24px var(--shadow);
 }
 
-/* Images - fixed size, no animation */
+/* Images - fixed size */
 .project-card img {
   width: 90px;
   height: 90px;
@@ -160,7 +160,7 @@ img, video {
   transform: none !important;
 }
 
-/* Titles - fixed size, no animation */
+/* Titles */
 .project-title {
   font-size: 1.1rem;
   font-weight: 700;
