@@ -38,7 +38,7 @@ export default function ProductViewerProject() {
           </p>
           <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
             <a 
-              href="https://github.com/mahsakhakpour/mahsa-portfolio/tree/main/public/product-viewer" 
+              href="https://github.com/mahsakhakpour/product-viewer" 
               target="_blank" 
               rel="noopener noreferrer" 
               className="project-btn project-btn-primary"
