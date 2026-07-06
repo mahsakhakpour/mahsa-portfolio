@@ -21,7 +21,12 @@ export default function ProjectsPage() {
       image: "/mccp/mccp-poster.png",
       link: "/projects/mccp",
     },
-    // BOTTOM ROW (2 items)
+    // BOTTOM ROW (3 items)
+    {
+      title: "360° Product Viewer",
+      image: "/product-viewer/icon.png",
+      link: "/projects/product-viewer",
+    },
     {
       title: "Construction Analytics",
       image: "/constructionAnalytics/construction-analytics.png",
