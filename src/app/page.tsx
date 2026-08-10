@@ -1,23 +1,24 @@
 "use client";
 
-import { FaCode, FaLaptopCode, FaPalette, FaChartLine, FaSearch, FaGithub, FaLinkedin } from "react-icons/fa";
+import { FaLaptopCode, FaPalette, FaChartLine, FaSearch, FaCog, FaLayerGroup } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import Chat from "../../components/Chat";
 
 export default function HomePage() {
 
   const skills = [
-    { name: "HTML", file: "/icons/html5.jpg" },
-    { name: "CSS", file: "/icons/css3.png" },
-    { name: "JavaScript", file: "/icons/js.png" },
-    { name: "React", file: "/icons/react.png" },
-    { name: "Next.js", file: "/icons/nextjs.png" },
-    { name: "Node.js", file: "/icons/node.png" },
-    { name: "SQL", file: "/icons/sql.png" },
-    { name: "Python", file: "/icons/python.jpg" },
-    { name: "MongoDB", file: "/icons/mongo.png" },
-    { name: "PHP", file: "/icons/php.png" },
-    { name: "Angular", file: "/icons/angular.png" },
+    { name: "HTML", file: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" },
+    { name: "CSS", file: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" },
+    { name: "JavaScript", file: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" },
+    { name: "React", file: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" },
+    { name: "Next.js", file: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg" },
+    { name: "Node.js", file: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" },
+    { name: "SQL", file: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/azuresqldatabase/azuresqldatabase-original.svg" },
+    { name: "Python", file: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" },
+    { name: "MongoDB", file: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg" },
+    { name: "PHP", file: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg" },
+    { name: "Angular", file: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/angular/angular-original.svg" },
+    { name: "WordPress", file: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/wordpress/wordpress-plain.svg" },
   ];
 
   return (
@@ -31,7 +32,7 @@ export default function HomePage() {
             In the Digital World
           </h1>
           <p>
-            Full-stack developer with a passion for front-end experiences and intuitive user interfaces.
+            UX/UI Designer & Front-End Developer | Passionate about digital design and human-centered experiences.
           </p>
         </section>
 
@@ -43,39 +44,47 @@ export default function HomePage() {
             <div className="about-text">
               <h2>About Me</h2>
               <p>
-                I am a full-stack web developer who thrives at the intersection of logic 
-                and creativity. While my technical foundation spans front-end interfaces, 
-                back-end systems, and database architecture, my true passion lies in 
-                crafting exceptional front-end experiences and intuitive user interfaces.
+                Hi, I'm Mahsa.
               </p>
               <p>
-                I am deeply driven by how users interact with technology, translating 
-                complex requirements into seamless, accessible, and human-centered digital 
-                journeys. My full-stack expertise allows me to bridge design and 
-                development, ensuring that every visual detail is supported by robust, 
-                scalable architecture.
+                I'm a <strong>UX/UI Designer and Front-End Developer</strong>, but if I'm being honest, my heart is in digital design.
               </p>
               <p>
-                I hold a Bachelor's degree in Computer-Software Engineering, an Associate 
-                Certificate in Web Development from the British Columbia Institute of 
-                Technology (BCIT), and a Master of Science in Computer Science from 
-                Northeastern University.
+                I love that moment when an idea finally becomes real—the moment I look at the product and think:
+              </p>
+              <p>
+                <strong>"Yes. That's exactly what I had in mind."</strong>
+              </p>
+              <p>
+                I enjoy understanding how people interact with technology, exploring ideas, and turning them into interfaces that feel intuitive, clear, and purposeful. My background in full-stack development means I can take an idea beyond the interface and understand how it works as a real product.
+              </p>
+              <p>
+                I can move between <strong>design and development</strong>, which helps me turn creative ideas into practical, technically sound experiences.
+              </p>
+              <p>
+                I hold a <strong>Bachelor's degree in Computer-Software Engineering</strong>, an <strong>Associate Certificate in Web Development from BCIT</strong>, and a <strong>Master of Science in Computer Science from Northeastern University</strong>.
+              </p>
+              <p>
+                But what really drives me isn't the technology itself.
+              </p>
+              <p>
+                <strong>It's seeing an idea become the thing I imagined.</strong>
               </p>
             </div>
           </div>
         </section>
 
-        {/* Professional Summary - Improved */}
+        {/* Professional Summary */}
         <section className="summary">
           <h2>Professional Summary</h2>
           <p>
-            I deliver clean, maintainable code with a focus on long-term value and user-centered design.
-            Every project receives structured planning, iterative development, and rigorous testing
-            to ensure performance, accessibility, and scalability across all devices and platforms.
+            My goal is to design and build digital products that people genuinely enjoy using. I combine a deep passion for 
+            UX/UI design with the technical discipline of a full-stack engineer to create experiences that are both beautiful 
+            and bulletproof. I believe the best technology feels effortless and intuitive.
           </p>
         </section>
 
-        {/* Skills - No more duplicates */}
+        {/* Skills */}
         <section className="skills" id="skills">
           <h2>Skills Overview</h2>
 
@@ -101,29 +110,32 @@ export default function HomePage() {
 
           <div className="offer-grid">
             <div className="offer-card">
+              <FaPalette className="offer-icon" />
+              <h3>UX/UI Design</h3>
+              <p>
+                Designing clear, user-centered interfaces that are intuitive, accessible, 
+                and a pleasure to use. My true passion lies in crafting digital experiences 
+                that users love.
+              </p>
+            </div>
+
+            <div className="offer-card">
               <FaLaptopCode className="offer-icon" />
               <h3>Front-End Development</h3>
               <p>
                 Creating responsive, accessible, and modern user interfaces
-                using current front-end technologies.
+                using current front-end technologies. I bring my designs to life 
+                with pixel-perfect precision.
               </p>
             </div>
 
             <div className="offer-card">
-              <FaCode className="offer-icon" />
+              <FaLayerGroup className="offer-icon" />
               <h3>Full Stack Development</h3>
               <p>
                 Building end-to-end applications with structured
-                and maintainable code.
-              </p>
-            </div>
-
-            <div className="offer-card">
-              <FaPalette className="offer-icon" />
-              <h3>UX/UI Designing</h3>
-              <p>
-                Designing clear, user-centered interfaces for
-                practical applications.
+                and maintainable code. My full-stack knowledge ensures 
+                seamless integration between design and functionality.
               </p>
             </div>
 
@@ -132,7 +144,7 @@ export default function HomePage() {
               <h3>Data-Driven Development</h3>
               <p>
                 Applying data insights and visualization
-                to improve application outcomes.
+                to improve application outcomes and inform design decisions.
               </p>
             </div>
 
@@ -141,7 +153,17 @@ export default function HomePage() {
               <h3>Business Analysis & SEO</h3>
               <p>
                 Aligning technical solutions with business goals
-                and improving visibility.
+                and improving visibility through strategic planning.
+              </p>
+            </div>
+
+            <div className="offer-card">
+              <FaCog className="offer-icon" />
+              <h3>Content Management Systems</h3>
+              <p>
+                Building and customizing user-friendly content management systems 
+                that allow clients to easily manage their own websites without coding. 
+                Expertise in various CMS platforms and headless solutions.
               </p>
             </div>
           </div>
@@ -151,7 +173,7 @@ export default function HomePage() {
         <section className="contact" id="contact">
           <h2>Contact</h2>
           <p>
-            If you&apos;d like to work together or have any questions:
+            If you'd like to work together or have any questions, I'd love to hear from you.
           </p>
 
           <div className="contact-links">
