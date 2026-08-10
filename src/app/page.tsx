@@ -50,7 +50,7 @@ export default function HomePage() {
                 I'm a <strong>UX/UI Designer and Front-End Developer</strong>, but if I'm being honest, my heart is in digital design.
               </p>
               <p>
-                I love that moment when an idea finally becomes real—the moment I look at the product and think:
+                I love that moment when an idea finally becomes real, the moment I look at the product and think:
               </p>
               <p>
                 <strong>"Yes. That's exactly what I had in mind."</strong>
