@@ -32,7 +32,7 @@ export default function HomePage() {
             In the Digital World
           </h1>
           <p>
-            UX/UI Designer & Front-End Developer | Passionate about digital design and human-centered experiences.
+            Product Designer & UX/UI Designer | Strong Front-End Development Focus | Human-centered experiences with a Computer Science foundation.
           </p>
         </section>
 
@@ -47,40 +47,53 @@ export default function HomePage() {
                 Hi, I'm Mahsa.
               </p>
               <p>
-                I'm a <strong>UX/UI Designer and Front-End Developer</strong>, but if I'm being honest, my heart is in digital design.
+                I'm a <strong>Product Designer</strong> and <strong>UX/UI Designer</strong> with a strong front-end development focus, and a deep love for human-centered experiences. My Computer Science background helps me turn visionary ideas into real, impactful products. I live at the intersection of user empathy, visual storytelling, and strategic problem-solving.
               </p>
               <p>
-                I love that moment when an idea finally becomes real, the moment I look at the product and think:
+                I design for the moment when everything clicks. When the user flow feels effortless. When the interface disappears and the experience takes over. When I look at the product and think:
               </p>
               <p>
                 <strong>"Yes. That's exactly what I had in mind."</strong>
               </p>
               <p>
-                I enjoy understanding how people interact with technology, exploring ideas, and turning them into interfaces that feel intuitive, clear, and purposeful. My background in full-stack development means I can take an idea beyond the interface and understand how it works as a real product.
+                I believe the best digital experiences aren't just functional, they're felt. They guide users intuitively, surprise them with delight, and make complex tasks feel simple. I don't just design screens; I design journeys, emotions, and connections between people and technology.
               </p>
               <p>
-                I can move between <strong>design and development</strong>, which helps me turn creative ideas into practical, technically sound experiences.
+                My background in Computer Science isn't about code, it's about understanding the possibilities and constraints of the medium I design for. It allows me to think structurally, prototype intelligently, and collaborate with engineers as a true partner. I speak both languages: design and technology. And that makes me a more effective, empathetic designer.
               </p>
               <p>
-                I hold a <strong>Bachelor's degree in Computer-Software Engineering</strong>, an <strong>Associate Certificate in Web Development from BCIT</strong>, and a <strong>Master of Science in Computer Science from Northeastern University</strong>.
+                With my <strong>front-end development expertise</strong>, I can bring my designs to life with pixel-perfect precision, ensuring every interaction feels as good as it looks. This ability to design and build gives me a unique perspective, I understand not just what users want, but what's technically feasible and performant.
               </p>
               <p>
-                But what really drives me isn't the technology itself.
+                I hold a <strong>Master of Science in Computer Science</strong> from Northeastern University, an <strong>Associate Certificate in Applied Web Development</strong> from BCIT, and a <strong>Bachelor's degree in Computer-Software Engineering</strong>.
               </p>
               <p>
-                <strong>It's seeing an idea become the thing I imagined.</strong>
+                But what drives me isn't the technology itself.
+              </p>
+              <p>
+                It's the human connection. It's watching someone use something I designed and seeing them smile because it just works. It's turning complex problems into elegant, intuitive experiences that people genuinely enjoy. It's the moment an idea becomes something real, something meaningful, something that makes someone's day a little bit better.
               </p>
             </div>
           </div>
         </section>
 
-        {/* Professional Summary */}
+        {/* Design Philosophy */}
         <section className="summary">
-          <h2>Professional Summary</h2>
+          <h2>Design Philosophy</h2>
           <p>
-            My goal is to design and build digital products that people genuinely enjoy using. I combine a deep passion for 
-            UX/UI design with the technical discipline of a full-stack engineer to create experiences that are both beautiful 
-            and bulletproof. I believe the best technology feels effortless and intuitive.
+            Design isn't just how it looks, it's how it feels, how it flows, and how it serves the people who use it.
+          </p>
+          <br />
+          <p>
+            <strong>Empathy-first design</strong> , Every pixel should be guided by a deep understanding of the humans on the other side. I start with people, not problems.
+          </p>
+          <br />
+          <p>
+            <strong>Storytelling through design</strong> , Every product has a story to tell. I craft experiences that guide users through that narrative with clarity and delight.
+          </p>
+          <br />
+          <p>
+            <strong>Design & build with purpose</strong> , I design with a deep understanding of front-end development, ensuring that every visual choice is not only beautiful but also technically sound and performant.
           </p>
         </section>
 
@@ -111,49 +124,49 @@ export default function HomePage() {
           <div className="offer-grid">
             <div className="offer-card">
               <FaPalette className="offer-icon" />
-              <h3>UX/UI Design</h3>
+              <h3>Product Design</h3>
               <p>
-                Designing clear, user-centered interfaces that are intuitive, accessible, 
-                and a pleasure to use. My true passion lies in crafting digital experiences 
-                that users love.
+                Designing user-centered products that are intuitive, accessible, 
+                and a pleasure to use. From research to high-fidelity prototypes, 
+                I craft experiences that users love.
               </p>
             </div>
 
             <div className="offer-card">
               <FaLaptopCode className="offer-icon" />
-              <h3>Front-End Development</h3>
+              <h3>UX/UI Design</h3>
               <p>
                 Creating responsive, accessible, and modern user interfaces
-                using current front-end technologies. I bring my designs to life 
-                with pixel-perfect precision.
+                with a focus on user flow, visual storytelling, and emotional 
+                connection.
               </p>
             </div>
 
             <div className="offer-card">
               <FaLayerGroup className="offer-icon" />
-              <h3>Full Stack Development</h3>
+              <h3>Front-End Development</h3>
               <p>
-                Building end-to-end applications with structured
-                and maintainable code. My full-stack knowledge ensures 
-                seamless integration between design and functionality.
+                Bringing designs to life with pixel-perfect precision. I build 
+                responsive, accessible, and performant interfaces using modern 
+                front-end technologies.
               </p>
             </div>
 
             <div className="offer-card">
               <FaChartLine className="offer-icon" />
-              <h3>Data-Driven Development</h3>
+              <h3>Data-Driven Design</h3>
               <p>
-                Applying data insights and visualization
-                to improve application outcomes and inform design decisions.
+                Applying data insights and user research to inform design 
+                decisions and create experiences that truly meet user needs.
               </p>
             </div>
 
             <div className="offer-card">
               <FaSearch className="offer-icon" />
-              <h3>Business Analysis & SEO</h3>
+              <h3>Business Analysis & Strategy</h3>
               <p>
-                Aligning technical solutions with business goals
-                and improving visibility through strategic planning.
+                Aligning design solutions with business goals and user needs
+                through strategic planning and research-driven insights.
               </p>
             </div>
 
