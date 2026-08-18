@@ -7,7 +7,7 @@ export default function KanbaPage() {
       {/* Hero Section */}
       <section className="hero-section">
         <img
-          src="/kanba/kanba.png"
+          src="/kanba-images/kanba.png"
           alt="Kanba"
           className="hero-img"
         />
@@ -68,7 +68,7 @@ export default function KanbaPage() {
         </div>
 
         <div className="feature">
-          <img src="/kanba/module.png" alt="Modules" />
+          <img src="/kanba-images/module.png" alt="Modules" />
           <div>
             <h4>Modules & Content</h4>
             <p>
@@ -84,11 +84,11 @@ export default function KanbaPage() {
               Create and manage assignments with due dates, points, submission tracking, grading functionality, and late submission handling.
             </p>
           </div>
-          <img src="/kanba/assignments.png" alt="Assignments" />
+          <img src="/kanba-images/assignments.png" alt="Assignments" />
         </div>
 
         <div className="feature">
-          <img src="/kanba/grades.png" alt="Grades" />
+          <img src="/kanba-images/grades.png" alt="Grades" />
           <div>
             <h4>Grade Management</h4>
             <p>
