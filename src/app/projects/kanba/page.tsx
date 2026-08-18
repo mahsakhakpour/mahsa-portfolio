@@ -64,7 +64,7 @@ export default function KanbaPage() {
               Customized course overview with quick navigation, recent activity feed, and course cards for easy access to enrolled courses.
             </p>
           </div>
-          <img src="/kanba/dashboard.png" alt="Dashboard" />
+          <img src="/kanba-images/dashboard.png" alt="Dashboard" />
         </div>
 
         <div className="feature">

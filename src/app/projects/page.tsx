@@ -34,7 +34,7 @@ export default function ProjectsPage() {
     },
     {
       title: "Kanba",
-      image: "/kanba/kanba.png",
+      image: "/kanba-images/kanba.png",
       link: "/projects/kanba",
     },
   ];
