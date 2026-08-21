@@ -147,26 +147,40 @@ export default function HealthWellnessProject() {
           </div>
         </section>
 
-        <section>
-          <div className="project-links">
-            <h2>Ready to Explore?</h2>
-            <p>Check out the complete source code on GitHub or try the live demo.</p>
-            <div className="project-buttons">
-              <a 
-                href="https://health-wellness-psi.vercel.app" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="project-btn project-btn-primary"
-                style={{ backgroundColor: '#0d9488', color: 'white' }}
-              >
-                Live Demo
-              </a>
-              <a href="https://github.com/mahsakhakpour/health-wellness" target="_blank" rel="noopener noreferrer" className="project-btn project-btn-dark">
-                Source Code
-              </a>
-            </div>
-          </div>
-        </section>
+<section>
+  <div className="project-links">
+    <h2>Ready to Explore?</h2>
+    <p>Check out the complete source code on GitHub, try the live demo, or read the full case study.</p>
+    <div className="project-buttons">
+      <a 
+        href="https://health-wellness-psi.vercel.app" 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        className="project-btn project-btn-primary"
+        style={{ backgroundColor: '#0d9488', color: 'white' }}
+      >
+        Live Demo
+      </a>
+      <a 
+        href="https://github.com/mahsakhakpour/health-wellness" 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        className="project-btn project-btn-dark"
+      >
+        Source Code
+      </a>
+      <a 
+        href="/Health-Wellness_Case_Study.pdf" 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        className="project-btn"
+        style={{ backgroundColor: '#0d9488', color: 'white' }}
+      >
+        Full Case Study
+      </a>
+    </div>
+  </div>
+</section>
       </div>
     </div>
   )
