@@ -78,6 +78,16 @@ export default function ConstructionAnalyticsProject() {
             >
               Source Code
             </a>
+
+<a 
+  href="/constructionAnalytics/Construction_Analytics_Case_Study.pdf"
+  target="_blank" 
+  rel="noopener noreferrer" 
+  className="project-btn project-btn-outline"
+  style={{ backgroundColor: '#10b981', color: 'white' }}
+>
+  Case Study
+</a>
           </div>
         </div>
       </section>
