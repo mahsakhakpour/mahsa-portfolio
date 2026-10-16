@@ -1,30 +1,41 @@
 "use client";
 
-import { FaLaptopCode, FaPalette, FaChartLine, FaSearch, FaCog, FaLayerGroup } from "react-icons/fa";
+import {
+  FaLaptopCode,
+  FaPalette,
+  FaChartLine,
+  FaUniversalAccess,
+  FaCog,
+  FaLayerGroup,
+  FaLinkedin,
+  FaGithub,
+} from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import Chat from "../../components/Chat";
 
 export default function HomePage() {
-
   const skills = [
+    { name: "Figma", file: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg" },
     { name: "HTML", file: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" },
     { name: "CSS", file: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" },
     { name: "JavaScript", file: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" },
+    { name: "TypeScript", file: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg" },
     { name: "React", file: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" },
     { name: "Next.js", file: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg" },
-    { name: "Node.js", file: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" },
-    { name: "SQL", file: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/azuresqldatabase/azuresqldatabase-original.svg" },
-    { name: "Python", file: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" },
-    { name: "MongoDB", file: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg" },
-    { name: "PHP", file: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg" },
     { name: "Angular", file: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/angular/angular-original.svg" },
+    { name: "Tailwind CSS", file: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" },
+    { name: "Node.js", file: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" },
+    { name: ".NET", file: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/dot-net/dot-net-original.svg" },
+    { name: "SQL", file: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/azuresqldatabase/azuresqldatabase-original.svg" },
+    { name: "MongoDB", file: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg" },
+    { name: "Python", file: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" },
+    { name: "PHP", file: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg" },
     { name: "WordPress", file: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/wordpress/wordpress-plain.svg" },
   ];
 
   return (
     <>
       <main>
-
         {/* Hero */}
         <section className="hero">
           <h1>
@@ -32,7 +43,9 @@ export default function HomePage() {
             In the Digital World
           </h1>
           <p>
-            Product Designer & UX/UI Designer | Strong Front-End Development Focus | Human-centered experiences with a Computer Science foundation.
+            <strong>Design Engineer | UX/UI Designer &amp; Front-End Developer</strong>
+            <br />
+            I design human-centered interfaces, and I build them.
           </p>
         </section>
 
@@ -44,28 +57,22 @@ export default function HomePage() {
             <div className="about-text">
               <h2>About Me</h2>
               <p>
-                Hi, I'm Mahsa.
+                As a <strong>Design Engineer</strong>, I bring together <strong>UX/UI design</strong> and <strong>front-end development</strong>, driven by a deep love for human-centered experiences. My work lives at the intersection of user empathy, visual storytelling, and problem-solving.
               </p>
               <p>
-                I'm a <strong>Product Designer</strong> and <strong>UX/UI Designer</strong> with a strong front-end development focus, and a deep love for human-centered experiences. My Computer Science background helps me turn visionary ideas into real, impactful products. I live at the intersection of user empathy, visual storytelling, and strategic problem-solving.
-              </p>
-              <p>
-                I design for the moment when everything clicks. When the user flow feels effortless. When the interface disappears and the experience takes over. When I look at the product and think:
+                It's all about the moment when everything clicks. When the user flow feels effortless. When the finished product matches the vision, and the only thought is:
               </p>
               <p>
                 <strong>"Yes. That's exactly what I had in mind."</strong>
               </p>
               <p>
-                I believe the best digital experiences aren't just functional, they're felt. They guide users intuitively, surprise them with delight, and make complex tasks feel simple. I don't just design screens; I design journeys, emotions, and connections between people and technology.
+                The best digital experiences aren't just functional, they're felt. They guide users intuitively, surprise them with delight, and make complex tasks feel simple. Beyond screens, the work is about journeys, emotions, and the connections between people and technology.
               </p>
               <p>
-                My background in Computer Science isn't about code, it's about understanding the possibilities and constraints of the medium I design for. It allows me to think structurally, prototype intelligently, and collaborate with engineers as a true partner. I speak both languages: design and technology. And that makes me a more effective, empathetic designer.
+                A developer who designs and a designer who codes. Designing in Figma and building with Angular, React, Next.js, and TypeScript means what's imagined is what actually ships, with fewer handoff gaps. <strong>Full-stack web applications</strong>, taken from product design all the way to production code, are part of that track record.
               </p>
               <p>
-                With my <strong>front-end development expertise</strong>, I can bring my designs to life with pixel-perfect precision, ensuring every interaction feels as good as it looks. This ability to design and build gives me a unique perspective, I understand not just what users want, but what's technically feasible and performant.
-              </p>
-              <p>
-                I hold a <strong>Master of Science in Computer Science</strong> from Northeastern University, an <strong>Associate Certificate in Applied Web Development</strong> from BCIT, and a <strong>Bachelor's degree in Computer-Software Engineering</strong>.
+                Education includes a <strong>Master of Science in Computer Science</strong> from Northeastern University, an <strong>Associate Certificate in Applied Web Development</strong> from BCIT, and a <strong>Bachelor's degree in Computer-Software Engineering</strong>.
               </p>
               <p>
                 But what drives me isn't the technology itself.
@@ -78,22 +85,38 @@ export default function HomePage() {
         </section>
 
         {/* Design Philosophy */}
-        <section className="summary">
+        <section className="summary" style={{ textAlign: "left" }}>
           <h2>Design Philosophy</h2>
           <p>
             Design isn't just how it looks, it's how it feels, how it flows, and how it serves the people who use it.
           </p>
           <br />
           <p>
-            <strong>Empathy-first design</strong> , Every pixel should be guided by a deep understanding of the humans on the other side. I start with people, not problems.
+            <strong>Empathy-first design.</strong> Every pixel should be guided by a deep understanding of the humans on the other side.
           </p>
           <br />
           <p>
-            <strong>Storytelling through design</strong> , Every product has a story to tell. I craft experiences that guide users through that narrative with clarity and delight.
+            <strong>Storytelling through design.</strong> Every product has a story to tell, and good design guides users through it with clarity and delight.
+          </p>
+        </section>
+
+        {/* How I Work */}
+        <section className="summary" style={{ textAlign: "left" }}>
+          <h2>How I Work</h2>
+          <p>
+            <strong>1. Understand the problem.</strong> Research, personas, and user journeys define who the product is for and what they need.
           </p>
           <br />
           <p>
-            <strong>Design & build with purpose</strong> , I design with a deep understanding of front-end development, ensuring that every visual choice is not only beautiful but also technically sound and performant.
+            <strong>2. Structure before pixels.</strong> Information architecture, user flows, and wireframes give a product clarity before it gets visual polish.
+          </p>
+          <br />
+          <p>
+            <strong>3. Prototype and refine.</strong> Figma prototypes and working builds make ideas real early, so they can be tried, questioned, and improved.
+          </p>
+          <br />
+          <p>
+            <strong>4. Build with purpose.</strong> Beautiful isn't enough. On the front end, that means accessible, responsive, performant interfaces in React, Next.js, and TypeScript. On the back end, it means clean APIs and well-planned data models, so the experience holds up beyond the screen.
           </p>
         </section>
 
@@ -126,9 +149,9 @@ export default function HomePage() {
               <FaPalette className="offer-icon" />
               <h3>Product Design</h3>
               <p>
-                Designing user-centered products that are intuitive, accessible, 
-                and a pleasure to use. From research to high-fidelity prototypes, 
-                I craft experiences that users love.
+                Turning complex problems into clear products. From user research,
+                personas, and journeys to flows, wireframes, and high-fidelity
+                Figma prototypes.
               </p>
             </div>
 
@@ -136,9 +159,9 @@ export default function HomePage() {
               <FaLaptopCode className="offer-icon" />
               <h3>UX/UI Design</h3>
               <p>
-                Creating responsive, accessible, and modern user interfaces
-                with a focus on user flow, visual storytelling, and emotional 
-                connection.
+                Designing responsive, modern interfaces with a focus on visual
+                hierarchy, interaction, and the emotional connection between
+                people and the product.
               </p>
             </div>
 
@@ -146,27 +169,26 @@ export default function HomePage() {
               <FaLayerGroup className="offer-icon" />
               <h3>Front-End Development</h3>
               <p>
-                Bringing designs to life with pixel-perfect precision. I build 
-                responsive, accessible, and performant interfaces using modern 
-                front-end technologies.
+                Building responsive, performant interfaces with React, Next.js,
+                TypeScript, and Tailwind CSS, so what's designed is what ships.
               </p>
             </div>
 
             <div className="offer-card">
               <FaChartLine className="offer-icon" />
-              <h3>Data-Driven Design</h3>
+              <h3>Dashboards &amp; Data Visualization</h3>
               <p>
-                Applying data insights and user research to inform design 
-                decisions and create experiences that truly meet user needs.
+                Designing and building analytics dashboards and interactive maps
+                that make complex data easy to explore and understand.
               </p>
             </div>
 
             <div className="offer-card">
-              <FaSearch className="offer-icon" />
-              <h3>Business Analysis & Strategy</h3>
+              <FaUniversalAccess className="offer-icon" />
+              <h3>Design Systems &amp; Accessibility</h3>
               <p>
-                Aligning design solutions with business goals and user needs
-                through strategic planning and research-driven insights.
+                Creating reusable components and consistent patterns, built to
+                WCAG standards so interfaces work for everyone.
               </p>
             </div>
 
@@ -174,8 +196,8 @@ export default function HomePage() {
               <FaCog className="offer-icon" />
               <h3>Content Management Systems</h3>
               <p>
-                Building and customizing user-friendly content management systems 
-                that allow clients to easily manage their own websites without coding. 
+                Building and customizing user-friendly content management systems
+                that allow clients to easily manage their own websites without coding.
                 Expertise in various CMS platforms and headless solutions.
               </p>
             </div>
@@ -198,13 +220,28 @@ export default function HomePage() {
             >
               <MdEmail /> Send Email
             </a>
-            
-            
+
+            <a
+              href="https://www.linkedin.com/in/mahsa-khakpour/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cta-button"
+            >
+              <FaLinkedin /> LinkedIn
+            </a>
+
+            <a
+              href="https://github.com/mahsakhakpour"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cta-button"
+            >
+              <FaGithub /> GitHub
+            </a>
           </div>
         </section>
-
       </main>
-      
+
       <Chat />
     </>
   );

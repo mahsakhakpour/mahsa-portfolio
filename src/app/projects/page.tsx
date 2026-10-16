@@ -22,11 +22,7 @@ export default function ProjectsPage() {
       link: "/projects/mccp",
     },
     // BOTTOM ROW (3 items)
-    {
-      title: "360° Product Viewer",
-      image: "/product-viewer/Chanel.png",
-      link: "/projects/product-viewer",
-    },
+
     {
       title: "Construction Analytics",
       image: "/constructionAnalytics/construction-analytics.png",
@@ -36,6 +32,12 @@ export default function ProjectsPage() {
       title: "Kanba",
       image: "/kanba-images/kanba.png",
       link: "/projects/kanba",
+    },
+
+        {
+      title: "Product Viewer",
+      image: "/product-viewer/Chanel.png",
+      link: "/projects/product-viewer",
     },
   ];
 

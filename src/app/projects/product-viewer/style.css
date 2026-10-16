@@ -113,17 +113,14 @@ body.dark .project-page {
 .project-section-title {
   font-size: 2rem;
   font-weight: 700;
-  text-align: center;
+  text-align: left;
   margin-top: 2rem;
   margin-bottom: 1.5rem;
-  color: var(--project-text-primary);
+  color: #10b981;
 }
 
 .project-section-title span {
-  background: linear-gradient(135deg, #10b981, #34d399);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #10b981;
 }
 
 .project-overview {
@@ -173,7 +170,7 @@ body.dark .project-page {
   font-size: 1.2rem;
   font-weight: 600;
   margin-bottom: 1rem;
-  color: var(--project-text-primary);
+  color: #10b981;
 }
 
 .project-feature-card p {
@@ -267,6 +264,7 @@ body.dark .project-iframe-wrapper {
   
   .project-section-title {
     font-size: 1.5rem;
+    text-align: left;
     margin-top: 1.5rem;
     margin-bottom: 1.5rem;
   }
@@ -322,6 +320,7 @@ body.dark .project-iframe-wrapper {
   
   .project-section-title {
     font-size: 1.3rem;
+    text-align: left;
     margin-top: 1rem;
     margin-bottom: 1rem;
   }

@@ -92,11 +92,36 @@ body.dark .siteName {
   display: block;
 }
 
+.dropdownLink {
+  padding: 10px 20px;
+  text-decoration: none;
+  color: var(--dropdown-text) !important;
+  transition: background 0.25s ease, color 0.25s ease, padding-left 0.25s ease;
+  background: transparent;
+  display: block;
+}
+
+/* First and last links get rounded corners to match the dropdown container */
+.dropdownLink:first-child {
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.dropdownLink:last-child {
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+/* If there's only one link, round all corners */
+.dropdownLink:only-child {
+  border-radius: 12px;
+}
+
+/* Hover: no scale, no translateX — just color change + subtle indent */
 .dropdownLink:hover {
   background: var(--dropdown-hover-bg) !important;
   color: var(--dropdown-hover-text) !important;
-  transform: scale(1.02) translateX(4px);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  padding-left: 26px;
 }
 
 .themeToggle {

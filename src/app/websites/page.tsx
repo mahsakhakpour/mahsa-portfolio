@@ -4,7 +4,7 @@ import "./style.css";
 
 export default function WebsitesPage() {
   const websites = [
-    { id: 1, url: "https://www.uniquegettogethersociety.com/" },
+    { id: 1, url: "https://www.ugts.ca/" },
     { id: 2, url: "https://traditionallearning.com/" },
     { id: 3, url: "https://unibuild.ca/" },
     { id: 4, url: "https://www.ciemployment.ca/" },

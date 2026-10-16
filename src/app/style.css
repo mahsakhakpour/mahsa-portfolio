@@ -1318,6 +1318,23 @@ body.dark .dropdownLink:hover {
   padding-top: 60px;
   padding-bottom: 60px;
 }
+.summary,
+.summary h2,
+.summary p {
+  text-align: left;
+  
+}
+.offer-card,
+.offer-card h3,
+.offer-card p {
+  text-align: left;
+}
+
+.offer-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
 
 @media (max-width: 768px) {
   .hero, .about, .summary, .skills, .offer, .contact {

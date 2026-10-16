@@ -32,23 +32,23 @@ export default function ProductViewerProject() {
       {/* Hero Section */}
       <section className="project-hero">
         <div className="project-container">
-          <h1>360° Product Experience</h1>
+          <h1>Product Viewer</h1>
           <p className="hero-description">
-            An immersive 3D product viewer with interactive rotation, zoom, and a premium e-commerce interface. Built with vanilla JavaScript, CSS, and HTML.
+            An interactive 3D product viewer with drag-to-rotate, zoom, and a full product page. Designed and built with vanilla JavaScript, CSS, and HTML, with no external libraries.
           </p>
           <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-            <a 
-              href="https://github.com/mahsakhakpour/product-viewer" 
-              target="_blank" 
-              rel="noopener noreferrer" 
+            <a
+              href="https://github.com/mahsakhakpour/product-viewer"
+              target="_blank"
+              rel="noopener noreferrer"
               className="project-btn project-btn-primary"
             >
               View Source Code
             </a>
-            <a 
-              href="/product-viewer/index.html" 
-              target="_blank" 
-              rel="noopener noreferrer" 
+            <a
+              href="/product-viewer/index.html"
+              target="_blank"
+              rel="noopener noreferrer"
               className="project-btn project-btn-secondary"
             >
               Live Demo
@@ -63,15 +63,15 @@ export default function ProductViewerProject() {
           <h2 className="project-section-title">About <span>This Project</span></h2>
           <div className="project-overview">
             <p>
-              The 360° Product Experience is an interactive product viewer that allows users to rotate and zoom in on a product from any angle. It features a smooth drag-to-rotate interaction, momentum-based scrolling, and a premium e-commerce interface.
+              <strong>The goal:</strong> online product pages usually show a few static photos. This project explores how an interactive 360° viewer can let people inspect a product the way they would in a store, using direct manipulation instead of buttons and image carousels.
             </p>
             <br />
             <p>
-              <strong>Key Features:</strong> Drag to rotate the product 360°, scroll or use buttons to zoom in/out, smooth momentum scrolling for natural rotation, and a fully responsive design. The interface includes a product page with pricing, rating, description, and add-to-cart functionality.
+              <strong>My role:</strong> I designed the interaction and interface, then built the rotation engine, zoom controls, and product page myself in vanilla JavaScript, CSS, and HTML.
             </p>
             <br />
             <p>
-              <strong>Technical Highlights:</strong> Built with vanilla JavaScript for the 3D rotation engine, CSS custom properties for theming, and a fully responsive layout. The project demonstrates advanced DOM manipulation, gesture handling, and smooth animations without any external libraries.
+              <strong>What it includes:</strong> drag to rotate the product 360°, zoom with scroll or buttons, a responsive layout, and a complete product page with pricing, rating, description, features, and add-to-cart feedback.
             </p>
           </div>
         </section>
@@ -81,10 +81,10 @@ export default function ProductViewerProject() {
           <h2 className="project-section-title">Live <span>Demo</span></h2>
           <div className="project-iframe-wrapper">
             <div className="project-iframe-container">
-              <iframe 
+              <iframe
                 src="/product-viewer/index.html"
                 className="project-iframe"
-                title="360° Product Experience"
+                title="Product Viewer"
                 width="100%"
                 height="650"
                 allowFullScreen
@@ -93,30 +93,48 @@ export default function ProductViewerProject() {
           </div>
         </section>
 
-        {/* How It Works */}
+        {/* Design Decisions */}
         <section>
-          <h2 className="project-section-title">How It <span>Works</span></h2>
+          <h2 className="project-section-title">Design <span>Decisions</span></h2>
           <div className="project-features">
             <div className="project-feature-card">
               <h3>1</h3>
-              <h4>Drag to Rotate</h4>
-              <p>Click and drag left or right to rotate the product 360°. The rotation is smooth with momentum for a natural feel.</p>
+              <h4>Direct manipulation over buttons</h4>
+              <p>Dragging the product itself feels more natural than clicking left and right arrows, so rotation follows the pointer instead of jumping between fixed angles.</p>
             </div>
             <div className="project-feature-card">
               <h3>2</h3>
-              <h4>Zoom Controls</h4>
-              <p>Use the zoom buttons or scroll to zoom in and out. The zoom level is displayed in real-time with 0.1x increments.</p>
+              <h4>Momentum for a physical feel</h4>
+              <p>Rotation continues briefly after release and slows down gradually, so the object feels like it has weight instead of stopping the instant the pointer lifts.</p>
             </div>
             <div className="project-feature-card">
               <h3>3</h3>
-              <h4>Premium Interface</h4>
-              <p>A complete product page with pricing, rating, description, features, and add-to-cart functionality with interactive feedback.</p>
+              <h4>Visible zoom feedback</h4>
+              <p>Zoom works with scroll or buttons, in 0.1x steps, with the current level shown in real time so people always know where they are.</p>
             </div>
             <div className="project-feature-card">
               <h3>4</h3>
-              <h4>Reveal Animation</h4>
-              <p>The product automatically reveals itself with a cinematic drop-in animation when the page loads.</p>
+              <h4>A reveal animation with a purpose</h4>
+              <p>The product drops in when the page loads, which draws attention to the object and signals that it's interactive.</p>
             </div>
+          </div>
+        </section>
+
+        {/* What I'd Improve Next */}
+        <section>
+          <h2 className="project-section-title">What I'd Improve <span>Next</span></h2>
+          <div className="project-overview">
+            <p>
+              <strong>Keyboard controls:</strong> arrow keys to rotate and +/− to zoom, so the viewer works without a mouse or touch.
+            </p>
+            <br />
+            <p>
+              <strong>Reduced motion:</strong> respect the <code>prefers-reduced-motion</code> setting by skipping the reveal animation and momentum for people who need it.
+            </p>
+            <br />
+            <p>
+              <strong>Usability testing:</strong> watch a few people use the viewer to see whether they discover drag-to-rotate without a hint.
+            </p>
           </div>
         </section>
 
@@ -124,7 +142,7 @@ export default function ProductViewerProject() {
         <section>
           <h2 className="project-section-title">Built <span>With</span></h2>
           <div className="project-tech-stack">
-            {['Vanilla JavaScript', 'CSS3', 'HTML5', 'CSS Custom Properties', 'DOM Manipulation', 'Gesture Handling', 'Momentum Physics', 'Responsive Design'].map((tech, index) => (
+            {['Vanilla JavaScript', 'CSS3', 'HTML5', 'CSS Custom Properties', 'Gesture Handling', 'Momentum Physics', 'Responsive Design'].map((tech, index) => (
               <span key={index} className="project-tech-item">{tech}</span>
             ))}
           </div>
