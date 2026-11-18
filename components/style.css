@@ -303,6 +303,7 @@ body {
   font-weight: bold;
   opacity: 0.9;
   letter-spacing: 0.5px;
+  color: #ffffff !important;
 }
 
 .footer-links {
