@@ -73,6 +73,7 @@ body.dark .project-page {
   margin-bottom: 2rem;
   max-width: 600px;
   line-height: 1.6;
+  color: #ffffff !important;
 }
 
 /* Buttons */
