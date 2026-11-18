@@ -75,7 +75,7 @@ export default function HomePage() {
                 Education includes a <strong>Master of Science in Computer Science</strong> from Northeastern University, an <strong>Associate Certificate in Applied Web Development</strong> from BCIT, and a <strong>Bachelor's degree in Computer-Software Engineering</strong>.
               </p>
               <p>
-                I also run [Company Name] Inc., a British Columbia–based company through which I provide design and development services to clients.
+                I also run Ahora Solutions Ltd., a British Columbia–based company through which I provide design and development services to clients.
               </p>
               <p>
                 But what drives me isn't the technology itself.
