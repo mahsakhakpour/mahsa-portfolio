@@ -6,7 +6,8 @@ export default function Footer() {
     <footer className="footer">
       <div className="footer-content">
         <div className="footer-copyright">
-          © {new Date().getFullYear()} Mahsa Khakpour. All rights reserved.
+          <p>© {new Date().getFullYear()} Mahsa Khakpour. All rights reserved.</p>
+<p>Services provided through Ahora Solutions Ltd.</p>
         </div>
         
         <div className="footer-links">
