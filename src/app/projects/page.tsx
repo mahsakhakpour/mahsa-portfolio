@@ -7,7 +7,7 @@ export default function ProjectsPage() {
   const projects = [
     // TOP ROW (3 items)
     {
-      title: "Health-Wellness",
+      title: "NurKin",
       image: "/healthWellness/health.png",
       link: "/projects/health-wellness",
     },

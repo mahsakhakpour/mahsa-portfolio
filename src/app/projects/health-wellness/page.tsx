@@ -76,7 +76,7 @@ export default function HealthWellnessProject() {
     <div className={`project-page ${isDark ? 'dark' : ''}`}>
       <section className="project-hero">
         <div className="project-container">
-          <h1>Health-Wellness</h1>
+          <h1>NurKin</h1>
           <p>A complete family health record platform for children with special needs. Track medications, appointments, therapy goals, and care team members in one centralized dashboard. Built with Next.js, TypeScript, Tailwind CSS, Prisma, and SQLite.</p>
           <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', justifyContent: 'center' }}>
             <a 
